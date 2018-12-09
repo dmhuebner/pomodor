@@ -1,0 +1,32 @@
+@mixin transition($duration) {
+  -webkit-transition: $duration;
+  -moz-transition: $duration;
+  -ms-transition: $duration;
+  -o-transition: $duration;
+  transition: $duration;
+}
+
+body {
+  color: #777;
+  background-color: #fff;
+  @include transition(1s);
+}
+
+.timer-container {
+  padding: 1rem;
+  width: auto;
+  margin: auto;
+  background-color: #ddd;
+
+  .timer-countdown {
+    font-size: 2rem;
+  }
+
+  .timer-start-btn {
+
+  }
+}
+
+.timer-container.timeron {
+  background-color: #4b0edd;
+}

@@ -1,4 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+/*** Variables ***/
+
+$softBlue: #00a9ff;
+$pomColor: #ff6868;
+$mellow: #ffc270;
+$darkerBackground: #333;
+
+$lightGrey: #aaa;
+$grey: #777;
+$white: #fff;
+$black: #000;
+$almostBlack: #222;
+$darkishPurple: #6748d8;
+
+/*** Mixins ***/
+
+@mixin transition($duration) {
+  -webkit-transition: $duration;
+  -moz-transition: $duration;
+  -ms-transition: $duration;
+  -o-transition: $duration;
+  transition: $duration;
+}
+
+@mixin box-shadow($px, $px2, $color) {
+  box-shadow: $px $px $px2 $color;
+  -moz-box-shadow: $px $px $px2 $color;
+  -webkit-box-shadow: $px $px $px2 $color;
+  -o-box-shadow: $px $px $px2 $color;
+}
+
+@mixin text-shadow($px, $px2, $color) {
+  text-shadow: $px $px $px2 $color;
+  -moz-text-shadow: $px $px $px2 $color;
+  -webkit-text-shadow: $px $px $px2 $color;
+  -o-text-shadow: $px $px $px2 $color;
+}
+
+/*** Main Styles ***/
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

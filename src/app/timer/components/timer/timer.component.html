@@ -1,3 +1,9 @@
-<p>
-  timer works!
-</p>
+<div class="timer-container" [class.timeron]="timeStarted">
+  <p class="timer-countdown">{{timeLeft | timer}}</p>
+  <button type="button" aria-label="start timer" mat-raised-button color="primary" *ngIf="!timeStarted" (click)="onStartTime()">
+    Start
+  </button>
+  <button type="button" aria-label="reset timer" mat-raised-button color="secondary" *ngIf="timeStarted" (click)="onResetTimer()">
+    Reset
+  </button>
+</div>
