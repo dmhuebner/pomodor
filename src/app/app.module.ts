@@ -27,6 +27,7 @@ import { TimerModule } from './timer/timer.module';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatButtonModule,
     SharedModule,
     TimerModule
   ],
