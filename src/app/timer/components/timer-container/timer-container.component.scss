@@ -6,20 +6,31 @@
   text-align: center;
   padding-top: 3rem;
   padding-bottom: 3rem;
-  background-color: #FAFAFA;
+  background-color: $lightPrimary;
   @include transition(1s);
 
   .timer-container {
     max-width: 50rem;
     margin: auto;
+    border: 1px solid #cdd;
+    @include transition(1s);
   }
-}
-
-.container-on-break {
-  background-color: lightblue;
 }
 
 .container-timer-on {
   background-color: #222222;
   color: #FFF;
+
+  .timer-container {
+    border: 1px solid transparent;
+  }
+}
+
+.container-on-break {
+  background-color: $lightOnBreak;
+  color: #222;
+
+  .timer-container {
+    border: 1px solid transparent;
+  }
 }

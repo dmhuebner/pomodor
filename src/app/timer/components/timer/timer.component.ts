@@ -37,7 +37,6 @@ export class TimerComponent implements OnInit {
         }
         this.endTimer();
         this.timerService.setOnBreak(!this.onBreak);
-        console.log(this.onBreak);
         this.setTimeLeft();
       }
     }, 1000);
@@ -48,18 +47,17 @@ export class TimerComponent implements OnInit {
       clearInterval(this.timerInterval);
     }
     this.endTimer();
-    this.timerService.setOnBreak(false);
   }
 
   onEndBreak() {
-    this.onResetTimer();
     this.timerService.setOnBreak(false);
+    this.onResetTimer();
   }
 
   private endTimer() {
     this.timerService.setTimerOn(false);
     this.workingTime = this.taskTimeInSeconds;
-    this.timeLeft = this.workingTime;
+    this.timeLeft = this.onBreak ? this.breakTime : this.workingTime;
   }
 
   private setTimeLeft() {
