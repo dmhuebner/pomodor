@@ -1,10 +1,4 @@
-@mixin transition($duration) {
-  -webkit-transition: $duration;
-  -moz-transition: $duration;
-  -ms-transition: $duration;
-  -o-transition: $duration;
-  transition: $duration;
-}
+@import "../../../app.component.scss";
 
 body {
   color: #777;
@@ -17,16 +11,59 @@ body {
   width: auto;
   margin: auto;
   background-color: #ddd;
+  @include transition(1s);
+  @include box-shadow(0px, 0px, #222);
+  @include transition(1s);
 
   .timer-countdown {
     font-size: 2rem;
+    color: #222;
+    @include transition(1s);
   }
 
-  .timer-start-btn {
+  .timer-start-button {
+    @include box-shadow(0px, 0px, #222);
+    @include transition(1s);
+  }
 
+  .timer-reset-button {
+    @include box-shadow(0px, 0px, #222);
+    @include transition(1s);
   }
 }
 
 .timer-container.timeron {
-  background-color: #4b0edd;
+  background-color: $primary;
+  @include box-shadow(0px, 55px, #111);
+  
+  .timer-countdown {
+    color: #fff;
+    font-size: 4rem;
+  }
+
+  .timer-reset-button {
+    @include box-shadow(0px, 20px, #333);
+  }
+
+  .timer-start-button {
+    @include box-shadow(0px, 20px, #444);
+  }
+}
+
+.timer-container.timeron.onbreak {
+  background-color: $mellow;
+}
+
+.timer-button-container {
+  width: auto;
+
+  button {
+    margin: 1rem;
+  }
+  
+  .timer-start-button.onbreak {
+    border: 1px solid #ff7332;
+    background-color: $mellow;
+    color: #FFF;
+  }
 }

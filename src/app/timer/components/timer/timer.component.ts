@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TimerService } from '../../timer.service';
 
 @Component({
   selector: 'pm-timer',
@@ -8,24 +9,36 @@ import { Component, OnInit } from '@angular/core';
 export class TimerComponent implements OnInit {
 
   private taskTimeInSeconds = 5;
+  private breakTimeInSeconds = 3;
   workingTime = this.taskTimeInSeconds;
+  breakTime = this.breakTimeInSeconds;
   timeLeft: number = this.workingTime;
-  timeStarted = false;
   timerInterval;
+  onBreak = false;
+  timerOn = false;
 
-  constructor() { }
+  constructor(private timerService: TimerService) { }
 
   ngOnInit() {
+    // Subscribe to onBreak$ subject observable and set value to this.onBreak
+    this.timerService.onBreak$.subscribe(val => this.onBreak = val);
+    this.timerService.timerOn$.subscribe(val => this.timerOn = val);
     this.onResetTimer();
   }
 
   onStartTime() {
+    this.timerService.setTimerOn(true);
     this.timeLeft--;
-    this.timeStarted = true;
     this.timerInterval = setInterval(() => {
       this.timeLeft--;
       if (this.timeLeft < 0) {
-        this.onResetTimer();
+        if (this.timerInterval) {
+          clearInterval(this.timerInterval);
+        }
+        this.endTimer();
+        this.timerService.setOnBreak(!this.onBreak);
+        console.log(this.onBreak);
+        this.setTimeLeft();
       }
     }, 1000);
   }
@@ -34,9 +47,23 @@ export class TimerComponent implements OnInit {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
-    this.timeStarted = false;
+    this.endTimer();
+    this.timerService.setOnBreak(false);
+  }
+
+  onEndBreak() {
+    this.onResetTimer();
+    this.timerService.setOnBreak(false);
+  }
+
+  private endTimer() {
+    this.timerService.setTimerOn(false);
     this.workingTime = this.taskTimeInSeconds;
     this.timeLeft = this.workingTime;
+  }
+
+  private setTimeLeft() {
+    this.timeLeft = this.onBreak ? this.breakTime : this.workingTime;
   }
 
 }
