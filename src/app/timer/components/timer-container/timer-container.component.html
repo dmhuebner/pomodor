@@ -4,7 +4,7 @@
   <h2 class="onBreak" *ngIf="onBreak && !timerOn">Recharge</h2>
   <h2 class="onBreak" *ngIf="onBreak && timerOn">Recharging...</h2>
   <section class="timer-container">
-    <pm-timer></pm-timer>
+    <pm-timer [timerLength]="timerLengthInSeconds" [breakLength]="breakLengthInSeconds"></pm-timer>
   </section>
   <h4>Completed Timers</h4>
   <hr class="completed-timers-hr">
