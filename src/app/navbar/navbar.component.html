@@ -9,8 +9,12 @@
         Home
       </a>
       <a mat-list-item class="nav-item" routerLink="/timer" routerLinkActive="active" href="#">
-        <mat-icon aria-label="timer">watch</mat-icon>
+        <mat-icon aria-label="Timer">watch</mat-icon>
         Timer
+      </a>
+      <a mat-list-item class="nav-item" routerLink="/settings" routerLinkActive="active" href="#">
+        <mat-icon aria-label="Settings">settings</mat-icon>
+        Settings
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -23,7 +27,7 @@
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Pomodime</span>
+      <span class="navbar-logo" (click)="drawer.toggle()">Pomodime</span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <div class="content-wrapper">

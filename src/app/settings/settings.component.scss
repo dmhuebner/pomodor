@@ -1,0 +1,22 @@
+@import "../app.component.scss";
+
+.settings-page {
+  text-align: center;
+
+  .settings-form {
+    text-align: center;
+    max-width: 50rem;
+    margin: auto;
+
+    mat-form-field {
+      min-width: 70%;
+      text-align: center;
+      font-size: 1.25rem;
+      color: $primary;
+    }
+
+    input {
+      text-align: center;
+    }
+  }
+}

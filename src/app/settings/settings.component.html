@@ -1,0 +1,16 @@
+<section class="settings-page">
+  <div class="settings-form">
+    <h2>Settings</h2>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Timer length in minutes" [formControl]="timerLength">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Recharge length in minutes" [formControl]="breakLength">
+    </mat-form-field>
+    <div class="settings-button-group">
+      <button type="button" class="save-settings" aria-label="save settings" mat-raised-button color="primary" (click)="onSaveSettings()" [disabled]="!timerLength.value || !breakLength.value">
+        Save
+      </button>
+    </div>
+  </div>
+</section>

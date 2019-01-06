@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { TimerService } from '../../timer.service';
 import {CompletedTimer} from '../../interfaces/CompletedTimer';
 
@@ -9,11 +9,12 @@ import {CompletedTimer} from '../../interfaces/CompletedTimer';
 })
 export class TimerComponent implements OnInit {
 
-  private taskTimeInSeconds = 1500;
-  private breakTimeInSeconds = 300;
-  workingTime = this.taskTimeInSeconds;
-  breakTime = this.breakTimeInSeconds;
-  timeLeft: number = this.workingTime;
+  @Input()
+  timerLength: number;
+  @Input()
+  breakLength: number;
+
+  timeLeft: number = this.timerLength;
   timerInterval;
   onBreak = false;
   timerOn = false;
@@ -76,12 +77,11 @@ export class TimerComponent implements OnInit {
 
   private endTimer() {
     this.timerService.setTimerOn(false);
-    this.workingTime = this.taskTimeInSeconds;
-    this.timeLeft = this.onBreak ? this.breakTime : this.workingTime;
+    this.timeLeft = this.onBreak ? this.breakLength : this.timerLength;
   }
 
   private setTimeLeft() {
-    this.timeLeft = this.onBreak ? this.breakTime : this.workingTime;
+    this.timeLeft = this.onBreak ? this.breakLength : this.timerLength;
   }
 
 }
