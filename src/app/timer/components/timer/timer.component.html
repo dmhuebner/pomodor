@@ -1,9 +1,14 @@
-<div class="timer-container" [class.timeron]="timeStarted">
+<div class="timer-container" [class.timeron]="timerOn" [class.onbreak]="onBreak">
   <p class="timer-countdown">{{timeLeft | timer}}</p>
-  <button type="button" aria-label="start timer" mat-raised-button color="primary" *ngIf="!timeStarted" (click)="onStartTime()">
-    Start
-  </button>
-  <button type="button" aria-label="reset timer" mat-raised-button color="secondary" *ngIf="timeStarted" (click)="onResetTimer()">
-    Reset
-  </button>
+  <div class="timer-button-container">
+    <button type="button" class="timer-start-button" [class.onbreak]="onBreak" aria-label="start timer" mat-raised-button color="primary" *ngIf="!timerOn" (click)="onStartTime()">
+      Start
+    </button>
+    <button type="button" class="timer-reset-button" aria-label="reset timer" mat-raised-button color="secondary" *ngIf="timerOn" (click)="onResetTimer()">
+      Reset
+    </button>
+    <button type="button" class="timer-reset-button" aria-label="end break timer" mat-raised-button color="secondary" *ngIf="(timerOn && onBreak) || onBreak" (click)="onEndBreak()">
+      End Break
+    </button>
+  </div>
 </div>
