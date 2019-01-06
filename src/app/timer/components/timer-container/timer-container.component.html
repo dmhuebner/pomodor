@@ -1,8 +1,14 @@
 <div class="timer-page-container" [class.container-timer-on]="timerOn" [class.container-on-break]="onBreak && timerOn">
   <h2 *ngIf="!onBreak && !timerOn">Timer</h2>
   <h2 *ngIf="!onBreak && timerOn">Focus</h2>
-  <h2 class="onBreak" *ngIf="onBreak">On Break</h2>
+  <h2 class="onBreak" *ngIf="onBreak && !timerOn">Recharge</h2>
+  <h2 class="onBreak" *ngIf="onBreak && timerOn">Recharging...</h2>
   <section class="timer-container">
     <pm-timer></pm-timer>
+  </section>
+  <h4>Completed Timers</h4>
+  <hr class="completed-timers-hr">
+  <section class="timer-history-container">
+    <pm-timer-history-container></pm-timer-history-container>
   </section>
 </div>

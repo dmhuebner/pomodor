@@ -10,6 +10,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { TimerModule } from './timer/timer.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { TimerModule } from './timer/timer.module';
     MatIconModule,
     MatListModule,
     MatButtonModule,
+    MatIconModule,
+    HttpClientModule,
     SharedModule,
     TimerModule
   ],
