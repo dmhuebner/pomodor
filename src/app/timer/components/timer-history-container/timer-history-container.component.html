@@ -1,0 +1,8 @@
+<section class="timer-history-container">
+  <div class="timer-history-container-heading">
+    <h4 class="number-completed" [class.timeron]="timerOn">{{timerHistoryList.length}}</h4>
+  </div>
+  <div class="timer-history-item" *ngFor="let timerItem of timerHistoryList">
+    <pm-timer-history [timerObject]="timerItem"></pm-timer-history>
+  </div>
+</section>

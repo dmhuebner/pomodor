@@ -1,0 +1,24 @@
+@import "../../../app.component.scss";
+
+.timer-history-item {
+  height: 4rem;
+  width: 4rem;
+  background-color: $primary;
+  margin: 1.4rem;
+  color: #fff;
+
+  &.completed {
+    background-color: $primaryLighter;
+  }
+
+  &.completed-with-break {
+    background-color: $primary;
+    box-shadow: 0 0 25px rgb(109, 138, 238);
+    border: 1px solid rgb(89, 117, 238);
+  }
+
+  mat-icon {
+    margin: 33%;
+    color: #fff;
+  }
+}

@@ -1,0 +1,4 @@
+<div class="timer-history-item" [class.completed]="timerObject?.completed && !timerObject?.completedWithBreak" [class.completed-with-break]="timerObject?.completedWithBreak">
+  <mat-icon *ngIf="!timerObject.completedWithBreak" svgIcon="done-checkmark"></mat-icon>
+  <mat-icon *ngIf="timerObject.completedWithBreak" svgIcon="done-checkmark-outline"></mat-icon>
+</div>

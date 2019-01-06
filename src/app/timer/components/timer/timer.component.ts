@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../../timer.service';
+import {CompletedTimer} from '../../interfaces/CompletedTimer';
 
 @Component({
   selector: 'pm-timer',
@@ -8,14 +9,18 @@ import { TimerService } from '../../timer.service';
 })
 export class TimerComponent implements OnInit {
 
-  private taskTimeInSeconds = 5;
-  private breakTimeInSeconds = 3;
+  private taskTimeInSeconds = 1500;
+  private breakTimeInSeconds = 300;
   workingTime = this.taskTimeInSeconds;
   breakTime = this.breakTimeInSeconds;
   timeLeft: number = this.workingTime;
   timerInterval;
   onBreak = false;
   timerOn = false;
+  currentTimer: CompletedTimer = {
+    completed: false,
+    completedWithBreak: false
+  };
 
   constructor(private timerService: TimerService) { }
 
@@ -36,6 +41,17 @@ export class TimerComponent implements OnInit {
           clearInterval(this.timerInterval);
         }
         this.endTimer();
+        this.currentTimer.completed = true;
+        console.log(this.currentTimer);
+        if (this.onBreak) {
+          this.currentTimer.completedWithBreak = true;
+          console.log(this.currentTimer);
+          this.timerService.addCompletedTimer(this.currentTimer);
+          this.currentTimer = {
+            completed: false,
+            completedWithBreak: false
+          };
+        }
         this.timerService.setOnBreak(!this.onBreak);
         this.setTimeLeft();
       }
@@ -50,6 +66,10 @@ export class TimerComponent implements OnInit {
   }
 
   onEndBreak() {
+    if (this.onBreak) {
+      this.timerService.addCompletedTimer(this.currentTimer);
+    }
+
     this.timerService.setOnBreak(false);
     this.onResetTimer();
   }

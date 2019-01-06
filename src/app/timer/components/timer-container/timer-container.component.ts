@@ -8,10 +8,10 @@ import {TimerService} from '../../timer.service';
 })
 export class TimerContainerComponent implements OnInit {
 
-  constructor(private timerService: TimerService) {}
-
   onBreak = false;
   timerOn = false;
+
+  constructor(private timerService: TimerService) {}
 
   ngOnInit() {
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
