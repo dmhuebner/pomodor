@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { TimerService } from '../../timer.service';
-import {CompletedTimer} from '../../interfaces/CompletedTimer';
+import { CompletedTimer } from '../../interfaces/CompletedTimer';
+import { SettingsService } from '../../../shared/services/settings.service';
 
 @Component({
   selector: 'pm-timer',
@@ -11,8 +12,12 @@ export class TimerComponent implements OnInit {
 
   @Input()
   timerLength: number;
+
   @Input()
   breakLength: number;
+
+  @Input()
+  timerBumperLength: number;
 
   timeLeft: number = this.timerLength;
   timerInterval;
@@ -22,13 +27,16 @@ export class TimerComponent implements OnInit {
     completed: false,
     completedWithBreak: false
   };
+  showTimerBumpers = false;
 
-  constructor(private timerService: TimerService) { }
+  constructor(private timerService: TimerService,
+              private settingsService: SettingsService) { }
 
   ngOnInit() {
     // Subscribe to onBreak$ subject observable and set value to this.onBreak
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
+    this.showTimerBumpers = this.settingsService.getUseTimerBumpers();
     this.onResetTimer();
   }
 
@@ -73,6 +81,14 @@ export class TimerComponent implements OnInit {
 
     this.timerService.setOnBreak(false);
     this.onResetTimer();
+  }
+
+  bumpTimerBack() {
+    this.timeLeft -= (this.timerBumperLength * 60);
+  }
+
+  bumpTimerForward() {
+    this.timeLeft += (this.timerBumperLength * 60);
   }
 
   private endTimer() {

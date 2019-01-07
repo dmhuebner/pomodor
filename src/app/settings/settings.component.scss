@@ -11,12 +11,20 @@
     .header-text {
       color: $primary;
     }
+    
+    .checkbox-field {
+      margin: 1rem 0 2rem 0;
+    }
 
     mat-form-field {
       min-width: 70%;
       text-align: center;
       font-size: 1.25rem;
       color: $primary;
+    }
+
+    .shorter-number-field {
+      width: 10rem;
     }
 
     input {

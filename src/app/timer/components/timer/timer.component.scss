@@ -30,6 +30,24 @@ body {
     @include box-shadow(0px, 0px, #222);
     @include transition(1s);
   }
+
+  .timer-minus-bumper {
+    font-size: 0.7rem;
+    @include box-shadow(0px, 0px, #222);
+    @include transition(1s);
+    -webkit-border-radius: 5px 100px 5px 100px;
+    -moz-border-radius: 5px 100px 5px 100px;
+    border-radius: 5px 100px 5px 100px;
+  }
+
+  .timer-plus-bumper {
+    font-size: 0.7rem;
+    @include box-shadow(0px, 0px, #222);
+    @include transition(1s);
+    -webkit-border-radius: 100px 0px 100px 5px;
+    -moz-border-radius: 100px 0px 100px 5px;
+    border-radius: 100px 0px 100px 5px;
+  }
 }
 
 .timer-container.timeron {
@@ -51,6 +69,18 @@ body {
 
   .timer-end-break {
     @include box-shadow(0px, 20px, #333);
+  }
+
+  .timer-minus-bumper {
+    @include box-shadow(0px, 30px, #222);
+    background-color: #fff;
+    color: $primary;
+  }
+
+  .timer-plus-bumper {
+    @include box-shadow(0px, 15px, #222);
+    background-color: #fff;
+    color: $primary;
   }
 }
 

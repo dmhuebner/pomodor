@@ -8,6 +8,8 @@ export class SettingsService {
   // Defaults set
   timerLengthInSeconds = 1500;
   breakLengthInSeconds = 300;
+  bumperLengthInMinutes = 1;
+  useTimerBumpers = false;
 
   constructor() { }
 
@@ -15,15 +17,31 @@ export class SettingsService {
     return this.timerLengthInSeconds;
   }
 
-  setTimerLengthInSeconds(seconds) {
+  setTimerLengthInSeconds(seconds: number) {
     this.timerLengthInSeconds = seconds * 60;
   }
 
-  getBreakLength() {
+  getBreakLength(): number {
     return this.breakLengthInSeconds;
   }
 
-  setBreakLengthInSeconds(seconds) {
+  setBreakLengthInSeconds(seconds: number) {
     this.breakLengthInSeconds = seconds * 60;
+  }
+
+  getBumperLengthInMinutes(): number {
+    return this.bumperLengthInMinutes;
+  }
+
+  setBumperLengthInMinutes(minutes: number) {
+    this.bumperLengthInMinutes = minutes;
+  }
+
+  getUseTimerBumpers(): boolean {
+    return this.useTimerBumpers;
+  }
+
+  setUseTimerBumpers(bool: boolean) {
+    this.useTimerBumpers = bool;
   }
 }

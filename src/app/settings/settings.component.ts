@@ -11,6 +11,8 @@ export class SettingsComponent implements OnInit {
 
   timerLength: FormControl = new FormControl(this.settingsService.getTimerLength() / 60);
   breakLength: FormControl = new FormControl(this.settingsService.getBreakLength() / 60);
+  bumperLengthInMinutes: FormControl = new FormControl(this.settingsService.getBumperLengthInMinutes());
+  useTimerBumpers: FormControl = new FormControl(this.settingsService.getUseTimerBumpers());
 
   constructor(private settingsService: SettingsService) { }
 
@@ -20,6 +22,8 @@ export class SettingsComponent implements OnInit {
   onSaveSettings() {
     this.settingsService.setTimerLengthInSeconds(this.timerLength.value);
     this.settingsService.setBreakLengthInSeconds(this.breakLength.value);
+    this.settingsService.setBumperLengthInMinutes(this.bumperLengthInMinutes.value);
+    this.settingsService.setUseTimerBumpers(this.useTimerBumpers.value);
   }
 
 }
