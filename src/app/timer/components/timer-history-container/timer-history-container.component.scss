@@ -1,4 +1,4 @@
-@import "../../../app.component.scss";
+@import "../../../../styles.scss";
 
 .timer-history-container {
   display: flex;
@@ -12,9 +12,7 @@
     width: 5.8rem;
     height: 5.8rem;
     font-size: 1.5rem;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
+    @include border-radius(50%);
     border: 1px solid rgba(60, 60, 60, 0.3);
 
     .number-completed {

@@ -3,7 +3,12 @@
 $softBlue: #00a9ff;
 $pomColor: #ff6868;
 $mellow: #ffc270;
+$break: #FF7F1C;
 $darkerBackground: #333;
+$primary: #3E51B5;
+$primaryLighter: #7881b5;
+$lightOnBreak: #ffe2be;
+$lightPrimary: #dfefff;
 
 $lightGrey: #aaa;
 $grey: #777;
@@ -36,14 +41,29 @@ $darkishPurple: #6748d8;
   -o-text-shadow: $px $px $px2 $color;
 }
 
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
 /*** Main Styles ***/
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-a {
-  text-decoration: none;
-  
-  &:hover {
-    color: #7041c2;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  a {
+    text-decoration: none;
+    color: $break;
+
+    &:hover {
+      color: #be470c;
+    }
+  }
+
+  .btn-large {
+    font-size: 1.2rem;
   }
 }
