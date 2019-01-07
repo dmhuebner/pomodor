@@ -4,8 +4,16 @@
     <mat-form-field>
       <input matInput type="number" placeholder="Timer length in minutes" [formControl]="timerLength">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" placeholder="Recharge length in minutes" [formControl]="breakLength">
+    <div>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Recharge length in minutes" [formControl]="breakLength">
+      </mat-form-field>
+    </div>
+    <div class="checkbox-field">
+      <mat-checkbox [formControl]="useTimerBumpers">Use Timer Bumpers?</mat-checkbox>
+    </div>
+    <mat-form-field class="shorter-number-field" *ngIf="useTimerBumpers.value">
+      <input matInput type="number" class="shorter-number-field" placeholder="Timer bumper length in minutes" [formControl]="bumperLengthInMinutes">
     </mat-form-field>
     <div class="settings-button-group">
       <button type="button" class="save-settings" aria-label="save settings" mat-raised-button color="primary" (click)="onSaveSettings()" [disabled]="!timerLength.value || !breakLength.value">

@@ -11,6 +11,7 @@ export class TimerContainerComponent implements OnInit {
 
   timerLengthInSeconds: number;
   breakLengthInSeconds: number;
+  timerBumperLengthInMinutes: number;
   onBreak = false;
   timerOn = false;
 
@@ -22,6 +23,7 @@ export class TimerContainerComponent implements OnInit {
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
     this.timerLengthInSeconds = this.settingsService.getTimerLength();
     this.breakLengthInSeconds = this.settingsService.getBreakLength();
+    this.timerBumperLengthInMinutes = this.settingsService.getBumperLengthInMinutes();
   }
 
 }
