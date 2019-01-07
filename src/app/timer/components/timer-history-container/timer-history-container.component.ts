@@ -20,8 +20,6 @@ export class TimerHistoryContainerComponent implements OnInit {
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
     this.timerService.completedTimerList$.subscribe(val => {
       if (val) {
-        console.log('val', val);
-        console.log(this.timerHistoryList);
         this.timerHistoryList.unshift(JSON.parse(JSON.stringify(val)));
       }
     });
