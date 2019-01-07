@@ -1,0 +1,37 @@
+@import "../../styles.scss";
+
+.home-page {
+  margin: 2rem;
+  
+  .welcome-header {
+    text-align: center;
+    color: $primary;
+    margin-bottom: 3rem;
+  }
+
+  .home-page-content {
+    max-width: 60rem;
+    background-color: $primary;
+    color: #fff;
+    margin: auto;
+    padding: 2rem;
+    @include border-radius(5px);
+
+    .app-description-container {
+      margin-bottom: 3rem;
+    }
+
+    .app-description {
+      font-size: 1.4rem;
+      line-height: 2rem;
+    }
+    
+    .home-page-button-group {
+      text-align: center;
+
+      .start-timer-homepage-button {
+        color: $primary;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import "../../../app.component.scss";
+@import "../../../../styles.scss";
 
 .timer-page-container {
   width: 100%;
@@ -8,6 +8,10 @@
   padding-bottom: 3rem;
   background-color: $lightPrimary;
   @include transition(1s);
+
+  .header-text {
+    color: $primary;
+  }
 
   .timer-container {
     max-width: 50rem;
@@ -26,7 +30,11 @@
 
 .container-timer-on {
   background-color: #222222;
-  color: #FFF;
+  color: #fff;
+
+  .header-text {
+    color: #fff;
+  }
 
   .timer-container {
     border: 1px solid transparent;
@@ -47,6 +55,4 @@
   justify-content: space-around;
   display: flex;
   flex-wrap: wrap;
-  // TODO remove this border
-  //border: 1px solid #777;
 }

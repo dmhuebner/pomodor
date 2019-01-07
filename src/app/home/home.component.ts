@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  homeHeader: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.homeHeader = 'Welcome to Pomodime';
   }
 
 }
