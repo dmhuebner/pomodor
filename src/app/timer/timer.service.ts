@@ -28,12 +28,7 @@ export class TimerService {
     this.timerOnSubject.next(bool);
   }
 
-  // addCompletedTimer(completedTimer: CompletedTimer) {
-  //   this.completedTimerList.push(completedTimer);
-  // }
-
   addCompletedTimer(completedTimer: CompletedTimer) {
-    console.log('completedTimer', completedTimer);
     this.completedTimerListSubject.next(completedTimer);
   }
 }

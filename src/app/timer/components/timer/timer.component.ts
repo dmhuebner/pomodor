@@ -51,10 +51,8 @@ export class TimerComponent implements OnInit {
         }
         this.endTimer();
         this.currentTimer.completed = true;
-        console.log(this.currentTimer);
         if (this.onBreak) {
           this.currentTimer.completedWithBreak = true;
-          console.log(this.currentTimer);
           this.timerService.addCompletedTimer(this.currentTimer);
           this.currentTimer = {
             completed: false,
