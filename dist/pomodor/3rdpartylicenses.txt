@@ -362,6 +362,8 @@ MIT
 @angular/forms
 MIT
 
+@angular/material/checkbox
+
 @angular/material/sidenav
 
 @angular/material/toolbar
