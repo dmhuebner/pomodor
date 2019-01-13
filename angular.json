@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pomodime2": {
+    "pomodor": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pomodime2",
+            "outputPath": "dist/pomodor",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pomodime2:build"
+            "browserTarget": "pomodor:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "pomodime2:build:production"
+              "browserTarget": "pomodor:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pomodime2:build"
+            "browserTarget": "pomodor:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
         }
       }
     },
-    "pomodime2-e2e": {
+    "pomodor-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -117,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "pomodime2:serve"
+            "devServerTarget": "pomodor:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "pomodime2:serve:production"
+              "devServerTarget": "pomodor:serve:production"
             }
           }
         },
@@ -137,5 +137,5 @@
       }
     }
   },
-  "defaultProject": "pomodime2"
+  "defaultProject": "pomodor"
 }

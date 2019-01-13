@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.homeHeader = 'Welcome to Pomodime';
+    this.homeHeader = 'Welcome to Pomodor';
   }
 
 }
