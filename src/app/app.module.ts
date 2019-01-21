@@ -20,6 +20,12 @@ import { SharedModule } from './shared/shared.module';
 import { TimerModule } from './timer/timer.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsModule } from './settings/settings.module';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AuthService } from './shared/services/auth.service';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -30,6 +36,10 @@ import { SettingsModule } from './settings/settings.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment .firebase, 'pomodor'),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
@@ -46,7 +56,7 @@ import { SettingsModule } from './settings/settings.module';
     TimerModule,
     SettingsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

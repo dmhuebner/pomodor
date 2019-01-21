@@ -1,4 +1,4 @@
-export interface SettingsFormInterface {
+export interface SettingsForm {
   timerLength: any;
   breakLength: any;
 }

@@ -5,13 +5,16 @@ import { MatIconModule } from '@angular/material';
 import { TimerPipe } from './pipes/timer.pipe';
 
 @NgModule({
-  declarations: [NotFoundComponent, TimerPipe],
+  declarations: [
+    NotFoundComponent,
+    TimerPipe,
+  ],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports: [
-    TimerPipe
+    TimerPipe,
   ]
 })
 export class SharedModule { }
