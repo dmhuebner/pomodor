@@ -31,6 +31,17 @@
         <mat-icon aria-label="Pomodor logo" svgIcon="pomodor"></mat-icon>
         Pomodor
       </span>
+      <div class="signed-in-menu-items" *ngIf="authService.user$ | async as user; else login">
+        <span class="user-display-name">{{user.displayName}}</span>
+        <button type="button" aria-label="logout" mat-raised-button (click)="authService.logout()">
+          Logout
+        </button>
+      </div>
+      <ng-template #login class="signed-out-menu-items">
+        <button type="button" aria-label="login" mat-raised-button (click)="authService.login()">
+          Login
+        </button>
+      </ng-template>
     </mat-toolbar>
     <!-- Add Content Here -->
     <div class="content-wrapper">

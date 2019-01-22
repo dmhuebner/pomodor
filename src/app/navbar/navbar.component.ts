@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'pm-navbar',
@@ -18,10 +19,19 @@ export class NavbarComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+              private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              public authService: AuthService) {
     iconRegistry.addSvgIcon(
       'pomodor',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tomato-icon.svg'));
+  }
+
+  login() {
+    return this.authService.login();
+  }
+
+  logout() {
+    return this.authService.logout();
   }
 
 }
