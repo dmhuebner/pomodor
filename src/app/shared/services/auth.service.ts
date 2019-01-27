@@ -19,7 +19,6 @@ export class AuthService {
               private afs: AngularFirestore,
               private router: Router) {
 
-    // TODO this should probably be in ngOnInit
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
@@ -42,14 +41,13 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  private updateUserData({ uid, displayName, tasks }: User | any) {
+  private updateUserData(user: User | any) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument = this.afs.doc(`users/${uid}`);
+    const userRef: AngularFirestoreDocument = this.afs.doc(`users/${user.uid}`);
 
-    const data: User = {
-      uid,
-      displayName,
-      tasks
+    const data = {
+      uid: user.uid,
+      displayName: user.displayName ? user.displayName : 'Hello'
     };
 
     userRef.set(data, { merge: true });
