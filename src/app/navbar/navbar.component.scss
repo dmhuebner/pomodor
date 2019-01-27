@@ -36,11 +36,16 @@
       }
     }
 
-    .signed-in-menu-items {
-      padding-top: 0.43rem;
+    .right-menu-group {
+      margin-left: auto;
 
-      .user-display-name {
-        margin: 1rem 1rem 1rem 0;
+      .signed-in-menu-items {
+        margin-top: 0.45rem;
+
+        .user-display-name {
+          margin: 1rem 1rem 1rem 0;
+          font-size: 1.1rem;
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CompletedTimer } from './interfaces/CompletedTimer';
+import { CompletedTimer } from './interfaces/CompletedTimer.interface';
 
 @Injectable({
   providedIn: 'root'

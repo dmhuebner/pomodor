@@ -8,7 +8,7 @@ export class SettingsService {
   // Defaults set
   timerLengthInSeconds = 1500;
   breakLengthInSeconds = 300;
-  bumperLengthInMinutes = 1;
+  bumperLengthInMinutes = 2;
   useTimerBumpers = false;
 
   constructor() { }

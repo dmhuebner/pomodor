@@ -1,5 +1,8 @@
 export default interface Task {
-  complete: boolean;
+  completed: boolean;
   description: string;
   dateCreated: Date;
+  dateCompleted?: Date;
+  order: number;
+  id: string;
 }

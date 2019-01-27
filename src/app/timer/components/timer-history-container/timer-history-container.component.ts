@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../../timer.service';
-import {CompletedTimer} from '../../interfaces/CompletedTimer';
+import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
 
 @Component({
   selector: 'pm-timer-history-container',

@@ -15,14 +15,14 @@ const USB_LIGHT_INTERCEPTOR_PROVIDER: ClassProvider = {
 @NgModule({
   declarations: [
     NotFoundComponent,
-    TimerPipe,
+    TimerPipe
   ],
   imports: [
     CommonModule,
-    MatIconModule,
+    MatIconModule
   ],
   exports: [
-    TimerPipe,
+    TimerPipe
   ],
   providers: [
     USB_LIGHT_INTERCEPTOR_PROVIDER
