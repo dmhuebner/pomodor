@@ -35,7 +35,7 @@ export class TaskService implements OnInit {
     );
   }
 
-  postNewTask(userUid: 'string', newTask: string, order: number): void {
+  postNewTask(userUid: string, newTask: string, order: number): void {
     const newTaskId: string = this.afs.createId();
     const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${newTaskId}`);
 
