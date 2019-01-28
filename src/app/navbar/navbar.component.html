@@ -12,6 +12,10 @@
         <mat-icon aria-label="Timer">watch</mat-icon>
         Timer
       </a>
+      <a mat-list-item class="nav-item" routerLink="/tasks" routerLinkActive="active" href="#">
+        <mat-icon aria-label="Tasks">ballot</mat-icon>
+        Tasks
+      </a>
       <a mat-list-item class="nav-item" routerLink="/settings" routerLinkActive="active" href="#">
         <mat-icon aria-label="Settings">settings</mat-icon>
         Settings
@@ -31,17 +35,19 @@
         <mat-icon aria-label="Pomodor logo" svgIcon="pomodor"></mat-icon>
         Pomodor
       </span>
-      <div class="signed-in-menu-items" *ngIf="authService.user$ | async as user; else login">
-        <span class="user-display-name">{{user.displayName}}</span>
-        <button type="button" aria-label="logout" mat-raised-button (click)="authService.logout()">
-          Logout
-        </button>
+      <div class="right-menu-group">
+        <div class="signed-in-menu-items" *ngIf="authService.user$ | async as user; else login">
+          <span class="user-display-name">{{user.displayName}}</span>
+          <button type="button" aria-label="logout" mat-raised-button (click)="logout()">
+            Logout
+          </button>
+        </div>
+        <ng-template #login class="signed-out-menu-items">
+          <button type="button" aria-label="login" mat-raised-button (click)="authService.login()">
+            Login
+          </button>
+        </ng-template>
       </div>
-      <ng-template #login class="signed-out-menu-items">
-        <button type="button" aria-label="login" mat-raised-button (click)="authService.login()">
-          Login
-        </button>
-      </ng-template>
     </mat-toolbar>
     <!-- Add Content Here -->
     <div class="content-wrapper">

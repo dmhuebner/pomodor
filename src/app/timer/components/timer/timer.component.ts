@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TimerService } from '../../timer.service';
-import { CompletedTimer } from '../../interfaces/CompletedTimer';
+import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
 import { SettingsService } from '../../../shared/services/settings.service';
 import { UsbLightService } from '../../../shared/services/usb-light.service';
 
