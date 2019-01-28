@@ -61,7 +61,7 @@ export class TaskService implements OnInit {
   // Returns true if the task should be placed in the completedTasks list
   checkTaskCompleted(task: Task): boolean {
     const newDate = new Date();
-    return moment(task.dateCompleted).add(15, 'seconds').isBefore(newDate);
+    return moment(task.dateCompleted).add(15, 'minutes').isBefore(newDate);
   }
 
   // Can be used as compare function in Array.sort for completedTaskList
