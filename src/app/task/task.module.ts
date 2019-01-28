@@ -5,6 +5,9 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SharedModule } from '../shared/shared.module';
+
+// TODO make sure SharedModule is needed below
 
 @NgModule({
   declarations: [TaskListContainerComponent, TaskListComponent],
@@ -17,7 +20,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    SharedModule
   ]
 })
 export class TaskModule { }
