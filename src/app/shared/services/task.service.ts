@@ -5,6 +5,7 @@ import Task from '../interfaces/task.interface';
 import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { switchMap } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class TaskService implements OnInit {
         if (user) {
           this.tasksCollection = this.afs.collection(`tasks/${user.uid}/tasks/`, ref => ref.orderBy('order'));
           return this.tasksCollection.valueChanges();
+          // TODO should we transform the dateCompleted from a Timestamp to a Date here?
         } else {
           return of(null);
         }
@@ -43,6 +45,7 @@ export class TaskService implements OnInit {
       description: newTask,
       completed: false,
       dateCreated: new Date(),
+      dateCompleted: null,
       order: order,
       id: newTaskId
     });
@@ -53,5 +56,22 @@ export class TaskService implements OnInit {
     const updatedTask = {...task};
 
     userTasksRef.set(updatedTask);
+  }
+
+  // Returns true if the task should be placed in the completedTasks list
+  checkTaskCompleted(task: Task): boolean {
+    const newDate = new Date();
+    return moment(task.dateCompleted).add(15, 'seconds').isBefore(newDate);
+  }
+
+  // Can be used as compare function in Array.sort for completedTaskList
+  compareDateCompleted(taskA, taskB) {
+    if (taskA.dateCompleted < taskB.dateCompleted) {
+      return 1;
+    }
+    if (taskA.dateCompleted > taskB.dateCompleted) {
+      return -1;
+    }
+    return 0;
   }
 }

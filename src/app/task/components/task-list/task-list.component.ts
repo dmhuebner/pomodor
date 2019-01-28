@@ -31,6 +31,7 @@ export class TaskListComponent implements OnInit {
 
   completeTask(task: Task): void {
     task.completed = !task.completed;
+    task.dateCompleted = task.completed ? new Date() : null;
     this.taskService.updateTask(this.currentUser.uid, task);
   }
 
