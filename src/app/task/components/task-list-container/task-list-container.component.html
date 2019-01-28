@@ -3,6 +3,12 @@
   <section class="tasks-container">
     <pm-task-list [tasksList]="taskList" (taskAdded)="onNewTaskAdded($event)"></pm-task-list>
   </section>
-  <h4>Completed Tasks</h4>
+  <h4 class="header-text">Completed Tasks</h4>
   <hr class="completed-tasks-hr">
+    <section class="completed-tasks">
+      <div class="completed-task" *ngFor="let task of completedTaskList">
+        <span class="completed-task-description">{{task.description}}</span>
+        <span class="task-date-completed">{{task.dateCompleted | date:'short'}}</span>
+      </div>
+    </section>
 </div>
