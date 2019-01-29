@@ -21,6 +21,7 @@ export class NavbarComponent {
   constructor(private breakpointObserver: BreakpointObserver,
               private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
               public authService: AuthService) {
+
     iconRegistry.addSvgIcon(
       'pomodor',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tomato-icon.svg'));

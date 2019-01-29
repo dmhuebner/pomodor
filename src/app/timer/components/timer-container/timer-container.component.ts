@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../../timer.service';
+import { TimerService } from '../../../shared/services/timer.service';
 import { SettingsService } from '../../../shared/services/settings.service';
 
 @Component({

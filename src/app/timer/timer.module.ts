@@ -4,7 +4,6 @@ import { TimerComponent } from './components/timer/timer.component';
 import { TimerContainerComponent } from './components/timer-container/timer-container.component';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { SharedModule } from '../shared/shared.module';
-import { TimerService } from './timer.service';
 import { TimerHistoryComponent } from './components/timer-history/timer-history.component';
 import { TimerHistoryContainerComponent } from './components/timer-history-container/timer-history-container.component';
 
@@ -25,8 +24,6 @@ import { TimerHistoryContainerComponent } from './components/timer-history-conta
     TimerContainerComponent,
     TimerComponent
   ],
-  providers: [
-    TimerService
-  ],
+  providers: [],
 })
 export class TimerModule { }

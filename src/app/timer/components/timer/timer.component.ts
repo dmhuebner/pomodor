@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TimerService } from '../../timer.service';
-import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
+import { Component, OnInit } from '@angular/core';
+import { TimerService } from '../../../shared/services/timer.service';
+import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
 import { SettingsService } from '../../../shared/services/settings.service';
-import { UsbLightService } from '../../../shared/services/usb-light.service';
 
 @Component({
   selector: 'pm-timer',
@@ -11,110 +10,48 @@ import { UsbLightService } from '../../../shared/services/usb-light.service';
 })
 export class TimerComponent implements OnInit {
 
-  @Input()
-  timerLength: number;
-
-  @Input()
-  breakLength: number;
-
-  @Input()
-  timerBumperLength: number;
-
-  timeLeft: number = this.timerLength;
-  timerInterval;
   onBreak = false;
   timerOn = false;
+  showTimerBumpers = false;
+
   currentTimer: CompletedTimer = {
     completed: false,
     completedWithBreak: false
   };
-  showTimerBumpers = false;
 
-  constructor(private timerService: TimerService,
-              private settingsService: SettingsService,
-              private usbLightService: UsbLightService) { }
+  constructor(public timerService: TimerService,
+              private settingsService: SettingsService) { }
 
   ngOnInit() {
     // Subscribe to onBreak$ subject observable and set value to this.onBreak
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
     this.showTimerBumpers = this.settingsService.getUseTimerBumpers();
-    this.onResetTimer();
   }
 
   onStartTime() {
-    this.handleStartTimerUSBLight();
-
-    this.timerService.setTimerOn(true);
-    this.timeLeft--;
-    this.timerInterval = setInterval(() => {
-      this.timeLeft--;
-      // If the time is up
-      if (this.timeLeft < 0) {
-        this.handleTimerIsUp();
-      }
-    }, 1000);
+    this.timerService.startTimer();
   }
 
   onResetTimer() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
-    this.endTimer();
+    this.timerService.resetTimer();
   }
 
   onEndBreak() {
+    // TODO should this be in a service? Probably...
     if (this.onBreak) {
       this.timerService.addCompletedTimer(this.currentTimer);
     }
 
-    this.timerService.setOnBreak(false);
-    this.onResetTimer();
+    this.timerService.endBreak();
   }
 
   bumpTimerBack() {
-    this.timeLeft -= (this.timerBumperLength * 60);
+    this.timerService.bumpTimerBack();
   }
 
   bumpTimerForward() {
-    this.timeLeft += (this.timerBumperLength * 60);
-  }
-
-  private endTimer() {
-    this.timerService.setTimerOn(false);
-    this.timeLeft = this.onBreak ? this.breakLength : this.timerLength;
-    // Turn off USB light
-    this.usbLightService.setLight('ff9900').subscribe();
-  }
-
-  private setTimeLeft() {
-    this.timeLeft = this.onBreak ? this.breakLength : this.timerLength;
-  }
-
-  private handleStartTimerUSBLight() {
-    // Determine what color the USB light should be
-    const usbLightColor = this.onBreak ? '00ff00' : 'ff0000';
-
-    // Turn on USB light if it is connected
-    this.usbLightService.setLight(usbLightColor).subscribe();
-  }
-
-  private handleTimerIsUp() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
-    this.endTimer();
-    this.currentTimer.completed = true;
-    if (this.onBreak) {
-      this.currentTimer.completedWithBreak = true;
-      this.timerService.addCompletedTimer(this.currentTimer);
-      this.currentTimer = {
-        completed: false,
-        completedWithBreak: false
-      };
-    }
-    this.timerService.setOnBreak(!this.onBreak);
-    this.setTimeLeft();
+    this.timerService.bumpTimerForward();
   }
 
 }
