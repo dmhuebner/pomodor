@@ -10,6 +10,13 @@
 
   .header-text {
     color: $primary;
+
+    pm-timer-countdown {
+      display: inline-block;
+      font-size: 0.8em;
+      font-weight: 400;
+      margin: 0 0 0.8rem 0.8rem;
+    }
   }
 
   .tasks-container {

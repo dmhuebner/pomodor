@@ -26,6 +26,7 @@ import { TimerModule } from './timer/timer.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsModule } from './settings/settings.module';
 import { TaskModule } from './task/task.module';
+import { TimerService } from './shared/services/timer.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,10 @@ import { TaskModule } from './task/task.module';
     TaskModule,
     SettingsModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    TimerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
