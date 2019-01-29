@@ -13,6 +13,7 @@ export class TimerComponent implements OnInit {
   onBreak = false;
   timerOn = false;
   showTimerBumpers = false;
+  timerBumperLength: number = this.settingsService.getBumperLengthInMinutes();
 
   currentTimer: CompletedTimer = {
     completed: false,
