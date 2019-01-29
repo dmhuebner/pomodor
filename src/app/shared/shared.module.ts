@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material';
 import { TimerPipe } from './pipes/timer.pipe';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsbLightInterceptor } from './interceptors/usbLight.interceptor';
+import { TimerCountdownComponent } from './components/timer-countdown/timer-countdown.component';
 
 const USB_LIGHT_INTERCEPTOR_PROVIDER: ClassProvider = {
   provide: HTTP_INTERCEPTORS ,
@@ -15,14 +16,16 @@ const USB_LIGHT_INTERCEPTOR_PROVIDER: ClassProvider = {
 @NgModule({
   declarations: [
     NotFoundComponent,
-    TimerPipe
+    TimerPipe,
+    TimerCountdownComponent
   ],
   imports: [
     CommonModule,
     MatIconModule
   ],
   exports: [
-    TimerPipe
+    TimerPipe,
+    TimerCountdownComponent
   ],
   providers: [
     USB_LIGHT_INTERCEPTOR_PROVIDER

@@ -1,0 +1,8 @@
+@import "../../../../styles.scss";
+
+.timer-countdown {
+  display: inline-block;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid $primary;
+  @include border-radius(5px);
+}

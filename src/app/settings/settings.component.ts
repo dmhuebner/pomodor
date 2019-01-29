@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../shared/services/settings.service';
 import { FormControl } from '@angular/forms';
+import { TimerService } from '../shared/services/timer.service';
 
 @Component({
   selector: 'pm-settings',
@@ -14,7 +15,8 @@ export class SettingsComponent implements OnInit {
   bumperLengthInMinutes: FormControl = new FormControl(this.settingsService.getBumperLengthInMinutes());
   useTimerBumpers: FormControl = new FormControl(this.settingsService.getUseTimerBumpers());
 
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService,
+              private timerService: TimerService) { }
 
   ngOnInit() {
   }
@@ -24,6 +26,7 @@ export class SettingsComponent implements OnInit {
     this.settingsService.setBreakLengthInSeconds(this.breakLength.value);
     this.settingsService.setBumperLengthInMinutes(this.bumperLengthInMinutes.value);
     this.settingsService.setUseTimerBumpers(this.useTimerBumpers.value);
+    this.timerService.resetTimer();
   }
 
 }
