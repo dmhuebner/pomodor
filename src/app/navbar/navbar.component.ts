@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../shared/services/auth.service';
+import { TimerService } from '../shared/services/timer.service';
 
 @Component({
   selector: 'pm-navbar',
@@ -20,7 +21,8 @@ export class NavbarComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,
               private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private timerService: TimerService) {
 
     iconRegistry.addSvgIcon(
       'pomodor',
@@ -32,6 +34,7 @@ export class NavbarComponent {
   }
 
   logout() {
+    this.timerService.resetTimer();
     return this.authService.logout();
   }
 
