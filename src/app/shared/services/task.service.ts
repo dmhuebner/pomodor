@@ -74,4 +74,14 @@ export class TaskService implements OnInit {
     }
     return 0;
   }
+
+  compareOrder(taskA, taskB) {
+    if (taskA.order < taskB.order) {
+      return 1;
+    }
+    if (taskA.order > taskB.order) {
+      return -1;
+    }
+    return 0;
+  }
 }
