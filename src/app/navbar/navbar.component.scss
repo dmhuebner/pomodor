@@ -48,10 +48,16 @@
 
       .signed-in-menu-items {
         margin-top: 0.45rem;
+        display: flex;
 
         .user-display-name {
-          margin: 1rem 1rem 1rem 0;
+          margin: 1rem 1rem 1.2rem 0;
           font-size: 1.1rem;
+        }
+
+        .logout-btn {
+          margin-top: 0.7rem;
+          max-height: 2.3rem;
         }
       }
     }
@@ -60,5 +66,15 @@
   .content-wrapper {
     margin: 0;
     padding: 0;
+  }
+}
+
+@media (max-width: $smBreakpoint) {
+  .signed-in-menu-items {
+
+    .login-btn,
+    .logout-btn {
+      font-size: 0.8rem;
+    }
   }
 }
