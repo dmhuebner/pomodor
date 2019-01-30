@@ -58,6 +58,11 @@ export class TaskService implements OnInit {
     userTasksRef.set(updatedTask);
   }
 
+  deleteTask(userUid: string, taskId: string): void {
+    const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${taskId}`);
+    userTasksRef.delete();
+  }
+
   // Returns true if the task should be placed in the completedTasks list
   checkTaskCompleted(task: Task): boolean {
     // Check if the soft expiration date for the task is before the time that this function is called
