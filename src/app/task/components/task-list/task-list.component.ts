@@ -20,6 +20,8 @@ export class TaskListComponent implements OnInit {
 
   newTask: FormControl = new FormControl('');
   currentUser: User;
+  // TODO make interface for tasksInEditMode
+  tasksInEditMode: object = {};
 
   constructor(private auth: AuthService,
               private afs: AngularFirestore,
@@ -61,6 +63,24 @@ export class TaskListComponent implements OnInit {
         userTasksRef.set(updatedTask);
       });
     }, 300);
+  }
+
+  toggleEditMode(task: Task) {
+    if (this.tasksInEditMode.hasOwnProperty(task.id)) {
+      delete this.tasksInEditMode[task.id];
+
+      if (!task.description) {
+        this.taskService.deleteTask(this.currentUser.uid, task.id);
+      } else {
+        this.taskService.updateTask(this.currentUser.uid, task);
+      }
+    } else {
+      this.tasksInEditMode[task.id] = task;
+    }
+  }
+
+  taskIsInEditMode(task) {
+    return this.tasksInEditMode.hasOwnProperty(task.id);
   }
 
 }

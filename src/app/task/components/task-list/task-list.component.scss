@@ -29,6 +29,10 @@
           text-decoration-color: $primary;
         }
 
+        .edit-task-description {
+          width: 100%;
+        }
+
         ::ng-deep .mat-checkbox-inner-container {
           margin-top: 0.2rem;
         }
@@ -41,6 +45,15 @@
         &:last-child {
           border: none;
         }
+      }
+
+      .edit-description-icon {
+        color: #888;
+      }
+
+      .save-edit-icon {
+        color: green;
+        font-weight: 700;
       }
 
       .drag-indicator-icon {
