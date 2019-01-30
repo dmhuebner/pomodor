@@ -17,6 +17,10 @@ $black: #000;
 $almostBlack: #222;
 $darkishPurple: #6748d8;
 
+/*** Media Query Breakpoints ***/
+$smBreakpoint: 767px;
+$xsBreakpoint: 467px;
+
 /*** Mixins ***/
 
 @mixin transition($duration) {

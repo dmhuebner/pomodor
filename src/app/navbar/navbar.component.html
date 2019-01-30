@@ -40,13 +40,13 @@
       </span>
       <div class="right-menu-group">
         <div class="signed-in-menu-items" *ngIf="authService.user$ | async as user; else login">
-          <span class="user-display-name">{{user.displayName}}</span>
-          <button type="button" aria-label="logout" mat-raised-button (click)="logout()">
+          <div class="user-display-name">{{user.displayName}}</div>
+          <button class="logout-btn" type="button" aria-label="logout" mat-raised-button (click)="logout()">
             Logout
           </button>
         </div>
         <ng-template #login class="signed-out-menu-items">
-          <button type="button" aria-label="login" mat-raised-button (click)="authService.login()">
+          <button class="login-btn" type="button" aria-label="login" mat-raised-button (click)="authService.login()">
             Login
           </button>
         </ng-template>
