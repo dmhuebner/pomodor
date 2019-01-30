@@ -5,11 +5,22 @@
         <mat-checkbox [checked]="task.completed"
                       [class.completed]="task.completed"
                       labelPosition="after"
-                      (change)="completeTask(task)">
+                      (change)="completeTask(task)"
+                      *ngIf="!taskIsInEditMode(task)">
           {{task.description}}
         </mat-checkbox>
+        <form #editTaskForm *ngIf="taskIsInEditMode(task)" (ngSubmit)="toggleEditMode(task)">
+          <mat-form-field class="edit-task-description">
+            <input matInput placeholder="Edit Task"
+                   name="{{'task-' + task.id + '-edit'}}"
+                   [(ngModel)]="task.description"
+                   autocomplete="off">
+          </mat-form-field>
+        </form>
       </div>
-      <mat-icon class="drag-indicator-icon">drag_indicator</mat-icon>
+      <mat-icon *ngIf="!taskIsInEditMode(task)" class="edit-description-icon" (click)="toggleEditMode(task)">edit</mat-icon>
+      <mat-icon *ngIf="taskIsInEditMode(task)" class="save-edit-icon" (click)="toggleEditMode(task)">checkmark</mat-icon>
+      <mat-icon class="drag-indicator-icon" (click)="toggleEditMode(task)">drag_indicator</mat-icon>
     </div>
   </div>
   <form #newTaskForm>
