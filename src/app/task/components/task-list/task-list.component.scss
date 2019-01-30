@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 .task-list-container {
-  padding: 0 4rem;
+  padding: 0 1rem;
 
   .task-list {
     text-align: left;
@@ -15,13 +15,14 @@
     }
 
     .task-item {
+      display: flex;
       cursor: pointer;
       padding: 0.5rem;
       border-bottom: 1px solid #eef;
 
       .task-item-inner-container {
         display: inline-block;
-        width: 94%;
+        width: 100%;
 
         mat-checkbox.completed {
           text-decoration: line-through;
@@ -81,5 +82,11 @@
   * {
     white-space: pre-wrap;
     word-wrap: break-word;
+  }
+}
+
+@media (min-width: $smBreakpoint) {
+  .task-list-container {
+    padding: 0 4rem;
   }
 }
