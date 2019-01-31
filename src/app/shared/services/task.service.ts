@@ -89,4 +89,8 @@ export class TaskService implements OnInit {
     }
     return 0;
   }
+
+  taskIsExpired(task: Task): boolean {
+    return moment(task.dateCompleted).add(7, 'days').isBefore(new Date());
+  }
 }

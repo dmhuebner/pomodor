@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormControl } from '@angular/forms';
-import { AuthService } from '../../../shared/services/auth.service';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Task from '../../../shared/interfaces/task.interface';
 import User from '../../../shared/interfaces/user.interface';
@@ -15,20 +14,18 @@ import { TaskService } from '../../../shared/services/task.service';
 export class TaskListComponent implements OnInit {
 
   @Input() tasksList: Task[];
+  @Input() currentUser: User;
 
   @Output() taskAdded: EventEmitter<Object> = new EventEmitter<Object>();
 
   newTask: FormControl = new FormControl('');
-  currentUser: User;
   // TODO make interface for tasksInEditMode
   tasksInEditMode: object = {};
 
-  constructor(private auth: AuthService,
-              private afs: AngularFirestore,
+  constructor(private afs: AngularFirestore,
               private taskService: TaskService) { }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => this.currentUser = user);
   }
 
   completeTask(task: Task): void {
