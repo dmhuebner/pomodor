@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../../shared/services/auth.service';
 import { TaskService } from '../../../shared/services/task.service';
 import Task from '../../../shared/interfaces/task.interface';
+import User from '../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'pm-task-list-container',
@@ -13,12 +14,14 @@ export class TaskListContainerComponent implements OnInit {
 
   taskList: Task[] = [];
   completedTaskList: Task[] = [];
+  currentUser: User;
 
   constructor(private afs: AngularFirestore,
               private auth: AuthService,
               private taskService: TaskService) { }
 
   ngOnInit() {
+    this.auth.user$.subscribe(user => this.currentUser = user);
     this.taskService.getTasks().subscribe(tasks => {
       tasks = tasks ? tasks : [];
 
@@ -34,8 +37,12 @@ export class TaskListContainerComponent implements OnInit {
 
       this.completedTaskList = tasks.filter(task => {
         if (task.dateCompleted) {
-          // TODO Add logic to delete completed task after certain amount of time
-          return this.taskService.checkTaskCompleted(task);
+          if (this.taskService.taskIsExpired(task)) {
+            this.taskService.deleteTask(this.currentUser.uid, task.id);
+            return false;
+          } else {
+            return this.taskService.checkTaskCompleted(task);
+          }
         }
       }).sort(this.taskService.compareDateCompleted);
     });

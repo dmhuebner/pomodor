@@ -49,12 +49,14 @@
 
       .completed-task-description {
         display: inline-block;
+        width: 80%;
       }
 
       .task-date-completed {
         margin-left: auto;
         display: inline-block;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
+        width: 18%;
       }
     }
   }
