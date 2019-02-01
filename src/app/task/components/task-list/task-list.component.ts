@@ -49,17 +49,20 @@ export class TaskListComponent implements OnInit {
   }
 
   onDragEnded(event) {
-    // TODO fix this update process - Right now there can be some visual stuttering because the observable is updating
-    //  when the order of each task is updated below
+    // The timeout makes sure that the list has finished reordering before we start updating the order prop of the task doc in the db.
     setTimeout(() => {
+      // Set isOrderingTasks to true so that the observable in task-list component doesn't update while we reorder the tasksList.
+      // This prevents visual stuttering of the tasks while reordering.
+      this.taskService.isReorderingTasks(true);
       this.tasksList.forEach((task, index) => {
         const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${this.currentUser.uid}/tasks/${task.id}`);
-        const updatedTask: Task = {...task};
-        updatedTask.order = index;
+        const updatedTask: Task = {...task, order: index};
 
         userTasksRef.set(updatedTask);
       });
-    }, 300);
+    });
+    // Set back to false after reordering tasksList so that the observable in task-list component will update again.
+    this.taskService.isReorderingTasks(false);
   }
 
   toggleEditMode(task: Task) {
