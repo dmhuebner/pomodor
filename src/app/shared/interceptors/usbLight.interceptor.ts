@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+// TODO It think we can remove this interceptor now.
 @Injectable()
 export class UsbLightInterceptor implements HttpInterceptor {
   // This interceptor's job is to catch any error that might be thrown from calling the USB LED light API.
