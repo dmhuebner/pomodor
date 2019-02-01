@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SettingsModule } from './settings/settings.module';
 import { TaskModule } from './task/task.module';
 import { TimerService } from './shared/services/timer.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { TimerService } from './shared/services/timer.service';
     AngularFirestoreModule,
     BrowserAnimationsModule,
     LayoutModule,
+    NgxSpinnerModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
