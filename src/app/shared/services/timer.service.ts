@@ -85,7 +85,7 @@ export class TimerService implements OnInit {
   }
 
   endBreak() {
-    // TODO this part will need to be done handled still
+    // TODO this part will need to be handled still
     // if (this.onBreak) {
     //   this.timerService.addCompletedTimer(this.currentTimer);
     // }
@@ -95,13 +95,11 @@ export class TimerService implements OnInit {
   }
 
   bumpTimerBack() {
-    // TODO write bumper functions in service
     this.timeLeft -= (this.settingsService.getBumperLengthInMinutes() * 60);
     this.currentTimerValueSubject.next(this.timeLeft);
   }
 
   bumpTimerForward() {
-    // TODO write bumper functions in service
     this.timeLeft += (this.settingsService.getBumperLengthInMinutes() * 60);
     this.currentTimerValueSubject.next(this.timeLeft);
   }
@@ -111,7 +109,7 @@ export class TimerService implements OnInit {
       clearInterval(this.timerInterval);
     }
     this.endTimer();
-    // TODO this part will need to be done handled still
+    // TODO this part will need to be handled still
     // this.currentTimer.completed = true;
     // if (this.onBreak) {
     //   this.currentTimer.completedWithBreak = true;

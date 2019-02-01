@@ -28,10 +28,10 @@ export class TaskListComponent implements OnInit {
   ngOnInit() {
   }
 
-  completeTask(task: Task): void {
+  completeTask(task: Task): Promise<void> {
     task.completed = !task.completed;
     task.dateCompleted = task.completed ? new Date() : null;
-    this.taskService.updateTask(this.currentUser.uid, task);
+    return this.taskService.updateTask(this.currentUser.uid, task);
   }
 
   drop(event: CdkDragDrop<Task[]>) {
@@ -48,12 +48,9 @@ export class TaskListComponent implements OnInit {
     this.newTask = new FormControl('');
   }
 
-  onDragEnded(event) {
-    // The timeout makes sure that the list has finished reordering before we start updating the order prop of the task doc in the db.
+  onDragEnded(event): void {
+    // The timeout makes sure that the list has finished reordering before we start updating the order prop of each task doc in the db.
     setTimeout(() => {
-      // Set isOrderingTasks to true so that the observable in task-list component doesn't update while we reorder the tasksList.
-      // This prevents visual stuttering of the tasks while reordering.
-      this.taskService.isReorderingTasks(true);
       this.tasksList.forEach((task, index) => {
         const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${this.currentUser.uid}/tasks/${task.id}`);
         const updatedTask: Task = {...task, order: index};
@@ -61,8 +58,6 @@ export class TaskListComponent implements OnInit {
         userTasksRef.set(updatedTask);
       });
     });
-    // Set back to false after reordering tasksList so that the observable in task-list component will update again.
-    this.taskService.isReorderingTasks(false);
   }
 
   toggleEditMode(task: Task) {
