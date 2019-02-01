@@ -6,6 +6,7 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 // TODO make sure SharedModule is needed below
 
@@ -21,7 +22,8 @@ import { SharedModule } from '../shared/shared.module';
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class TaskModule { }
