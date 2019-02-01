@@ -4,6 +4,14 @@
     <pm-timer-countdown></pm-timer-countdown>
   </h2>
   <section class="tasks-container">
+    <ngx-spinner
+      bdColor="rgba(62, 81, 181, 0.2)"
+      size="medium"
+      color="#3E51B5"
+      type="square-loader"
+      fullScreen="false">
+      <p style="font-size: 20px; color: #3E51B5">Loading...</p>
+    </ngx-spinner>
     <pm-task-list [tasksList]="taskList"
                   [currentUser]="currentUser"
                   (taskAdded)="onNewTaskAdded($event)">
