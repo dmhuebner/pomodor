@@ -26,6 +26,7 @@ export class TimerContainerComponent implements OnInit {
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
     this.taskService.getTasks$().subscribe(tasks => {
+      tasks = tasks ? tasks : [];
       this.currentTask = tasks.filter(task => !task.completed).sort(this.taskService.compareOrder).pop();
     });
     this.timerLengthInSeconds = this.settingsService.getTimerLength();
