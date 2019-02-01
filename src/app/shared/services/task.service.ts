@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import Task from '../interfaces/task.interface';
 import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, debounceTime } from 'rxjs/operators';
 import * as moment from 'moment';
 
 @Injectable({
@@ -13,24 +13,22 @@ import * as moment from 'moment';
 export class TaskService implements OnInit {
 
   tasksCollection: AngularFirestoreCollection<Task>;
-  tasks$: Observable<Task[]>;
   currentUser: User;
-  reorderingTasks: boolean;
 
   constructor(private afs: AngularFirestore,
               private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.reorderingTasks = false;
     this.auth.user$.subscribe(user => this.currentUser = user);
   }
 
-  getTasks(): Observable<Task[]> {
+  getTasks$(): Observable<Task[]> {
     return this.auth.user$.pipe(
       switchMap(user => {
         if (user) {
           this.tasksCollection = this.afs.collection(`tasks/${user.uid}/tasks/`, ref => ref.orderBy('order'));
-          return this.tasksCollection.valueChanges();
+          // We debounce the valueChanges observable to make sure there is no visual skipping when reordering tasks
+          return this.tasksCollection.valueChanges().pipe(debounceTime(50));
           // TODO should we transform the dateCompleted from a Timestamp to a Date here?
         } else {
           return of(null);
@@ -39,11 +37,11 @@ export class TaskService implements OnInit {
     );
   }
 
-  postNewTask(userUid: string, newTask: string, order: number): void {
+  postNewTask(userUid: string, newTask: string, order: number): Promise<void> {
     const newTaskId: string = this.afs.createId();
     const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${newTaskId}`);
 
-    userTasksRef.set({
+    return userTasksRef.set({
       description: newTask,
       completed: false,
       dateCreated: new Date(),
@@ -53,22 +51,26 @@ export class TaskService implements OnInit {
     });
   }
 
-  updateTask(userUid: string, task: Task) {
+  updateTask(userUid: string, task: Task): Promise<void> {
     const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${task.id}`);
     const updatedTask = {...task};
 
-    userTasksRef.set(updatedTask);
+    return userTasksRef.set(updatedTask);
   }
 
-  deleteTask(userUid: string, taskId: string): void {
+  deleteTask(userUid: string, taskId: string): Promise<void> {
     const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${taskId}`);
-    userTasksRef.delete();
+    return userTasksRef.delete();
   }
 
   // Returns true if the task should be placed in the completedTasks list
   checkTaskCompleted(task: Task): boolean {
     // Check if the soft expiration date for the task is before the time that this function is called
     return moment(task.dateCompleted).add(15, 'minutes').isBefore(new Date());
+  }
+
+  taskIsExpired(task: Task): boolean {
+    return moment(task.dateCompleted).add(7, 'days').isBefore(new Date());
   }
 
   // Can be used as compare function in Array.sort for completedTaskList
@@ -90,13 +92,5 @@ export class TaskService implements OnInit {
       return -1;
     }
     return 0;
-  }
-
-  taskIsExpired(task: Task): boolean {
-    return moment(task.dateCompleted).add(7, 'days').isBefore(new Date());
-  }
-
-  isReorderingTasks(bool?: boolean): boolean {
-    return bool !== undefined ? this.reorderingTasks = bool : this.reorderingTasks;
   }
 }
