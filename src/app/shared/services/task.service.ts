@@ -15,11 +15,13 @@ export class TaskService implements OnInit {
   tasksCollection: AngularFirestoreCollection<Task>;
   tasks$: Observable<Task[]>;
   currentUser: User;
+  reorderingTasks: boolean;
 
   constructor(private afs: AngularFirestore,
               private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.reorderingTasks = false;
     this.auth.user$.subscribe(user => this.currentUser = user);
   }
 
@@ -92,5 +94,9 @@ export class TaskService implements OnInit {
 
   taskIsExpired(task: Task): boolean {
     return moment(task.dateCompleted).add(7, 'days').isBefore(new Date());
+  }
+
+  isReorderingTasks(bool?: boolean): boolean {
+    return bool !== undefined ? this.reorderingTasks = bool : this.reorderingTasks;
   }
 }

@@ -25,15 +25,18 @@ export class TaskListContainerComponent implements OnInit {
     this.taskService.getTasks().subscribe(tasks => {
       tasks = tasks ? tasks : [];
 
-      this.taskList = tasks.filter(task => {
-        if (task.dateCompleted) {
-          // Transform dateCompleted into a date if there is a toDate function (if its a Timestamp) - We might wanna change this...
-          task.dateCompleted = typeof task.dateCompleted.toDate ? task.dateCompleted.toDate() : task.dateCompleted;
-          return !this.taskService.checkTaskCompleted(task);
-        } else {
-          return true;
-        }
-      });
+      // We check if we're currently reordering the task list and only update the list if we are done reordering
+      if (!this.taskService.isReorderingTasks()) {
+        this.taskList = tasks.filter(task => {
+          if (task.dateCompleted) {
+            // Transform dateCompleted into a date if there is a toDate function (if its a Timestamp) - We might wanna change this...
+            task.dateCompleted = typeof task.dateCompleted.toDate ? task.dateCompleted.toDate() : task.dateCompleted;
+            return !this.taskService.checkTaskCompleted(task);
+          } else {
+            return true;
+          }
+        });
+      }
 
       this.completedTaskList = tasks.filter(task => {
         if (task.dateCompleted) {
