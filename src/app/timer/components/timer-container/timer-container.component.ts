@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../../../shared/services/timer.service';
-import { SettingsService } from '../../../shared/services/settings.service';
-import { TaskService } from '../../../shared/services/task.service';
+import { TimerService } from '../../../shared/services/timer/timer.service';
+import { SettingsService } from '../../../shared/services/settings/settings.service';
+import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
 
 @Component({

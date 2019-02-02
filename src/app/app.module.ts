@@ -18,7 +18,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AuthService } from './shared/services/auth.service';
+import { AuthService } from './shared/services/auth/auth.service';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
@@ -26,7 +26,7 @@ import { TimerModule } from './timer/timer.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsModule } from './settings/settings.module';
 import { TaskModule } from './task/task.module';
-import { TimerService } from './shared/services/timer.service';
+import { TimerService } from './shared/services/timer/timer.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({

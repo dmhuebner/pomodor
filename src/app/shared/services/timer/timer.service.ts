@@ -1,9 +1,9 @@
 import {Injectable, OnInit} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CompletedTimer } from '../interfaces/CompletedTimer.interface';
-import { SettingsService } from './settings.service';
-import { UsbLightService } from './usb-light.service';
-import { TimerPipe } from '../pipes/timer.pipe';
+import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
+import { SettingsService } from '../settings/settings.service';
+import { UsbLightService } from '../usbLight/usb-light.service';
+import { TimerPipe } from '../../pipes/timer.pipe';
 
 @Injectable({
   providedIn: 'root'
