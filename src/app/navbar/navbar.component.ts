@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AuthService } from '../shared/services/auth.service';
-import { TimerService } from '../shared/services/timer.service';
-import { UsbLightService } from '../shared/services/usb-light.service';
+import { AuthService } from '../shared/services/auth/auth.service';
+import { TimerService } from '../shared/services/timer/timer.service';
+import { UsbLightService } from '../shared/services/usbLight/usb-light.service';
 
 @Component({
   selector: 'pm-navbar',

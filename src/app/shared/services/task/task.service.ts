@@ -1,22 +1,21 @@
 import { Injectable, OnInit } from '@angular/core';
-import User from '../interfaces/user.interface';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import Task from '../interfaces/task.interface';
+import User from '../../interfaces/user.interface';
+import Task from '../../interfaces/task.interface';
 import { Observable, of } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth.service';
 import { switchMap, debounceTime } from 'rxjs/operators';
 import * as moment from 'moment';
+import { DataService } from '../data/data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService implements OnInit {
 
-  tasksCollection: AngularFirestoreCollection<Task>;
   currentUser: User;
 
-  constructor(private afs: AngularFirestore,
-              private auth: AuthService) { }
+  constructor(private auth: AuthService,
+              private dataService: DataService<Task>) { }
 
   ngOnInit(): void {
     this.auth.user$.subscribe(user => this.currentUser = user);
@@ -26,9 +25,9 @@ export class TaskService implements OnInit {
     return this.auth.user$.pipe(
       switchMap(user => {
         if (user) {
-          this.tasksCollection = this.afs.collection(`tasks/${user.uid}/tasks/`, ref => ref.orderBy('order'));
           // We debounce the valueChanges observable to make sure there is no visual skipping when reordering tasks
-          return this.tasksCollection.valueChanges().pipe(debounceTime(50));
+          return this.dataService.getCollection$(`tasks/${user.uid}/tasks/`, 'order')
+            .pipe(debounceTime(50));
           // TODO should we transform the dateCompleted from a Timestamp to a Date here?
         } else {
           return of(null);
@@ -37,30 +36,25 @@ export class TaskService implements OnInit {
     );
   }
 
-  postNewTask(userUid: string, newTask: string, order: number): Promise<void> {
-    const newTaskId: string = this.afs.createId();
-    const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${newTaskId}`);
-
-    return userTasksRef.set({
-      description: newTask,
+  postNewTask(userUid: string, newTaskDesc: string, order: number): Promise<void> {
+    const payload: Task = {
+      description: newTaskDesc,
       completed: false,
       dateCreated: new Date(),
       dateCompleted: null,
       order: order,
-      id: newTaskId
-    });
+      id: null
+    };
+
+    return this.dataService.postNewItem(`tasks/${userUid}/tasks/`, payload);
   }
 
   updateTask(userUid: string, task: Task): Promise<void> {
-    const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${task.id}`);
-    const updatedTask = {...task};
-
-    return userTasksRef.set(updatedTask);
+    return this.dataService.updateItem(`tasks/${userUid}/tasks/${task.id}`, task);
   }
 
   deleteTask(userUid: string, taskId: string): Promise<void> {
-    const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${userUid}/tasks/${taskId}`);
-    return userTasksRef.delete();
+    return this.dataService.deleteItem(`tasks/${userUid}/tasks/${taskId}`);
   }
 
   // Returns true if the task should be placed in the completedTasks list

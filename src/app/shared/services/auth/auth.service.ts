@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import User from '../interfaces/user.interface';
+import User from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
