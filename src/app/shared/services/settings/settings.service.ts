@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data.service';
-import { Settings } from '../../interfaces/settings.interface';
+import Settings from '../../interfaces/settings.interface';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -46,6 +46,10 @@ export class SettingsService {
 
   getUseTimerBumpers(): boolean {
     return this.currentSettings ? this.currentSettings.useTimerBumpers : this.defaultSettings.useTimerBumpers;
+  }
+
+  getTasksLinkedToTimer(): boolean {
+    return this.currentSettings ? this.currentSettings.tasksLinkedToTimer : this.defaultSettings.tasksLinkedToTimer;
   }
 
   updateUserSettings(newUserSettings: Settings, userUid: string): Promise<void> {

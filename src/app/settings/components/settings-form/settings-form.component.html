@@ -12,3 +12,6 @@
 <mat-form-field class="shorter-number-field" *ngIf="currentSettings.useTimerBumpers.value">
   <input matInput type="number" class="shorter-number-field" placeholder="Timer bumper length in minutes" [formControl]="currentSettings.bumperLengthInMinutes">
 </mat-form-field>
+<div class="checkbox-field">
+  <mat-checkbox [formControl]="currentSettings.tasksLinkedToTimer">Link highest priority Task to Timer?</mat-checkbox>
+</div>

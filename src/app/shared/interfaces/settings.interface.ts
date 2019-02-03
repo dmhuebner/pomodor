@@ -1,4 +1,4 @@
-export interface Settings {
+export default interface Settings {
   timerLength: number;
   breakLength: number;
   bumperLengthInMinutes: number;

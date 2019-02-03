@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Settings} from '../../../shared/interfaces/settings.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import Settings from '../../../shared/interfaces/settings.interface';
 
 @Component({
   selector: 'pm-settings-form',
