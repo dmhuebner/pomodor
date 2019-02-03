@@ -1,0 +1,19 @@
+<section class="settings-page">
+  <div class="settings-form">
+    <h2 class="header-text">Settings</h2>
+    <ngx-spinner
+      bdColor="rgba(62, 81, 181, 0.2)"
+      size="medium"
+      color="#3E51B5"
+      type="square-loader"
+      fullScreen="false">
+      <p style="font-size: 20px; color: #3E51B5">Loading Settings...</p>
+    </ngx-spinner>
+    <pm-settings-form [currentSettings]="currentSettings"></pm-settings-form>
+    <div class="settings-button-group">
+      <button type="button" class="save-settings" aria-label="save settings" mat-raised-button color="primary" (click)="onSaveSettings()" [disabled]="!currentSettings.timerLength.value || !currentSettings.breakLength.value">
+        Save
+      </button>
+    </div>
+  </div>
+</section>
