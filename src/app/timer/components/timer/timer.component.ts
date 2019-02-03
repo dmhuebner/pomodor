@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../../../shared/services/timer/timer.service';
 import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
 import { SettingsService } from '../../../shared/services/settings/settings.service';
-import { Settings } from '../../../shared/interfaces/settings.interface';
+import Settings from '../../../shared/interfaces/settings.interface';
 
 @Component({
   selector: 'pm-timer',
