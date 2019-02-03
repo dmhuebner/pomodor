@@ -15,7 +15,9 @@ export class SettingsService {
     breakLength: 5,
     bumperLengthInMinutes: 2,
     useTimerBumpers: false,
-    tasksLinkedToTimer: true
+    tasksLinkedToTimer: true,
+    moveCompletedTaskToCompletedListTimeInMin: 15,
+    completedTaskExpirationInDays: 7
   };
 
   currentSettings: Settings = {...this.defaultSettings};
@@ -50,6 +52,18 @@ export class SettingsService {
 
   getTasksLinkedToTimer(): boolean {
     return this.currentSettings ? this.currentSettings.tasksLinkedToTimer : this.defaultSettings.tasksLinkedToTimer;
+  }
+
+  getMoveCompletedTaskToCompletedListTimeInMin(): number {
+    return this.currentSettings
+      ? this.currentSettings.moveCompletedTaskToCompletedListTimeInMin
+      : this.defaultSettings.moveCompletedTaskToCompletedListTimeInMin;
+  }
+
+  getCompletedTaskExpirationInDays(): number {
+    return this.currentSettings
+      ? this.currentSettings.completedTaskExpirationInDays
+      : this.defaultSettings.completedTaskExpirationInDays;
   }
 
   updateUserSettings(newUserSettings: Settings, userUid: string): Promise<void> {

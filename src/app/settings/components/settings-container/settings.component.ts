@@ -20,7 +20,9 @@ export class SettingsComponent implements OnInit {
     breakLength: new FormControl(this.settingsService.getBreakLength() / 60),
     bumperLengthInMinutes: new FormControl(this.settingsService.getBumperLengthInMinutes()),
     useTimerBumpers: new FormControl(this.settingsService.getUseTimerBumpers()),
-    tasksLinkedToTimer: new FormControl(this.settingsService.getTasksLinkedToTimer())
+    tasksLinkedToTimer: new FormControl(this.settingsService.getTasksLinkedToTimer()),
+    moveCompletedTaskToCompletedListTimeInMin: new FormControl(this.settingsService.getMoveCompletedTaskToCompletedListTimeInMin()),
+    completedTaskExpirationInDays: new FormControl(this.settingsService.getCompletedTaskExpirationInDays()),
   };
 
   currentUser: User;
