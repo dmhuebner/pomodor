@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Task from '../../../shared/interfaces/task.interface';
 import User from '../../../shared/interfaces/user.interface';
-import { TaskService } from '../../../shared/services/task.service';
+import { TaskService } from '../../../shared/services/task/task.service';
 
 @Component({
   selector: 'pm-task-list',

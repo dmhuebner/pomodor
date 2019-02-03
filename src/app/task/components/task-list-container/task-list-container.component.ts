@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from '../../../shared/services/auth.service';
-import { TaskService } from '../../../shared/services/task.service';
+import { AuthService } from '../../../shared/services/auth/auth.service';
+import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
 import User from '../../../shared/interfaces/user.interface';
 import { NgxSpinnerService } from 'ngx-spinner';

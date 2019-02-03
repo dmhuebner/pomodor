@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../../../shared/services/timer.service';
-import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
-import { SettingsService } from '../../../shared/services/settings.service';
+import { TimerService } from '../../../shared/services/timer/timer.service';
+import { CompletedTimer } from '../../../shared/interfaces/completedTimer.interface';
+import { SettingsService } from '../../../shared/services/settings/settings.service';
+import { Settings } from '../../../shared/interfaces/settings.interface';
 
 @Component({
   selector: 'pm-timer',
@@ -12,13 +13,9 @@ export class TimerComponent implements OnInit {
 
   onBreak = false;
   timerOn = false;
-  showTimerBumpers = false;
-  timerBumperLength: number = this.settingsService.getBumperLengthInMinutes();
 
-  currentTimer: CompletedTimer = {
-    completed: false,
-    completedWithBreak: false
-  };
+  currentSettings: Settings = {...this.settingsService.defaultSettings};
+  currentTimer: CompletedTimer = {completed: false, completedWithBreak: false};
 
   constructor(public timerService: TimerService,
               private settingsService: SettingsService) { }
@@ -27,7 +24,12 @@ export class TimerComponent implements OnInit {
     // Subscribe to onBreak$ subject observable and set value to this.onBreak
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
-    this.showTimerBumpers = this.settingsService.getUseTimerBumpers();
+    this.settingsService.currentSettings$.subscribe(settings => {
+      this.currentSettings = settings;
+      if (!this.timerOn) {
+        this.timerService.setTimeLeft();
+      }
+    });
   }
 
   onStartTime() {

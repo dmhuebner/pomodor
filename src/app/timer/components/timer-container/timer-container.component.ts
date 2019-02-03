@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../../../shared/services/timer.service';
-import { SettingsService } from '../../../shared/services/settings.service';
-import { TaskService } from '../../../shared/services/task.service';
+import { TimerService } from '../../../shared/services/timer/timer.service';
+import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
 
 @Component({
@@ -11,15 +10,11 @@ import Task from '../../../shared/interfaces/task.interface';
 })
 export class TimerContainerComponent implements OnInit {
 
-  timerLengthInSeconds: number;
-  breakLengthInSeconds: number;
-  timerBumperLengthInMinutes: number;
   onBreak = false;
   timerOn = false;
   currentTask: Task;
 
   constructor(private timerService: TimerService,
-              private settingsService: SettingsService,
               public taskService: TaskService) {}
 
   ngOnInit() {
@@ -29,9 +24,6 @@ export class TimerContainerComponent implements OnInit {
       tasks = tasks ? tasks : [];
       this.currentTask = tasks.filter(task => !task.completed).sort(this.taskService.compareOrder).pop();
     });
-    this.timerLengthInSeconds = this.settingsService.getTimerLength();
-    this.breakLengthInSeconds = this.settingsService.getBreakLength();
-    this.timerBumperLengthInMinutes = this.settingsService.getBumperLengthInMinutes();
   }
 
 }
