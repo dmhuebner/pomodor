@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data.service';
 import { Settings } from '../../interfaces/settings.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,11 @@ export class SettingsService {
 
   constructor(private dataService: DataService<Settings>) { }
 
-  getUserSettings$(userUid: string): Observable<Settings> {
-    return this.dataService.getItem$(`settings/${userUid}`);
+  getUserSettings$(userUid: string): Observable<Settings | null> {
+    return this.dataService.getItem$(`settings/${userUid}`).pipe(
+      map(settings => settings),
+      catchError(error => of(error))
+    );
   }
 
   getTimerLength(): number {
