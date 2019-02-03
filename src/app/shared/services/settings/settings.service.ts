@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data/data.service';
-import { Settings } from '../../interfaces/settings.interface';
+import Settings from '../../interfaces/settings.interface';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -15,7 +15,9 @@ export class SettingsService {
     breakLength: 5,
     bumperLengthInMinutes: 2,
     useTimerBumpers: false,
-    tasksLinkedToTimer: true
+    tasksLinkedToTimer: true,
+    moveCompletedTaskToCompletedListTimeInMin: 15,
+    completedTaskExpirationInDays: 7
   };
 
   currentSettings: Settings = {...this.defaultSettings};
@@ -46,6 +48,22 @@ export class SettingsService {
 
   getUseTimerBumpers(): boolean {
     return this.currentSettings ? this.currentSettings.useTimerBumpers : this.defaultSettings.useTimerBumpers;
+  }
+
+  getTasksLinkedToTimer(): boolean {
+    return this.currentSettings ? this.currentSettings.tasksLinkedToTimer : this.defaultSettings.tasksLinkedToTimer;
+  }
+
+  getMoveCompletedTaskToCompletedListTimeInMin(): number {
+    return this.currentSettings
+      ? this.currentSettings.moveCompletedTaskToCompletedListTimeInMin
+      : this.defaultSettings.moveCompletedTaskToCompletedListTimeInMin;
+  }
+
+  getCompletedTaskExpirationInDays(): number {
+    return this.currentSettings
+      ? this.currentSettings.completedTaskExpirationInDays
+      : this.defaultSettings.completedTaskExpirationInDays;
   }
 
   updateUserSettings(newUserSettings: Settings, userUid: string): Promise<void> {

@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { switchMap, debounceTime } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DataService } from '../data/data.service';
+import {SettingsService} from '../settings/settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class TaskService implements OnInit {
   currentUser: User;
 
   constructor(private auth: AuthService,
-              private dataService: DataService<Task>) { }
+              private dataService: DataService<Task>,
+              private settingsService: SettingsService) { }
 
   ngOnInit(): void {
     this.auth.user$.subscribe(user => this.currentUser = user);
@@ -59,12 +61,14 @@ export class TaskService implements OnInit {
 
   // Returns true if the task should be placed in the completedTasks list
   checkTaskCompleted(task: Task): boolean {
+    const softExpirationInMin = this.settingsService.getMoveCompletedTaskToCompletedListTimeInMin();
     // Check if the soft expiration date for the task is before the time that this function is called
-    return moment(task.dateCompleted).add(15, 'minutes').isBefore(new Date());
+    return moment(task.dateCompleted).add(softExpirationInMin, 'minutes').isBefore(new Date());
   }
 
   taskIsExpired(task: Task): boolean {
-    return moment(task.dateCompleted).add(7, 'days').isBefore(new Date());
+    const hardExpirationInMin = this.settingsService.getCompletedTaskExpirationInDays();
+    return moment(task.dateCompleted).add(hardExpirationInMin, 'days').isBefore(new Date());
   }
 
   // Can be used as compare function in Array.sort for completedTaskList

@@ -4,7 +4,7 @@ import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
 import { SettingsService } from '../settings/settings.service';
 import { UsbLightService } from '../usbLight/usb-light.service';
 import { TimerPipe } from '../../pipes/timer.pipe';
-import { Settings } from '../../interfaces/settings.interface';
+import Settings from '../../interfaces/settings.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../../../shared/services/timer/timer.service';
 import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
+import { SettingsService } from '../../../shared/services/settings/settings.service';
 
 @Component({
   selector: 'pm-timer-container',
@@ -15,7 +16,8 @@ export class TimerContainerComponent implements OnInit {
   currentTask: Task;
 
   constructor(private timerService: TimerService,
-              public taskService: TaskService) {}
+              public taskService: TaskService,
+              public settingsService: SettingsService) {}
 
   ngOnInit() {
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
