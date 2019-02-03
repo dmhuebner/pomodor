@@ -325,7 +325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
 /* harmony import */ var _shared_components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/components/not-found/not-found.component */ "./src/app/shared/components/not-found/not-found.component.ts");
 /* harmony import */ var _timer_components_timer_container_timer_container_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./timer/components/timer-container/timer-container.component */ "./src/app/timer/components/timer-container/timer-container.component.ts");
-/* harmony import */ var _settings_settings_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./settings/settings.component */ "./src/app/settings/settings.component.ts");
+/* harmony import */ var _settings_components_settings_container_settings_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./settings/components/settings-container/settings.component */ "./src/app/settings/components/settings-container/settings.component.ts");
 /* harmony import */ var _task_components_task_list_container_task_list_container_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./task/components/task-list-container/task-list-container.component */ "./src/app/task/components/task-list-container/task-list-container.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -345,7 +345,7 @@ var routes = [
     { path: 'home', component: _home_home_component__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"] },
     { path: 'timer', component: _timer_components_timer_container_timer_container_component__WEBPACK_IMPORTED_MODULE_4__["TimerContainerComponent"] },
     { path: 'tasks', component: _task_components_task_list_container_task_list_container_component__WEBPACK_IMPORTED_MODULE_6__["TaskListContainerComponent"] },
-    { path: 'settings', component: _settings_settings_component__WEBPACK_IMPORTED_MODULE_5__["SettingsComponent"] },
+    { path: 'settings', component: _settings_components_settings_container_settings_component__WEBPACK_IMPORTED_MODULE_5__["SettingsComponent"] },
     { path: '**', component: _shared_components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_3__["NotFoundComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -765,32 +765,32 @@ var NavbarComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/settings/settings.component.html":
-/*!**************************************************!*\
-  !*** ./src/app/settings/settings.component.html ***!
-  \**************************************************/
+/***/ "./src/app/settings/components/settings-container/settings.component.html":
+/*!********************************************************************************!*\
+  !*** ./src/app/settings/components/settings-container/settings.component.html ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"settings-page\">\n  <div class=\"settings-form\">\n    <h2 class=\"header-text\">Settings</h2>\n    <ngx-spinner\n      bdColor=\"rgba(62, 81, 181, 0.2)\"\n      size=\"medium\"\n      color=\"#3E51B5\"\n      type=\"square-loader\"\n      fullScreen=\"false\">\n      <p style=\"font-size: 20px; color: #3E51B5\">Loading Settings...</p>\n    </ngx-spinner>\n    <mat-form-field>\n      <input matInput type=\"number\" placeholder=\"Timer length in minutes\" [formControl]=\"currentSettings.timerLength\">\n    </mat-form-field>\n    <div>\n      <mat-form-field>\n        <input matInput type=\"number\" placeholder=\"Recharge length in minutes\" [formControl]=\"currentSettings.breakLength\">\n      </mat-form-field>\n    </div>\n    <div class=\"checkbox-field\">\n      <mat-checkbox [formControl]=\"currentSettings.useTimerBumpers\">Use Timer Bumpers?</mat-checkbox>\n    </div>\n    <mat-form-field class=\"shorter-number-field\" *ngIf=\"currentSettings.useTimerBumpers.value\">\n      <input matInput type=\"number\" class=\"shorter-number-field\" placeholder=\"Timer bumper length in minutes\" [formControl]=\"currentSettings.bumperLengthInMinutes\">\n    </mat-form-field>\n    <div class=\"settings-button-group\">\n      <button type=\"button\" class=\"save-settings\" aria-label=\"save settings\" mat-raised-button color=\"primary\" (click)=\"onSaveSettings()\" [disabled]=\"!currentSettings.timerLength.value || !currentSettings.breakLength.value\">\n        Save\n      </button>\n    </div>\n  </div>\n</section>\n"
+module.exports = "<section class=\"settings-page\">\n  <h2 class=\"header-text\">Settings</h2>\n  <ngx-spinner\n    bdColor=\"rgba(62, 81, 181, 0.2)\"\n    size=\"medium\"\n    color=\"#3E51B5\"\n    type=\"square-loader\"\n    fullScreen=\"false\">\n    <p style=\"font-size: 20px; color: #3E51B5\">Loading Settings...</p>\n  </ngx-spinner>\n  <div class=\"settings-form\" *ngIf=\"!loading\">\n    <pm-settings-form [currentSettings]=\"currentSettings\"></pm-settings-form>\n    <div class=\"settings-button-group\">\n      <button type=\"button\"\n              class=\"save-settings\"\n              aria-label=\"save settings\"\n              mat-raised-button\n              color=\"primary\"\n              (click)=\"onSaveSettings()\"\n              [disabled]=\"shouldDisableSaveButton()\">\n        Save Settings\n      </button>\n      <button type=\"button\"\n              class=\"restore-default-settings\"\n              aria-label=\"restore default settings\"\n              mat-raised-button\n              color=\"secondary\"\n              (click)=\"onRestoreDefaults()\">\n        Restore Defaults\n      </button>\n    </div>\n  </div>\n</section>\n"
 
 /***/ }),
 
-/***/ "./src/app/settings/settings.component.scss":
-/*!**************************************************!*\
-  !*** ./src/app/settings/settings.component.scss ***!
-  \**************************************************/
+/***/ "./src/app/settings/components/settings-container/settings.component.scss":
+/*!********************************************************************************!*\
+  !*** ./src/app/settings/components/settings-container/settings.component.scss ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/*** Variables ***/\n/*** Media Query Breakpoints ***/\n/*** Mixins ***/\n/*** Main Styles ***/\nhtml, body {\n  height: 100%; }\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif; }\nbody a {\n    text-decoration: none;\n    color: #FF7F1C; }\nbody a:hover {\n      color: #be470c; }\nbody .btn-large {\n    font-size: 1.2rem; }\n.settings-page {\n  text-align: center; }\n.settings-page .settings-form {\n    text-align: center;\n    max-width: 50rem;\n    margin: auto; }\n.settings-page .settings-form .header-text {\n      color: #3E51B5; }\n.settings-page .settings-form .checkbox-field {\n      margin: 1rem 0 2rem 0; }\n.settings-page .settings-form mat-form-field {\n      min-width: 70%;\n      text-align: center;\n      font-size: 1.25rem;\n      color: #3E51B5; }\n.settings-page .settings-form .shorter-number-field {\n      width: 10rem; }\n.settings-page .settings-form input {\n      text-align: center; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9kYXZpZGh1ZWJuZXIvQ29kZS9TUEFzL3BvbW9kb3Ivc3JjL3N0eWxlcy5zY3NzIiwiL1VzZXJzL2RhdmlkaHVlYm5lci9Db2RlL1NQQXMvcG9tb2Rvci9zcmMvYXBwL3NldHRpbmdzL3NldHRpbmdzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLG1CQUFtQjtBQW1CbkIsaUNBQWlDO0FBSWpDLGdCQUFnQjtBQThCaEIscUJBQXFCO0FBRXJCO0VBQWEsYUFBWSxFQUFJO0FBQzdCO0VBQ0UsVUFBUztFQUNULGtEQUFpRCxFQWNsRDtBQWhCRDtJQUtJLHNCQUFxQjtJQUNyQixlQXpEVyxFQThEWjtBQVhIO01BU00sZUFBYyxFQUNmO0FBVkw7SUFjSSxrQkFBaUIsRUFDbEI7QUNyRUg7RUFDRSxtQkFBa0IsRUE4Qm5CO0FBL0JEO0lBSUksbUJBQWtCO0lBQ2xCLGlCQUFnQjtJQUNoQixhQUFZLEVBd0JiO0FBOUJIO01BU00sZURKVyxFQ0taO0FBVkw7TUFhTSxzQkFBcUIsRUFDdEI7QUFkTDtNQWlCTSxlQUFjO01BQ2QsbUJBQWtCO01BQ2xCLG1CQUFrQjtNQUNsQixlRGZXLEVDZ0JaO0FBckJMO01Bd0JNLGFBQVksRUFDYjtBQXpCTDtNQTRCTSxtQkFBa0IsRUFDbkIiLCJmaWxlIjoic3JjL2FwcC9zZXR0aW5ncy9zZXR0aW5ncy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qKiogVmFyaWFibGVzICoqKi9cblxuJHNvZnRCbHVlOiAjMDBhOWZmO1xuJHBvbUNvbG9yOiAjZmY2ODY4O1xuJG1lbGxvdzogI2ZmYzI3MDtcbiRicmVhazogI0ZGN0YxQztcbiRkYXJrZXJCYWNrZ3JvdW5kOiAjMzMzO1xuJHByaW1hcnk6ICMzRTUxQjU7XG4kcHJpbWFyeUxpZ2h0ZXI6ICM3ODgxYjU7XG4kbGlnaHRPbkJyZWFrOiAjZmZmYWVmO1xuJGxpZ2h0UHJpbWFyeTogI2RmZWZmZjtcblxuJGxpZ2h0R3JleTogI2FhYTtcbiRncmV5OiAjNzc3O1xuJHdoaXRlOiAjZmZmO1xuJGJsYWNrOiAjMDAwO1xuJGFsbW9zdEJsYWNrOiAjMjIyO1xuJGRhcmtpc2hQdXJwbGU6ICM2NzQ4ZDg7XG5cbi8qKiogTWVkaWEgUXVlcnkgQnJlYWtwb2ludHMgKioqL1xuJHNtQnJlYWtwb2ludDogNzY3cHg7XG4keHNCcmVha3BvaW50OiA0NjdweDtcblxuLyoqKiBNaXhpbnMgKioqL1xuXG5AbWl4aW4gdHJhbnNpdGlvbigkZHVyYXRpb24pIHtcbiAgLXdlYmtpdC10cmFuc2l0aW9uOiAkZHVyYXRpb247XG4gIC1tb3otdHJhbnNpdGlvbjogJGR1cmF0aW9uO1xuICAtbXMtdHJhbnNpdGlvbjogJGR1cmF0aW9uO1xuICAtby10cmFuc2l0aW9uOiAkZHVyYXRpb247XG4gIHRyYW5zaXRpb246ICRkdXJhdGlvbjtcbn1cblxuQG1peGluIGJveC1zaGFkb3coJHB4LCAkcHgyLCAkY29sb3IpIHtcbiAgYm94LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLW1vei1ib3gtc2hhZG93OiAkcHggJHB4ICRweDIgJGNvbG9yO1xuICAtd2Via2l0LWJveC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG4gIC1vLWJveC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG59XG5cbkBtaXhpbiB0ZXh0LXNoYWRvdygkcHgsICRweDIsICRjb2xvcikge1xuICB0ZXh0LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLW1vei10ZXh0LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLXdlYmtpdC10ZXh0LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLW8tdGV4dC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG59XG5cbkBtaXhpbiBib3JkZXItcmFkaXVzKCRyYWRpdXMpIHtcbiAgYm9yZGVyLXJhZGl1czogJHJhZGl1cztcbiAgLXdlYmtpdC1ib3JkZXItcmFkaXVzOiAkcmFkaXVzO1xuICAtbW96LWJvcmRlci1yYWRpdXM6ICRyYWRpdXM7XG59XG5cbi8qKiogTWFpbiBTdHlsZXMgKioqL1xuXG5odG1sLCBib2R5IHsgaGVpZ2h0OiAxMDAlOyB9XG5ib2R5IHtcbiAgbWFyZ2luOiAwO1xuICBmb250LWZhbWlseTogUm9ib3RvLCBcIkhlbHZldGljYSBOZXVlXCIsIHNhbnMtc2VyaWY7XG5cbiAgYSB7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGNvbG9yOiAkYnJlYWs7XG5cbiAgICAmOmhvdmVyIHtcbiAgICAgIGNvbG9yOiAjYmU0NzBjO1xuICAgIH1cbiAgfVxuXG4gIC5idG4tbGFyZ2Uge1xuICAgIGZvbnQtc2l6ZTogMS4ycmVtO1xuICB9XG59XG4iLCJAaW1wb3J0IFwiLi4vLi4vc3R5bGVzLnNjc3NcIjtcblxuLnNldHRpbmdzLXBhZ2Uge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG5cbiAgLnNldHRpbmdzLWZvcm0ge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBtYXgtd2lkdGg6IDUwcmVtO1xuICAgIG1hcmdpbjogYXV0bztcblxuICAgIC5oZWFkZXItdGV4dCB7XG4gICAgICBjb2xvcjogJHByaW1hcnk7XG4gICAgfVxuICAgIFxuICAgIC5jaGVja2JveC1maWVsZCB7XG4gICAgICBtYXJnaW46IDFyZW0gMCAycmVtIDA7XG4gICAgfVxuXG4gICAgbWF0LWZvcm0tZmllbGQge1xuICAgICAgbWluLXdpZHRoOiA3MCU7XG4gICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICBmb250LXNpemU6IDEuMjVyZW07XG4gICAgICBjb2xvcjogJHByaW1hcnk7XG4gICAgfVxuXG4gICAgLnNob3J0ZXItbnVtYmVyLWZpZWxkIHtcbiAgICAgIHdpZHRoOiAxMHJlbTtcbiAgICB9XG5cbiAgICBpbnB1dCB7XG4gICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgfVxuICB9XG59XG4iXX0= */"
+module.exports = "/*** Variables ***/\n/*** Media Query Breakpoints ***/\n/*** Mixins ***/\n/*** Main Styles ***/\nhtml, body {\n  height: 100%; }\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif; }\nbody a {\n    text-decoration: none;\n    color: #FF7F1C; }\nbody a:hover {\n      color: #be470c; }\nbody .btn-large {\n    font-size: 1.2rem; }\n.settings-page {\n  text-align: center; }\n.settings-page .header-text {\n    color: #3E51B5; }\n.settings-page .settings-form {\n    text-align: center;\n    max-width: 50rem;\n    margin: auto; }\n.settings-page .settings-form .settings-button-group button {\n      margin: 0.5rem 1rem;\n      width: 10rem; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9kYXZpZGh1ZWJuZXIvQ29kZS9TUEFzL3BvbW9kb3Ivc3JjL3N0eWxlcy5zY3NzIiwiL1VzZXJzL2RhdmlkaHVlYm5lci9Db2RlL1NQQXMvcG9tb2Rvci9zcmMvYXBwL3NldHRpbmdzL2NvbXBvbmVudHMvc2V0dGluZ3MtY29udGFpbmVyL3NldHRpbmdzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLG1CQUFtQjtBQW1CbkIsaUNBQWlDO0FBSWpDLGdCQUFnQjtBQThCaEIscUJBQXFCO0FBRXJCO0VBQWEsYUFBWSxFQUFJO0FBQzdCO0VBQ0UsVUFBUztFQUNULGtEQUFpRCxFQWNsRDtBQWhCRDtJQUtJLHNCQUFxQjtJQUNyQixlQXpEVyxFQThEWjtBQVhIO01BU00sZUFBYyxFQUNmO0FBVkw7SUFjSSxrQkFBaUIsRUFDbEI7QUNyRUg7RUFDRSxtQkFBa0IsRUFrQm5CO0FBbkJEO0lBSUksZURDYSxFQ0FkO0FBTEg7SUFRSSxtQkFBa0I7SUFDbEIsaUJBQWdCO0lBQ2hCLGFBQVksRUFRYjtBQWxCSDtNQWNRLG9CQUFtQjtNQUNuQixhQUFZLEVBQ2IiLCJmaWxlIjoic3JjL2FwcC9zZXR0aW5ncy9jb21wb25lbnRzL3NldHRpbmdzLWNvbnRhaW5lci9zZXR0aW5ncy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qKiogVmFyaWFibGVzICoqKi9cblxuJHNvZnRCbHVlOiAjMDBhOWZmO1xuJHBvbUNvbG9yOiAjZmY2ODY4O1xuJG1lbGxvdzogI2ZmYzI3MDtcbiRicmVhazogI0ZGN0YxQztcbiRkYXJrZXJCYWNrZ3JvdW5kOiAjMzMzO1xuJHByaW1hcnk6ICMzRTUxQjU7XG4kcHJpbWFyeUxpZ2h0ZXI6ICM3ODgxYjU7XG4kbGlnaHRPbkJyZWFrOiAjZmZmYWVmO1xuJGxpZ2h0UHJpbWFyeTogI2RmZWZmZjtcblxuJGxpZ2h0R3JleTogI2FhYTtcbiRncmV5OiAjNzc3O1xuJHdoaXRlOiAjZmZmO1xuJGJsYWNrOiAjMDAwO1xuJGFsbW9zdEJsYWNrOiAjMjIyO1xuJGRhcmtpc2hQdXJwbGU6ICM2NzQ4ZDg7XG5cbi8qKiogTWVkaWEgUXVlcnkgQnJlYWtwb2ludHMgKioqL1xuJHNtQnJlYWtwb2ludDogNzY3cHg7XG4keHNCcmVha3BvaW50OiA0NjdweDtcblxuLyoqKiBNaXhpbnMgKioqL1xuXG5AbWl4aW4gdHJhbnNpdGlvbigkZHVyYXRpb24pIHtcbiAgLXdlYmtpdC10cmFuc2l0aW9uOiAkZHVyYXRpb247XG4gIC1tb3otdHJhbnNpdGlvbjogJGR1cmF0aW9uO1xuICAtbXMtdHJhbnNpdGlvbjogJGR1cmF0aW9uO1xuICAtby10cmFuc2l0aW9uOiAkZHVyYXRpb247XG4gIHRyYW5zaXRpb246ICRkdXJhdGlvbjtcbn1cblxuQG1peGluIGJveC1zaGFkb3coJHB4LCAkcHgyLCAkY29sb3IpIHtcbiAgYm94LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLW1vei1ib3gtc2hhZG93OiAkcHggJHB4ICRweDIgJGNvbG9yO1xuICAtd2Via2l0LWJveC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG4gIC1vLWJveC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG59XG5cbkBtaXhpbiB0ZXh0LXNoYWRvdygkcHgsICRweDIsICRjb2xvcikge1xuICB0ZXh0LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLW1vei10ZXh0LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLXdlYmtpdC10ZXh0LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLW8tdGV4dC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG59XG5cbkBtaXhpbiBib3JkZXItcmFkaXVzKCRyYWRpdXMpIHtcbiAgYm9yZGVyLXJhZGl1czogJHJhZGl1cztcbiAgLXdlYmtpdC1ib3JkZXItcmFkaXVzOiAkcmFkaXVzO1xuICAtbW96LWJvcmRlci1yYWRpdXM6ICRyYWRpdXM7XG59XG5cbi8qKiogTWFpbiBTdHlsZXMgKioqL1xuXG5odG1sLCBib2R5IHsgaGVpZ2h0OiAxMDAlOyB9XG5ib2R5IHtcbiAgbWFyZ2luOiAwO1xuICBmb250LWZhbWlseTogUm9ib3RvLCBcIkhlbHZldGljYSBOZXVlXCIsIHNhbnMtc2VyaWY7XG5cbiAgYSB7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGNvbG9yOiAkYnJlYWs7XG5cbiAgICAmOmhvdmVyIHtcbiAgICAgIGNvbG9yOiAjYmU0NzBjO1xuICAgIH1cbiAgfVxuXG4gIC5idG4tbGFyZ2Uge1xuICAgIGZvbnQtc2l6ZTogMS4ycmVtO1xuICB9XG59XG4iLCJAaW1wb3J0IFwiLi4vLi4vLi4vLi4vc3R5bGVzXCI7XG5cbi5zZXR0aW5ncy1wYWdlIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuXG4gIC5oZWFkZXItdGV4dCB7XG4gICAgY29sb3I6ICRwcmltYXJ5O1xuICB9XG5cbiAgLnNldHRpbmdzLWZvcm0ge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBtYXgtd2lkdGg6IDUwcmVtO1xuICAgIG1hcmdpbjogYXV0bztcblxuICAgIC5zZXR0aW5ncy1idXR0b24tZ3JvdXAge1xuICAgICAgYnV0dG9uIHtcbiAgICAgICAgbWFyZ2luOiAwLjVyZW0gMXJlbTtcbiAgICAgICAgd2lkdGg6IDEwcmVtO1xuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl19 */"
 
 /***/ }),
 
-/***/ "./src/app/settings/settings.component.ts":
-/*!************************************************!*\
-  !*** ./src/app/settings/settings.component.ts ***!
-  \************************************************/
+/***/ "./src/app/settings/components/settings-container/settings.component.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/settings/components/settings-container/settings.component.ts ***!
+  \******************************************************************************/
 /*! exports provided: SettingsComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -798,11 +798,22 @@ module.exports = "/*** Variables ***/\n/*** Media Query Breakpoints ***/\n/*** M
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SettingsComponent", function() { return SettingsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _shared_services_settings_settings_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/services/settings/settings.service */ "./src/app/shared/services/settings/settings.service.ts");
+/* harmony import */ var _shared_services_settings_settings_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/services/settings/settings.service */ "./src/app/shared/services/settings/settings.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _shared_services_timer_timer_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/services/timer/timer.service */ "./src/app/shared/services/timer/timer.service.ts");
-/* harmony import */ var _shared_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/services/auth/auth.service */ "./src/app/shared/services/auth/auth.service.ts");
+/* harmony import */ var _shared_services_timer_timer_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../shared/services/timer/timer.service */ "./src/app/shared/services/timer/timer.service.ts");
+/* harmony import */ var _shared_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/services/auth/auth.service */ "./src/app/shared/services/auth/auth.service.ts");
 /* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm5/ngx-spinner.js");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -864,11 +875,16 @@ var SettingsComponent = /** @class */ (function () {
             timerLength: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getTimerLength() / 60),
             breakLength: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getBreakLength() / 60),
             bumperLengthInMinutes: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getBumperLengthInMinutes()),
-            useTimerBumpers: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getUseTimerBumpers())
+            useTimerBumpers: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getUseTimerBumpers()),
+            tasksLinkedToTimer: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getTasksLinkedToTimer()),
+            moveCompletedTaskToCompletedListTimeInMin: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getMoveCompletedTaskToCompletedListTimeInMin()),
+            completedTaskExpirationInDays: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.settingsService.getCompletedTaskExpirationInDays()),
         };
+        this.loading = false;
     }
     SettingsComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.spinner.spinnerObservable.subscribe(function (loading) { return _this.loading = loading; });
         this.spinner.show();
         this.auth.user$.subscribe(function (user) {
             if (user) {
@@ -886,21 +902,33 @@ var SettingsComponent = /** @class */ (function () {
     };
     SettingsComponent.prototype.onSaveSettings = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var updatedUserSettings;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.settingsService.updateUserSettings({
-                            timerLength: this.currentSettings.timerLength.value,
-                            breakLength: this.currentSettings.breakLength.value,
-                            bumperLengthInMinutes: this.currentSettings.bumperLengthInMinutes.value,
-                            useTimerBumpers: this.currentSettings.useTimerBumpers.value,
-                            tasksLinkedToTimer: true
-                        }, this.currentUser.uid)];
+                    case 0:
+                        updatedUserSettings = this.generateUserSettingsRequestFromForm();
+                        return [4 /*yield*/, this.settingsService.updateUserSettings(updatedUserSettings, this.currentUser.uid)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, this.timerService.resetTimer()];
                 }
             });
         });
+    };
+    SettingsComponent.prototype.onRestoreDefaults = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
+                return [2 /*return*/, this.onSaveSettings()];
+            });
+        });
+    };
+    SettingsComponent.prototype.shouldDisableSaveButton = function () {
+        return !this.currentSettings.timerLength.value
+            || !this.currentSettings.breakLength.value
+            || !this.currentSettings.moveCompletedTaskToCompletedListTimeInMin.value
+            || !this.currentSettings.completedTaskExpirationInDays.value
+            || (this.currentSettings.useTimerBumpers.value && !this.currentSettings.bumperLengthInMinutes.value);
     };
     SettingsComponent.prototype.updateSettingsForm = function (settings) {
         for (var setting in settings) {
@@ -909,11 +937,20 @@ var SettingsComponent = /** @class */ (function () {
             }
         }
     };
+    SettingsComponent.prototype.generateUserSettingsRequestFromForm = function () {
+        var request = __assign({}, this.settingsService.currentSettings);
+        for (var setting in this.currentSettings) {
+            if (this.currentSettings.hasOwnProperty(setting)) {
+                request[setting] = this.currentSettings[setting].value;
+            }
+        }
+        return request;
+    };
     SettingsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'pm-settings',
-            template: __webpack_require__(/*! ./settings.component.html */ "./src/app/settings/settings.component.html"),
-            styles: [__webpack_require__(/*! ./settings.component.scss */ "./src/app/settings/settings.component.scss")]
+            template: __webpack_require__(/*! ./settings.component.html */ "./src/app/settings/components/settings-container/settings.component.html"),
+            styles: [__webpack_require__(/*! ./settings.component.scss */ "./src/app/settings/components/settings-container/settings.component.scss")]
         }),
         __metadata("design:paramtypes", [_shared_services_settings_settings_service__WEBPACK_IMPORTED_MODULE_1__["SettingsService"],
             _shared_services_timer_timer_service__WEBPACK_IMPORTED_MODULE_3__["TimerService"],
@@ -921,6 +958,73 @@ var SettingsComponent = /** @class */ (function () {
             ngx_spinner__WEBPACK_IMPORTED_MODULE_5__["NgxSpinnerService"]])
     ], SettingsComponent);
     return SettingsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/settings/components/settings-form/settings-form.component.html":
+/*!********************************************************************************!*\
+  !*** ./src/app/settings/components/settings-form/settings-form.component.html ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<mat-form-field>\n  <input matInput\n         type=\"number\"\n         placeholder=\"Timer length in minutes\"\n         name=\"timerLength\"\n         [formControl]=\"currentSettings.timerLength\">\n</mat-form-field>\n<div>\n  <mat-form-field>\n    <input matInput\n           type=\"number\"\n           placeholder=\"Recharge length in minutes\"\n           name=\"breakLength\"\n           [formControl]=\"currentSettings.breakLength\">\n  </mat-form-field>\n</div>\n<div class=\"checkbox-field\">\n  <mat-checkbox name=\"useTimerBumpers\" [formControl]=\"currentSettings.useTimerBumpers\">Use Timer Bumpers?</mat-checkbox>\n</div>\n<mat-form-field class=\"shorter-number-field\" *ngIf=\"currentSettings.useTimerBumpers.value\">\n  <input\n    matInput\n    type=\"number\"\n    class=\"shorter-number-field\"\n    placeholder=\"Timer bumper length in minutes\"\n    name=\"bumperLengthInMinutes\"\n    [formControl]=\"currentSettings.bumperLengthInMinutes\">\n</mat-form-field>\n<div class=\"checkbox-field\">\n  <mat-checkbox name=\"tasksLinkedToTimer\" [formControl]=\"currentSettings.tasksLinkedToTimer\">Link highest priority Task to Timer?</mat-checkbox>\n</div>\n<mat-form-field class=\"shorter-number-field\">\n  <input matInput\n         type=\"number\"\n         class=\"shorter-number-field\"\n         placeholder=\"Number of minutes before Completed Tasks show up on Completed Task List\"\n         name=\"moveCompletedTaskToCompletedListTimeInMin\"\n         [formControl]=\"currentSettings.moveCompletedTaskToCompletedListTimeInMin\">\n</mat-form-field>\n<mat-form-field class=\"shorter-number-field\">\n  <input matInput\n         type=\"number\"\n         class=\"shorter-number-field\"\n         placeholder=\"Number of days before Completed Tasks expire and get deleted\"\n         name=\"completedTaskExpirationInDays\"\n         [formControl]=\"currentSettings.completedTaskExpirationInDays\">\n</mat-form-field>\n"
+
+/***/ }),
+
+/***/ "./src/app/settings/components/settings-form/settings-form.component.scss":
+/*!********************************************************************************!*\
+  !*** ./src/app/settings/components/settings-form/settings-form.component.scss ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/*** Variables ***/\n/*** Media Query Breakpoints ***/\n/*** Mixins ***/\n/*** Main Styles ***/\nhtml, body {\n  height: 100%; }\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif; }\nbody a {\n    text-decoration: none;\n    color: #FF7F1C; }\nbody a:hover {\n      color: #be470c; }\nbody .btn-large {\n    font-size: 1.2rem; }\n.checkbox-field {\n  margin: 1rem 0 2rem 0; }\nmat-form-field {\n  min-width: 70%;\n  text-align: center;\n  font-size: 1.25rem;\n  color: #3E51B5; }\n.shorter-number-field {\n  width: 10rem; }\ninput {\n  text-align: center; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9kYXZpZGh1ZWJuZXIvQ29kZS9TUEFzL3BvbW9kb3Ivc3JjL3N0eWxlcy5zY3NzIiwiL1VzZXJzL2RhdmlkaHVlYm5lci9Db2RlL1NQQXMvcG9tb2Rvci9zcmMvYXBwL3NldHRpbmdzL2NvbXBvbmVudHMvc2V0dGluZ3MtZm9ybS9zZXR0aW5ncy1mb3JtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLG1CQUFtQjtBQW1CbkIsaUNBQWlDO0FBSWpDLGdCQUFnQjtBQThCaEIscUJBQXFCO0FBRXJCO0VBQWEsYUFBWSxFQUFJO0FBQzdCO0VBQ0UsVUFBUztFQUNULGtEQUFpRCxFQWNsRDtBQWhCRDtJQUtJLHNCQUFxQjtJQUNyQixlQXpEVyxFQThEWjtBQVhIO01BU00sZUFBYyxFQUNmO0FBVkw7SUFjSSxrQkFBaUIsRUFDbEI7QUNyRUg7RUFDRSxzQkFBcUIsRUFDdEI7QUFFRDtFQUNFLGVBQWM7RUFDZCxtQkFBa0I7RUFDbEIsbUJBQWtCO0VBQ2xCLGVESGUsRUNJaEI7QUFFRDtFQUNFLGFBQVksRUFDYjtBQUVEO0VBQ0UsbUJBQWtCLEVBQ25CIiwiZmlsZSI6InNyYy9hcHAvc2V0dGluZ3MvY29tcG9uZW50cy9zZXR0aW5ncy1mb3JtL3NldHRpbmdzLWZvcm0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKioqIFZhcmlhYmxlcyAqKiovXG5cbiRzb2Z0Qmx1ZTogIzAwYTlmZjtcbiRwb21Db2xvcjogI2ZmNjg2ODtcbiRtZWxsb3c6ICNmZmMyNzA7XG4kYnJlYWs6ICNGRjdGMUM7XG4kZGFya2VyQmFja2dyb3VuZDogIzMzMztcbiRwcmltYXJ5OiAjM0U1MUI1O1xuJHByaW1hcnlMaWdodGVyOiAjNzg4MWI1O1xuJGxpZ2h0T25CcmVhazogI2ZmZmFlZjtcbiRsaWdodFByaW1hcnk6ICNkZmVmZmY7XG5cbiRsaWdodEdyZXk6ICNhYWE7XG4kZ3JleTogIzc3NztcbiR3aGl0ZTogI2ZmZjtcbiRibGFjazogIzAwMDtcbiRhbG1vc3RCbGFjazogIzIyMjtcbiRkYXJraXNoUHVycGxlOiAjNjc0OGQ4O1xuXG4vKioqIE1lZGlhIFF1ZXJ5IEJyZWFrcG9pbnRzICoqKi9cbiRzbUJyZWFrcG9pbnQ6IDc2N3B4O1xuJHhzQnJlYWtwb2ludDogNDY3cHg7XG5cbi8qKiogTWl4aW5zICoqKi9cblxuQG1peGluIHRyYW5zaXRpb24oJGR1cmF0aW9uKSB7XG4gIC13ZWJraXQtdHJhbnNpdGlvbjogJGR1cmF0aW9uO1xuICAtbW96LXRyYW5zaXRpb246ICRkdXJhdGlvbjtcbiAgLW1zLXRyYW5zaXRpb246ICRkdXJhdGlvbjtcbiAgLW8tdHJhbnNpdGlvbjogJGR1cmF0aW9uO1xuICB0cmFuc2l0aW9uOiAkZHVyYXRpb247XG59XG5cbkBtaXhpbiBib3gtc2hhZG93KCRweCwgJHB4MiwgJGNvbG9yKSB7XG4gIGJveC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG4gIC1tb3otYm94LXNoYWRvdzogJHB4ICRweCAkcHgyICRjb2xvcjtcbiAgLXdlYmtpdC1ib3gtc2hhZG93OiAkcHggJHB4ICRweDIgJGNvbG9yO1xuICAtby1ib3gtc2hhZG93OiAkcHggJHB4ICRweDIgJGNvbG9yO1xufVxuXG5AbWl4aW4gdGV4dC1zaGFkb3coJHB4LCAkcHgyLCAkY29sb3IpIHtcbiAgdGV4dC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG4gIC1tb3otdGV4dC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG4gIC13ZWJraXQtdGV4dC1zaGFkb3c6ICRweCAkcHggJHB4MiAkY29sb3I7XG4gIC1vLXRleHQtc2hhZG93OiAkcHggJHB4ICRweDIgJGNvbG9yO1xufVxuXG5AbWl4aW4gYm9yZGVyLXJhZGl1cygkcmFkaXVzKSB7XG4gIGJvcmRlci1yYWRpdXM6ICRyYWRpdXM7XG4gIC13ZWJraXQtYm9yZGVyLXJhZGl1czogJHJhZGl1cztcbiAgLW1vei1ib3JkZXItcmFkaXVzOiAkcmFkaXVzO1xufVxuXG4vKioqIE1haW4gU3R5bGVzICoqKi9cblxuaHRtbCwgYm9keSB7IGhlaWdodDogMTAwJTsgfVxuYm9keSB7XG4gIG1hcmdpbjogMDtcbiAgZm9udC1mYW1pbHk6IFJvYm90bywgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBzYW5zLXNlcmlmO1xuXG4gIGEge1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICBjb2xvcjogJGJyZWFrO1xuXG4gICAgJjpob3ZlciB7XG4gICAgICBjb2xvcjogI2JlNDcwYztcbiAgICB9XG4gIH1cblxuICAuYnRuLWxhcmdlIHtcbiAgICBmb250LXNpemU6IDEuMnJlbTtcbiAgfVxufVxuIiwiQGltcG9ydCBcIi4uLy4uLy4uLy4uL3N0eWxlc1wiO1xuXG4uY2hlY2tib3gtZmllbGQge1xuICBtYXJnaW46IDFyZW0gMCAycmVtIDA7XG59XG5cbm1hdC1mb3JtLWZpZWxkIHtcbiAgbWluLXdpZHRoOiA3MCU7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgZm9udC1zaXplOiAxLjI1cmVtO1xuICBjb2xvcjogJHByaW1hcnk7XG59XG5cbi5zaG9ydGVyLW51bWJlci1maWVsZCB7XG4gIHdpZHRoOiAxMHJlbTtcbn1cblxuaW5wdXQge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG4iXX0= */"
+
+/***/ }),
+
+/***/ "./src/app/settings/components/settings-form/settings-form.component.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/settings/components/settings-form/settings-form.component.ts ***!
+  \******************************************************************************/
+/*! exports provided: SettingsFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SettingsFormComponent", function() { return SettingsFormComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var SettingsFormComponent = /** @class */ (function () {
+    function SettingsFormComponent() {
+    }
+    SettingsFormComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], SettingsFormComponent.prototype, "currentSettings", void 0);
+    SettingsFormComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'pm-settings-form',
+            template: __webpack_require__(/*! ./settings-form.component.html */ "./src/app/settings/components/settings-form/settings-form.component.html"),
+            styles: [__webpack_require__(/*! ./settings-form.component.scss */ "./src/app/settings/components/settings-form/settings-form.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SettingsFormComponent);
+    return SettingsFormComponent;
 }());
 
 
@@ -939,10 +1043,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SettingsModule", function() { return SettingsModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _settings_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settings.component */ "./src/app/settings/settings.component.ts");
+/* harmony import */ var _components_settings_container_settings_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/settings-container/settings.component */ "./src/app/settings/components/settings-container/settings.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm5/ngx-spinner.js");
+/* harmony import */ var _components_settings_form_settings_form_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/settings-form/settings-form.component */ "./src/app/settings/components/settings-form/settings-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -955,12 +1060,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var SettingsModule = /** @class */ (function () {
     function SettingsModule() {
     }
     SettingsModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            declarations: [_settings_component__WEBPACK_IMPORTED_MODULE_2__["SettingsComponent"]],
+            declarations: [_components_settings_container_settings_component__WEBPACK_IMPORTED_MODULE_2__["SettingsComponent"], _components_settings_form_settings_form_component__WEBPACK_IMPORTED_MODULE_6__["SettingsFormComponent"]],
             imports: [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatFormFieldModule"],
@@ -1469,7 +1575,9 @@ var SettingsService = /** @class */ (function () {
             breakLength: 5,
             bumperLengthInMinutes: 2,
             useTimerBumpers: false,
-            tasksLinkedToTimer: true
+            tasksLinkedToTimer: true,
+            moveCompletedTaskToCompletedListTimeInMin: 15,
+            completedTaskExpirationInDays: 7
         };
         this.currentSettings = __assign({}, this.defaultSettings);
         this.currentSettingsSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](this.currentSettings);
@@ -1489,6 +1597,19 @@ var SettingsService = /** @class */ (function () {
     };
     SettingsService.prototype.getUseTimerBumpers = function () {
         return this.currentSettings ? this.currentSettings.useTimerBumpers : this.defaultSettings.useTimerBumpers;
+    };
+    SettingsService.prototype.getTasksLinkedToTimer = function () {
+        return this.currentSettings ? this.currentSettings.tasksLinkedToTimer : this.defaultSettings.tasksLinkedToTimer;
+    };
+    SettingsService.prototype.getMoveCompletedTaskToCompletedListTimeInMin = function () {
+        return this.currentSettings
+            ? this.currentSettings.moveCompletedTaskToCompletedListTimeInMin
+            : this.defaultSettings.moveCompletedTaskToCompletedListTimeInMin;
+    };
+    SettingsService.prototype.getCompletedTaskExpirationInDays = function () {
+        return this.currentSettings
+            ? this.currentSettings.completedTaskExpirationInDays
+            : this.defaultSettings.completedTaskExpirationInDays;
     };
     SettingsService.prototype.updateUserSettings = function (newUserSettings, userUid) {
         return this.dataService.updateItem("settings/" + userUid, newUserSettings);
@@ -1531,6 +1652,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _data_data_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../data/data.service */ "./src/app/shared/services/data/data.service.ts");
+/* harmony import */ var _settings_settings_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../settings/settings.service */ "./src/app/shared/services/settings/settings.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1546,10 +1668,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var TaskService = /** @class */ (function () {
-    function TaskService(auth, dataService) {
+    function TaskService(auth, dataService, settingsService) {
         this.auth = auth;
         this.dataService = dataService;
+        this.settingsService = settingsService;
     }
     TaskService.prototype.ngOnInit = function () {
         var _this = this;
@@ -1588,11 +1712,13 @@ var TaskService = /** @class */ (function () {
     };
     // Returns true if the task should be placed in the completedTasks list
     TaskService.prototype.checkTaskCompleted = function (task) {
+        var softExpirationInMin = this.settingsService.getMoveCompletedTaskToCompletedListTimeInMin();
         // Check if the soft expiration date for the task is before the time that this function is called
-        return moment__WEBPACK_IMPORTED_MODULE_4__(task.dateCompleted).add(15, 'minutes').isBefore(new Date());
+        return moment__WEBPACK_IMPORTED_MODULE_4__(task.dateCompleted).add(softExpirationInMin, 'minutes').isBefore(new Date());
     };
     TaskService.prototype.taskIsExpired = function (task) {
-        return moment__WEBPACK_IMPORTED_MODULE_4__(task.dateCompleted).add(7, 'days').isBefore(new Date());
+        var hardExpirationInMin = this.settingsService.getCompletedTaskExpirationInDays();
+        return moment__WEBPACK_IMPORTED_MODULE_4__(task.dateCompleted).add(hardExpirationInMin, 'days').isBefore(new Date());
     };
     // Can be used as compare function in Array.sort for completedTaskList
     TaskService.prototype.compareDateCompleted = function (taskA, taskB) {
@@ -1618,7 +1744,8 @@ var TaskService = /** @class */ (function () {
             providedIn: 'root'
         }),
         __metadata("design:paramtypes", [_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"],
-            _data_data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"]])
+            _data_data_service__WEBPACK_IMPORTED_MODULE_5__["DataService"],
+            _settings_settings_service__WEBPACK_IMPORTED_MODULE_6__["SettingsService"]])
     ], TaskService);
     return TaskService;
 }());
@@ -2241,7 +2368,7 @@ var TaskModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"timer-page-container\" [class.container-timer-on]=\"timerOn\" [class.container-on-break]=\"onBreak && timerOn\">\n  <h2 class=\"header-text\" *ngIf=\"!onBreak && !timerOn\">Timer</h2>\n  <h2 class=\"header-text\" *ngIf=\"!onBreak && timerOn && !currentTask\">Focus</h2>\n  <h2 class=\"header-text\" *ngIf=\"!onBreak && timerOn\">{{currentTask?.description}}</h2>\n  <h2 class=\"on-break\" *ngIf=\"onBreak && !timerOn\">Recharge</h2>\n  <h2 class=\"on-break\" *ngIf=\"onBreak && timerOn\">Recharging...</h2>\n  <section class=\"timer-container\">\n    <pm-timer></pm-timer>\n  </section>\n  <h4>Completed Timers</h4>\n  <hr class=\"completed-timers-hr\">\n  <section class=\"timer-history-container\">\n    <pm-timer-history-container></pm-timer-history-container>\n  </section>\n</div>\n"
+module.exports = "<div class=\"timer-page-container\" [class.container-timer-on]=\"timerOn\" [class.container-on-break]=\"onBreak && timerOn\">\n  <h2 class=\"header-text\" *ngIf=\"!onBreak && !timerOn\">Timer</h2>\n  <h2 class=\"header-text\" *ngIf=\"!onBreak && timerOn && (!currentTask || !settingsService.currentSettings.tasksLinkedToTimer)\">Focus</h2>\n  <h2 class=\"header-text\" *ngIf=\"!onBreak && timerOn && settingsService.currentSettings.tasksLinkedToTimer\">{{currentTask?.description}}</h2>\n  <h2 class=\"on-break\" *ngIf=\"onBreak && !timerOn\">Recharge</h2>\n  <h2 class=\"on-break\" *ngIf=\"onBreak && timerOn\">Recharging...</h2>\n  <section class=\"timer-container\">\n    <pm-timer></pm-timer>\n  </section>\n  <h4>Completed Timers</h4>\n  <hr class=\"completed-timers-hr\">\n  <section class=\"timer-history-container\">\n    <pm-timer-history-container></pm-timer-history-container>\n  </section>\n</div>\n"
 
 /***/ }),
 
@@ -2269,6 +2396,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _shared_services_timer_timer_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/services/timer/timer.service */ "./src/app/shared/services/timer/timer.service.ts");
 /* harmony import */ var _shared_services_task_task_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../shared/services/task/task.service */ "./src/app/shared/services/task/task.service.ts");
+/* harmony import */ var _shared_services_settings_settings_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../shared/services/settings/settings.service */ "./src/app/shared/services/settings/settings.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2281,10 +2409,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var TimerContainerComponent = /** @class */ (function () {
-    function TimerContainerComponent(timerService, taskService) {
+    function TimerContainerComponent(timerService, taskService, settingsService) {
         this.timerService = timerService;
         this.taskService = taskService;
+        this.settingsService = settingsService;
         this.onBreak = false;
         this.timerOn = false;
     }
@@ -2304,7 +2434,8 @@ var TimerContainerComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./timer-container.component.scss */ "./src/app/timer/components/timer-container/timer-container.component.scss")]
         }),
         __metadata("design:paramtypes", [_shared_services_timer_timer_service__WEBPACK_IMPORTED_MODULE_1__["TimerService"],
-            _shared_services_task_task_service__WEBPACK_IMPORTED_MODULE_2__["TaskService"]])
+            _shared_services_task_task_service__WEBPACK_IMPORTED_MODULE_2__["TaskService"],
+            _shared_services_settings_settings_service__WEBPACK_IMPORTED_MODULE_3__["SettingsService"]])
     ], TimerContainerComponent);
     return TimerContainerComponent;
 }());
