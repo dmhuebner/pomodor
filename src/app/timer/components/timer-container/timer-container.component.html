@@ -1,7 +1,9 @@
 <div class="timer-page-container" [class.container-timer-on]="timerOn" [class.container-on-break]="onBreak && timerOn">
   <h2 class="header-text" *ngIf="!onBreak && !timerOn">Timer</h2>
   <h2 class="header-text" *ngIf="!onBreak && timerOn && (!currentTask || !settingsService.currentSettings.tasksLinkedToTimer)">Focus</h2>
-  <h2 class="header-text" *ngIf="!onBreak && timerOn && settingsService.currentSettings.tasksLinkedToTimer">{{currentTask?.description}}</h2>
+  <h2 class="header-text" *ngIf="!onBreak && timerOn && settingsService.currentSettings.tasksLinkedToTimer">
+    <mat-checkbox id="complete-task-checkbox" [checked]="currentTask?.completed" (change)="completeTask(currentTask)">{{currentTask?.description}}</mat-checkbox>
+  </h2>
   <h2 class="on-break" *ngIf="onBreak && !timerOn">Recharge</h2>
   <h2 class="on-break" *ngIf="onBreak && timerOn">Recharging...</h2>
   <section class="timer-container">
