@@ -1,3 +1,5 @@
+@import '~ngx-toastr/toastr.css';
+
 /*** Variables ***/
 
 $softBlue: #00a9ff;
@@ -69,5 +71,24 @@ body {
 
   .btn-large {
     font-size: 1.2rem;
+  }
+}
+
+///*** Toastr Styles ***/
+
+.toast-container {
+  margin-top: 3.5rem;
+
+  .toast-success {
+    background-color: #12a37a;
+  }
+  .toast-error {
+    background-color: #BD362F;
+  }
+  .toast-info {
+    background-color: #2F96B4;
+  }
+  .toast-warning {
+    background-color: #F89406;
   }
 }

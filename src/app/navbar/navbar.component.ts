@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../shared/services/auth/auth.service';
 import { TimerService } from '../shared/services/timer/timer.service';
 import { UsbLightService } from '../shared/services/usbLight/usb-light.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'pm-navbar',
@@ -24,7 +25,8 @@ export class NavbarComponent implements OnInit {
               private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
               public authService: AuthService,
               private timerService: TimerService,
-              private usbLightService: UsbLightService) {
+              private usbLightService: UsbLightService,
+              private toastr: ToastrService) {
 
     iconRegistry.addSvgIcon(
       'pomodor',
@@ -35,12 +37,14 @@ export class NavbarComponent implements OnInit {
     this.usbLightService.setLight('ff9900').subscribe();
   }
 
-  login(): Promise<boolean> {
-    return this.authService.login();
+  async loginUser() {
+    await this.authService.login();
+    this.toastr.success(null, 'Logged In!');
   }
 
   async logout(): Promise<void> {
     this.timerService.resetTimer();
+    this.toastr.success(null, 'Logged Out');
     return this.authService.logout();
   }
 
