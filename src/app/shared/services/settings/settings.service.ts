@@ -1,47 +1,60 @@
 import { Injectable } from '@angular/core';
+import { DataService } from '../data/data.service';
+import { Settings } from '../../interfaces/settings.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
-  // Defaults set
-  timerLengthInSeconds = 1500;
-  breakLengthInSeconds = 300;
-  bumperLengthInMinutes = 2;
-  useTimerBumpers = false;
+  // Defaults settings
+  defaultSettings: Settings = {
+    timerLength: 25,
+    breakLength: 5,
+    bumperLengthInMinutes: 2,
+    useTimerBumpers: false,
+    tasksLinkedToTimer: true
+  };
 
-  constructor() { }
+  currentSettings: Settings = {...this.defaultSettings};
 
-  getTimerLength() {
-    return this.timerLengthInSeconds;
+  currentSettingsSubject: BehaviorSubject<Settings> = new BehaviorSubject<Settings>(this.currentSettings);
+  currentSettings$: Observable<Settings> = this.currentSettingsSubject.asObservable();
+
+  constructor(private dataService: DataService<Settings>) { }
+
+  getUserSettings$(userUid: string): Observable<Settings> {
+    return this.dataService.getItem$(`settings/${userUid}`);
   }
 
-  setTimerLengthInSeconds(seconds: number) {
-    this.timerLengthInSeconds = seconds * 60;
+  getTimerLength(): number {
+    return this.currentSettings ? this.currentSettings.timerLength * 60 : this.defaultSettings.timerLength * 60;
   }
 
   getBreakLength(): number {
-    return this.breakLengthInSeconds;
-  }
-
-  setBreakLengthInSeconds(seconds: number) {
-    this.breakLengthInSeconds = seconds * 60;
+    return this.currentSettings ? this.currentSettings.breakLength * 60 : this.defaultSettings.breakLength * 60;
   }
 
   getBumperLengthInMinutes(): number {
-    return this.bumperLengthInMinutes;
-  }
-
-  setBumperLengthInMinutes(minutes: number) {
-    this.bumperLengthInMinutes = minutes;
+    return this.currentSettings ? this.currentSettings.bumperLengthInMinutes : this.defaultSettings.bumperLengthInMinutes;
   }
 
   getUseTimerBumpers(): boolean {
-    return this.useTimerBumpers;
+    return this.currentSettings ? this.currentSettings.useTimerBumpers : this.defaultSettings.useTimerBumpers;
   }
 
-  setUseTimerBumpers(bool: boolean) {
-    this.useTimerBumpers = bool;
+  updateUserSettings(newUserSettings: Settings, userUid: string): Promise<void> {
+    return this.dataService.updateItem(`settings/${userUid}`, newUserSettings);
+  }
+
+  setCurrentSettings(settings: Settings) {
+    for (const setting in settings) {
+      if (settings.hasOwnProperty(setting)) {
+        this.currentSettings[setting] = settings[setting];
+      }
+    }
+
+    this.currentSettingsSubject.next(this.currentSettings);
   }
 }

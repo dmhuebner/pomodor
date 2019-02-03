@@ -1,8 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './shared/services/auth/auth.service';
+import { SettingsService } from './shared/services/settings/settings.service';
 
 @Component({
   selector: 'pm-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+
+  constructor(private authService: AuthService,
+              private settingsService: SettingsService) {}
+
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.settingsService.getUserSettings$(user.uid).subscribe(settings => {
+          if (settings) {
+            console.log('users settings from app.comp', settings);
+            this.settingsService.setCurrentSettings(settings);
+          } else {
+            this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
+          }
+        });
+      } else {
+        this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
+      }
+    });
+  }
+}

@@ -35,11 +35,11 @@ export class NavbarComponent implements OnInit {
     this.usbLightService.setLight('ff9900').subscribe();
   }
 
-  login() {
+  login(): Promise<boolean> {
     return this.authService.login();
   }
 
-  logout() {
+  async logout(): Promise<void> {
     this.timerService.resetTimer();
     return this.authService.logout();
   }

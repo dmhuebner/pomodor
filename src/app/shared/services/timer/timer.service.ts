@@ -1,9 +1,10 @@
 import {Injectable, OnInit} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
+import { CompletedTimer } from '../../interfaces/completedTimer.interface';
 import { SettingsService } from '../settings/settings.service';
 import { UsbLightService } from '../usbLight/usb-light.service';
 import { TimerPipe } from '../../pipes/timer.pipe';
+import { Settings } from '../../interfaces/settings.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class TimerService implements OnInit {
 
   timerOn: boolean;
   onBreak: boolean;
+  currentSettings: Settings = {...this.settingsService.defaultSettings};
 
   constructor(private settingsService: SettingsService,
               private usbLightService: UsbLightService) { }
@@ -39,6 +41,10 @@ export class TimerService implements OnInit {
     // Subscribe to subject observable and set value
     this.onBreak$.subscribe(val => this.onBreak = val);
     this.timerOn$.subscribe(val => this.timerOn = val);
+    this.settingsService.currentSettings$.subscribe(settings => {
+      this.currentSettings = settings;
+      this.setTimeLeft();
+    });
     this.currentTimerValue$.subscribe(val => this.timeLeft = val);
   }
 
@@ -104,6 +110,11 @@ export class TimerService implements OnInit {
     this.currentTimerValueSubject.next(this.timeLeft);
   }
 
+  setTimeLeft() {
+    this.timeLeft = this.onBreak ? this.settingsService.getBreakLength() : this.settingsService.getTimerLength();
+    this.currentTimerValueSubject.next(this.timeLeft);
+  }
+
   private handleTimerIsUp() {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
@@ -129,11 +140,6 @@ export class TimerService implements OnInit {
     this.updateAppTitleElement();
     // Set USB light to yellow
     this.usbLightService.setLight('ff9900').subscribe();
-  }
-
-  private setTimeLeft() {
-    this.timeLeft = this.onBreak ? this.settingsService.getBreakLength() : this.settingsService.getTimerLength();
-    this.currentTimerValueSubject.next(this.timeLeft);
   }
 
   // Updates title element based on timer via dom manipulation. If there is a better way, show me :)

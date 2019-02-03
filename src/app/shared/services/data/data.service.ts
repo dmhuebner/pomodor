@@ -15,10 +15,9 @@ export abstract class DataService<TypeI> {
     return collection.valueChanges();
   }
 
-  getItem$(itemPath: string): Observable<TypeI[]> {
-    let collection: AngularFirestoreCollection<TypeI>;
-    collection = this.afs.collection(itemPath, ref => ref);
-    return collection.valueChanges();
+  getItem$(itemPath: string): Observable<TypeI> {
+    const docRef: AngularFirestoreDocument<TypeI> = this.afs.doc(itemPath);
+    return docRef.valueChanges();
   }
 
   postNewItem(collectionPath: string, payload: object): Promise<void> {

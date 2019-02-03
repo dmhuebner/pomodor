@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import User from '../../interfaces/user.interface';
+import { DataService } from '../data/data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +15,13 @@ export class AuthService {
   user$: Observable<User>;
 
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore,
-              private router: Router) {
+              private router: Router,
+              private dataService: DataService<User>) {
 
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return this.dataService.getItem$(`users/${user.uid}`);
         } else {
           return of(null);
         }
@@ -30,27 +29,24 @@ export class AuthService {
     );
   }
 
-  async login() {
+  async login(): Promise<boolean> {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
-    this.router.navigate(['/timer']);
-    return this.updateUserData(credential.user);
+    await this.updateUserData(credential.user);
+    return this.router.navigate(['/timer']);
   }
 
-  async logout() {
-    await this.afAuth.auth.signOut();
-    this.router.navigate(['/']);
+  async logout(): Promise<void> {
+    await this.router.navigate(['/']);
+    return this.afAuth.auth.signOut();
   }
 
-  private updateUserData(user: User | any) {
-    // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument = this.afs.doc(`users/${user.uid}`);
-
-    const data = {
+  private updateUserData(user: User): Promise<void> {
+    const userData: User = {
       uid: user.uid,
       displayName: user.displayName ? user.displayName : 'Hello'
     };
 
-    userRef.set(data, { merge: true });
+    return this.dataService.updateItem(`users/${user.uid}`, userData);
   }
 }
