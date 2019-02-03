@@ -30,10 +30,12 @@ export class AuthService {
   }
 
   async login(): Promise<boolean> {
-    const provider = new auth.GoogleAuthProvider();
-    const credential = await this.afAuth.auth.signInWithPopup(provider);
-    await this.updateUserData(credential.user);
-    return this.router.navigate(['/timer']);
+    try {
+      const provider = new auth.GoogleAuthProvider();
+      const credential = await this.afAuth.auth.signInWithPopup(provider);
+      await this.updateUserData(credential.user);
+      return this.router.navigate(['/timer']);
+    } catch (error) {}
   }
 
   async logout(): Promise<void> {

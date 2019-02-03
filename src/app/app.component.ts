@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
       if (user) {
         this.settingsService.getUserSettings$(user.uid).subscribe(settings => {
           if (settings) {
-            console.log('users settings from app.comp', settings);
             this.settingsService.setCurrentSettings(settings);
           } else {
             this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
