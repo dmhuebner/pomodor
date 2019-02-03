@@ -30,6 +30,7 @@ import { TimerService } from './shared/services/timer/timer.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SettingsService } from './shared/services/settings/settings.service';
 import { TaskService } from './shared/services/task/task.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { TaskService } from './shared/services/task/task.service';
     BrowserAnimationsModule,
     LayoutModule,
     NgxSpinnerModule,
+    ToastrModule.forRoot(),
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -60,7 +62,7 @@ import { TaskService } from './shared/services/task/task.service';
     SharedModule,
     TimerModule,
     TaskModule,
-    SettingsModule
+    SettingsModule,
   ],
   providers: [
     AuthService,

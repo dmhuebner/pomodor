@@ -6,6 +6,7 @@ import Settings from '../../../shared/interfaces/settings.interface';
 import User from '../../../shared/interfaces/user.interface';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'pm-settings',
@@ -31,7 +32,8 @@ export class SettingsComponent implements OnInit {
   constructor(private settingsService: SettingsService,
               private timerService: TimerService,
               private auth: AuthService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.spinner.spinnerObservable.subscribe(loading => this.loading = loading);
@@ -53,11 +55,12 @@ export class SettingsComponent implements OnInit {
   async onSaveSettings(): Promise<void> {
     const updatedUserSettings: Settings = this.generateUserSettingsRequestFromForm();
     await this.settingsService.updateUserSettings(updatedUserSettings, this.currentUser.uid);
+    this.toastr.success(null, 'Settings Saved!');
     return this.timerService.resetTimer();
   }
 
   async onRestoreDefaults(): Promise<void> {
-    this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
+    await this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
     return this.onSaveSettings();
   }
 
