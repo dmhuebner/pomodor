@@ -28,6 +28,8 @@ import { SettingsModule } from './settings/settings.module';
 import { TaskModule } from './task/task.module';
 import { TimerService } from './shared/services/timer/timer.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { SettingsService } from './shared/services/settings/settings.service';
+import { TaskService } from './shared/services/task/task.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   providers: [
     AuthService,
-    TimerService
+    TimerService,
+    SettingsService,
+    TaskService
   ],
   bootstrap: [AppComponent]
 })
