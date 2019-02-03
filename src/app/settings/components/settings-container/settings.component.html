@@ -9,7 +9,7 @@
     <p style="font-size: 20px; color: #3E51B5">Loading Settings...</p>
   </ngx-spinner>
   <div class="settings-form" *ngIf="!loading">
-    <pm-settings-form [currentSettings]="currentSettings"></pm-settings-form>
+    <pm-settings-form [currentSettings]="currentSettings" [shouldShowBumperLengthField]="currentSettings.useTimerBumpers.value"></pm-settings-form>
     <div class="settings-button-group">
       <button type="button"
               class="save-settings"

@@ -17,7 +17,7 @@
 <div class="checkbox-field">
   <mat-checkbox name="useTimerBumpers" [formControl]="currentSettings.useTimerBumpers">Use Timer Bumpers?</mat-checkbox>
 </div>
-<mat-form-field class="shorter-number-field" *ngIf="currentSettings.useTimerBumpers.value">
+<mat-form-field class="shorter-number-field" *ngIf="shouldShowBumperLengthField">
   <input
     matInput
     type="number"
