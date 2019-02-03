@@ -56,6 +56,19 @@ export class SettingsComponent implements OnInit {
     return this.timerService.resetTimer();
   }
 
+  async onRestoreDefaults(): Promise<void> {
+    this.settingsService.setCurrentSettings(this.settingsService.defaultSettings);
+    return this.onSaveSettings();
+  }
+
+  shouldDisableSaveButton() {
+    return !this.currentSettings.timerLength.value
+      || !this.currentSettings.breakLength.value
+      || !this.currentSettings.moveCompletedTaskToCompletedListTimeInMin.value
+      || !this.currentSettings.completedTaskExpirationInDays.value
+      || (this.currentSettings.useTimerBumpers.value && !this.currentSettings.bumperLengthInMinutes.value);
+  }
+
   private updateSettingsForm(settings: Settings) {
     for (const setting in settings) {
       if (settings.hasOwnProperty(setting)) {

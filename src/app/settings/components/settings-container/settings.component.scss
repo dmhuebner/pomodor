@@ -11,5 +11,12 @@
     text-align: center;
     max-width: 50rem;
     margin: auto;
+
+    .settings-button-group {
+      button {
+        margin: 0.5rem 1rem;
+        width: 10rem;
+      }
+    }
   }
 }
