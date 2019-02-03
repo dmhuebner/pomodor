@@ -9,6 +9,7 @@ import Settings from '../../../shared/interfaces/settings.interface';
 export class SettingsFormComponent implements OnInit {
 
   @Input() currentSettings: Settings;
+  @Input() shouldShowBumperLengthField: boolean;
 
   constructor() { }
 
