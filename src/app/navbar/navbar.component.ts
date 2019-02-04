@@ -8,6 +8,7 @@ import { AuthService } from '../shared/services/auth/auth.service';
 import { TimerService } from '../shared/services/timer/timer.service';
 import { UsbLightService } from '../shared/services/usbLight/usb-light.service';
 import { ToastrService } from 'ngx-toastr';
+import User from '../shared/interfaces/user.interface';
 
 @Component({
   selector: 'pm-navbar',
@@ -20,6 +21,8 @@ export class NavbarComponent implements OnInit {
     .pipe(
       map(result => result.matches)
     );
+
+  currentUser: User;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
@@ -35,16 +38,17 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.usbLightService.setLight('ff9900').subscribe();
+    this.authService.user$.subscribe(user => this.currentUser = user);
   }
 
   async loginUser() {
     await this.authService.login();
-    this.toastr.success(null, 'Logged In!');
+    this.toastr.success(null, `${this.currentUser.displayName} Logged In!`);
   }
 
   async logout(): Promise<void> {
     this.timerService.resetTimer();
-    this.toastr.success(null, 'Logged Out');
+    this.toastr.success(null, `${this.currentUser.displayName} Logged Out`);
     return this.authService.logout();
   }
 
