@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
@@ -16,8 +16,8 @@ import { map } from 'rxjs/operators';
 })
 export class TaskListContainerComponent implements OnInit {
 
-  taskList: Task[] = [];
-  completedTaskList: Task[] = [];
+  tasksList: Task[] = [];
+  completedTasksList: Task[] = [];
   currentUser: User;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -37,7 +37,7 @@ export class TaskListContainerComponent implements OnInit {
     this.taskService.getTasks$().subscribe(tasks => {
       tasks = tasks ? tasks : [];
 
-      this.taskList = tasks.filter(task => {
+      this.tasksList = tasks.filter(task => {
         if (task.dateCompleted) {
           // Transform dateCompleted into a date if there is a toDate function (if its a Timestamp) - We might wanna change this...
           task.dateCompleted = typeof task.dateCompleted.toDate ? task.dateCompleted.toDate() : task.dateCompleted;
@@ -47,7 +47,7 @@ export class TaskListContainerComponent implements OnInit {
         }
       });
 
-      this.completedTaskList = tasks.filter(task => {
+      this.completedTasksList = tasks.filter(task => {
         if (task.dateCompleted) {
           if (this.taskService.taskIsExpired(task)) {
             this.taskService.deleteTask(this.currentUser.uid, task.id);
@@ -63,8 +63,32 @@ export class TaskListContainerComponent implements OnInit {
   }
 
   onNewTaskAdded(event): Promise<void> {
-    return this.taskService.postNewTask(event.userUid, event.newTask, this.taskList.length);
+    return this.taskService.postNewTask(this.currentUser.uid, event, this.tasksList.length);
   }
 
+  onTaskUpdated(task: Task) {
+    return this.taskService.updateTask(this.currentUser.uid, task);
+  }
 
+  onTaskDeleted(task: Task) {
+    return this.taskService.deleteTask(this.currentUser.uid, task.id);
+  }
+
+  toggleTaskComplete(task: Task): Promise<void> {
+    task.completed = !task.completed;
+    task.dateCompleted = task.completed ? new Date() : null;
+    return this.taskService.updateTask(this.currentUser.uid, task);
+  }
+
+  onDragEnded(): void {
+    // The timeout makes sure that the list has finished reordering before we start updating the order prop of each task doc in the db.
+    setTimeout(() => {
+      this.tasksList.forEach((task, index) => {
+        const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${this.currentUser.uid}/tasks/${task.id}`);
+        const updatedTask: Task = {...task, order: index};
+
+        userTasksRef.set(updatedTask);
+      });
+    });
+  }
 }

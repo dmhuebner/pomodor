@@ -7,11 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NewTaskComponent } from './components/new-task/new-task.component';
 
 // TODO make sure SharedModule is needed below
 
 @NgModule({
-  declarations: [TaskListContainerComponent, TaskListComponent],
+  declarations: [TaskListContainerComponent, TaskListComponent, NewTaskComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

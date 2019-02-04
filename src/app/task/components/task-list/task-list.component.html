@@ -1,11 +1,11 @@
 <div class="task-list-container">
   <div cdkDropList class="task-list" (cdkDropListDropped)="drop($event)">
-    <div class="task-item" *ngFor="let task of tasksList" cdkDrag (cdkDragDropped)="onDragEnded($event)">
+    <div class="task-item" *ngFor="let task of tasksList" cdkDrag (cdkDragDropped)="onDragEnded()">
       <div class="task-item-inner-container">
         <mat-checkbox [checked]="task.completed"
                       [class.completed]="task.completed"
                       labelPosition="after"
-                      (change)="completeTask(task)"
+                      (change)="onCompleteTask(task)"
                       *ngIf="!taskIsInEditMode(task)">
           {{task.description}}
         </mat-checkbox>
@@ -24,20 +24,4 @@
       <mat-icon class="drag-indicator-icon" cdkDragHandle *ngIf="deviceIsMobile">drag_indicator</mat-icon>
     </div>
   </div>
-  <form #newTaskForm>
-    <mat-form-field class="form-field-full-width">
-      <input matInput placeholder="Enter a task" [formControl]="newTask" autocomplete="off">
-    </mat-form-field>
-    <div class="task-button-group">
-      <button type="submit"
-              class="add-task"
-              aria-label="add task"
-              mat-raised-button
-              color="primary"
-              (click)="onAddTask()"
-              [disabled]="!newTask.value">
-        Add Task
-      </button>
-    </div>
-  </form>
 </div>
