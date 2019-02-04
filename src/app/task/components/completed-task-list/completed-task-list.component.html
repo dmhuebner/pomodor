@@ -1,0 +1,6 @@
+<section class="completed-tasks" *ngIf="completedTasksList?.length">
+  <div class="completed-task" *ngFor="let completedTask of completedTasksList">
+    <span class="completed-task-description">{{completedTask.description}}</span>
+    <span class="task-date-completed">{{completedTask.dateCompleted | date:'short'}}</span>
+  </div>
+</section>

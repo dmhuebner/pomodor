@@ -24,10 +24,5 @@
   </section>
   <h4 class="header-text">Completed Tasks</h4>
   <hr class="completed-tasks-hr">
-    <section class="completed-tasks" *ngIf="completedTasksList?.length">
-      <div class="completed-task" *ngFor="let task of completedTasksList">
-        <span class="completed-task-description">{{task.description}}</span>
-        <span class="task-date-completed">{{task.dateCompleted | date:'short'}}</span>
-      </div>
-    </section>
+  <pm-completed-task-list [completedTasksList]="completedTasksList"></pm-completed-task-list>
 </div>
