@@ -15,6 +15,7 @@ export class TaskListComponent implements OnInit {
 
   @Input() tasksList: Task[];
   @Input() currentUser: User;
+  @Input() deviceIsMobile: boolean;
 
   @Output() taskAdded: EventEmitter<Object> = new EventEmitter<Object>();
 

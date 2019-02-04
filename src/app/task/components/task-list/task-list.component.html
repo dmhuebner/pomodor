@@ -20,7 +20,8 @@
       </div>
       <mat-icon *ngIf="!taskIsInEditMode(task)" class="edit-description-icon" (click)="toggleEditMode(task)">edit</mat-icon>
       <mat-icon *ngIf="taskIsInEditMode(task)" class="save-edit-icon" (click)="toggleEditMode(task)">checkmark</mat-icon>
-      <mat-icon class="drag-indicator-icon" (click)="toggleEditMode(task)">drag_indicator</mat-icon>
+      <mat-icon class="drag-indicator-icon" *ngIf="!deviceIsMobile">drag_indicator</mat-icon>
+      <mat-icon class="drag-indicator-icon" cdkDragHandle *ngIf="deviceIsMobile">drag_indicator</mat-icon>
     </div>
   </div>
   <form #newTaskForm>
