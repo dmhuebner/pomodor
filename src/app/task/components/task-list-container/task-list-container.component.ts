@@ -63,7 +63,7 @@ export class TaskListContainerComponent implements OnInit {
   }
 
   onNewTaskAdded(event): Promise<void> {
-    return this.taskService.postNewTask(event.userUid, event.newTask, this.taskList.length);
+    return this.taskService.postNewTask(this.currentUser.uid, event, this.taskList.length);
   }
 
 

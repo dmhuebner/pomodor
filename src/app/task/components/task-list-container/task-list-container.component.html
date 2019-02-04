@@ -14,9 +14,9 @@
     </ngx-spinner>
     <pm-task-list [tasksList]="taskList"
                   [currentUser]="currentUser"
-                  [deviceIsMobile]="isHandset$ | async"
-                  (taskAdded)="onNewTaskAdded($event)">
+                  [deviceIsMobile]="isHandset$ | async">
     </pm-task-list>
+    <pm-new-task (taskAdded)="onNewTaskAdded($event)"></pm-new-task>
   </section>
   <h4 class="header-text">Completed Tasks</h4>
   <hr class="completed-tasks-hr">

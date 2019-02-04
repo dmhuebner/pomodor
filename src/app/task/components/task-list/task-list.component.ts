@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { FormControl } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Task from '../../../shared/interfaces/task.interface';
 import User from '../../../shared/interfaces/user.interface';
@@ -16,10 +15,6 @@ export class TaskListComponent implements OnInit {
   @Input() tasksList: Task[];
   @Input() currentUser: User;
   @Input() deviceIsMobile: boolean;
-
-  @Output() taskAdded: EventEmitter<Object> = new EventEmitter<Object>();
-
-  newTask: FormControl = new FormControl('');
   // TODO make interface for tasksInEditMode
   tasksInEditMode: object = {};
 
@@ -37,16 +32,6 @@ export class TaskListComponent implements OnInit {
 
   drop(event: CdkDragDrop<Task[]>) {
     moveItemInArray(this.tasksList, event.previousIndex, event.currentIndex);
-  }
-
-  onAddTask() {
-    const eventPayload = {
-      userUid: this.currentUser.uid,
-      newTask: this.newTask.value
-    };
-
-    this.taskAdded.emit(eventPayload);
-    this.newTask = new FormControl('');
   }
 
   onDragEnded(event): void {

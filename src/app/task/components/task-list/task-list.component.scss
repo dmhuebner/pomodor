@@ -70,16 +70,6 @@
   .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
-
-  .form-field-full-width {
-    width: 100%;
-  }
-
-  .task-button-group {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
 }
 
 ::ng-deep .cdk-drag-preview {

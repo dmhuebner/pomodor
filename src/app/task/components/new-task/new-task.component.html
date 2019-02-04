@@ -1,0 +1,16 @@
+<form #newTaskForm>
+  <mat-form-field class="form-field-full-width">
+    <input matInput placeholder="Enter a task" [formControl]="newTaskDesc" autocomplete="off">
+  </mat-form-field>
+  <div class="task-button-group">
+    <button type="submit"
+            class="add-task"
+            aria-label="add task"
+            mat-raised-button
+            color="primary"
+            (click)="onAddTask()"
+            [disabled]="!newTaskDesc.value">
+      Add Task
+    </button>
+  </div>
+</form>
