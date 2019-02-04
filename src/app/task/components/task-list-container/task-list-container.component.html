@@ -12,16 +12,20 @@
       fullScreen="false">
       <p style="font-size: 20px; color: #3E51B5">Loading...</p>
     </ngx-spinner>
-    <pm-task-list [tasksList]="taskList"
+    <pm-task-list [tasksList]="tasksList"
                   [currentUser]="currentUser"
                   [deviceIsMobile]="isHandset$ | async"
-                  (taskAdded)="onNewTaskAdded($event)">
+                  (taskCompletionChanged)="toggleTaskComplete($event)"
+                  (dragEnded)="onDragEnded()"
+                  (taskUpdated)="onTaskUpdated($event)"
+                  (taskDeleted)="onTaskDeleted($event)">
     </pm-task-list>
+    <pm-new-task (taskAdded)="onNewTaskAdded($event)"></pm-new-task>
   </section>
   <h4 class="header-text">Completed Tasks</h4>
   <hr class="completed-tasks-hr">
-    <section class="completed-tasks" *ngIf="completedTaskList?.length">
-      <div class="completed-task" *ngFor="let task of completedTaskList">
+    <section class="completed-tasks" *ngIf="completedTasksList?.length">
+      <div class="completed-task" *ngFor="let task of completedTasksList">
         <span class="completed-task-description">{{task.description}}</span>
         <span class="task-date-completed">{{task.dateCompleted | date:'short'}}</span>
       </div>

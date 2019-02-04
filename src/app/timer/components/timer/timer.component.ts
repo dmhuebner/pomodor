@@ -1,8 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../../../shared/services/timer/timer.service';
-import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
-import { SettingsService } from '../../../shared/services/settings/settings.service';
-import Settings from '../../../shared/interfaces/settings.interface';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'pm-timer',
@@ -11,50 +7,41 @@ import Settings from '../../../shared/interfaces/settings.interface';
 })
 export class TimerComponent implements OnInit {
 
-  onBreak = false;
-  timerOn = false;
+  @Input() onBreak: boolean;
+  @Input() timerOn: boolean;
+  @Input() useTimerBumpers: boolean;
+  @Input() bumperLengthInMinutes: boolean;
+  @Input() currentTimerValue: boolean;
 
-  currentSettings: Settings = {...this.settingsService.defaultSettings};
-  currentTimer: CompletedTimer = {completed: false, completedWithBreak: false};
+  @Output() timerStarted: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() timerReset: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() breakEnded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() timeBumpedBack: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() timeBumpedForward: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(public timerService: TimerService,
-              private settingsService: SettingsService) { }
+  constructor() { }
 
-  ngOnInit() {
-    // Subscribe to onBreak$ subject observable and set value to this.onBreak
-    this.timerService.onBreak$.subscribe(val => this.onBreak = val);
-    this.timerService.timerOn$.subscribe(val => this.timerOn = val);
-    this.settingsService.currentSettings$.subscribe(settings => {
-      this.currentSettings = settings;
-      if (!this.timerOn) {
-        this.timerService.setTimeLeft();
-      }
-    });
+  ngOnInit(): void {
   }
 
   onStartTime() {
-    this.timerService.startTimer();
+    this.timerStarted.emit(true);
   }
 
   onResetTimer() {
-    this.timerService.resetTimer();
+    this.timerReset.emit(true);
   }
 
   onEndBreak() {
-    // TODO should this be in a service? Probably...
-    if (this.onBreak) {
-      this.timerService.addCompletedTimer(this.currentTimer);
-    }
-
-    this.timerService.endBreak();
+    this.breakEnded.emit(true);
   }
 
   bumpTimerBack() {
-    this.timerService.bumpTimerBack();
+    this.timeBumpedBack.emit(true);
   }
 
   bumpTimerForward() {
-    this.timerService.bumpTimerForward();
+    this.timeBumpedForward.emit(true);
   }
 
 }

@@ -7,7 +7,17 @@
   <h2 class="on-break" *ngIf="onBreak && !timerOn">Recharge</h2>
   <h2 class="on-break" *ngIf="onBreak && timerOn">Recharging...</h2>
   <section class="timer-container">
-    <pm-timer></pm-timer>
+    <pm-timer [onBreak]="onBreak"
+              [timerOn]="timerOn"
+              [useTimerBumpers]="currentSettings.useTimerBumpers"
+              [bumperLengthInMinutes]="currentSettings.bumperLengthInMinutes"
+              [currentTimerValue]="timerService.currentTimerValue$ | async"
+              (timerStarted)="onStartTime()"
+              (timerReset)="onResetTimer()"
+              (breakEnded)="onEndBreak()"
+              (timeBumpedBack)="bumpTimerBack()"
+              (timeBumpedForward)="bumpTimerForward()">
+    </pm-timer>
   </section>
   <h4>Completed Timers</h4>
   <hr class="completed-timers-hr">
