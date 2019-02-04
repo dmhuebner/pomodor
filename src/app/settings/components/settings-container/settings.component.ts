@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.spinner.spinnerObservable.subscribe(loading => this.loading = loading);
     this.spinner.show();
+    // TODO fix this nested subscribe
     this.auth.user$.subscribe(user => {
       if (user) {
         this.currentUser = user;
