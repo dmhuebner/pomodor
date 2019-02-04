@@ -5,6 +5,9 @@ import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
 import User from '../../../shared/interfaces/user.interface';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'pm-task-list-container',
@@ -17,10 +20,16 @@ export class TaskListContainerComponent implements OnInit {
   completedTaskList: Task[] = [];
   currentUser: User;
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
+
   constructor(private afs: AngularFirestore,
               private auth: AuthService,
               private taskService: TaskService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              public breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.spinner.show();

@@ -14,6 +14,7 @@
     </ngx-spinner>
     <pm-task-list [tasksList]="taskList"
                   [currentUser]="currentUser"
+                  [deviceIsMobile]="isHandset$ | async"
                   (taskAdded)="onNewTaskAdded($event)">
     </pm-task-list>
   </section>
