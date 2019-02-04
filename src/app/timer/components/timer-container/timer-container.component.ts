@@ -22,7 +22,7 @@ export class TimerContainerComponent implements OnInit {
   currentSettings: Settings = {...this.settingsService.defaultSettings};
   currentTimer: CompletedTimer = {completed: false, completedWithBreak: false};
 
-  constructor(private timerService: TimerService,
+  constructor(public timerService: TimerService,
               public taskService: TaskService,
               public settingsService: SettingsService,
               private auth: AuthService) {}
