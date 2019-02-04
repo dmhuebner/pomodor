@@ -1,11 +1,11 @@
 <div class="task-list-container">
   <div cdkDropList class="task-list" (cdkDropListDropped)="drop($event)">
-    <div class="task-item" *ngFor="let task of tasksList" cdkDrag (cdkDragDropped)="onDragEnded($event)">
+    <div class="task-item" *ngFor="let task of tasksList" cdkDrag (cdkDragDropped)="onDragEnded()">
       <div class="task-item-inner-container">
         <mat-checkbox [checked]="task.completed"
                       [class.completed]="task.completed"
                       labelPosition="after"
-                      (change)="completeTask(task)"
+                      (change)="onCompleteTask(task)"
                       *ngIf="!taskIsInEditMode(task)">
           {{task.description}}
         </mat-checkbox>

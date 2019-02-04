@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Task from '../../../shared/interfaces/task.interface';
 import User from '../../../shared/interfaces/user.interface';
-import { TaskService } from '../../../shared/services/task/task.service';
 
 @Component({
   selector: 'pm-task-list',
@@ -15,52 +13,47 @@ export class TaskListComponent implements OnInit {
   @Input() tasksList: Task[];
   @Input() currentUser: User;
   @Input() deviceIsMobile: boolean;
+
+  @Output() taskCompletionChanged: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() dragEnded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() taskDeleted: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() taskUpdated: EventEmitter<Task> = new EventEmitter<Task>();
+
   // TODO make interface for tasksInEditMode
   tasksInEditMode: object = {};
 
-  constructor(private afs: AngularFirestore,
-              private taskService: TaskService) { }
+  constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  completeTask(task: Task): Promise<void> {
-    task.completed = !task.completed;
-    task.dateCompleted = task.completed ? new Date() : null;
-    return this.taskService.updateTask(this.currentUser.uid, task);
+  onCompleteTask(task: Task): void {
+    this.taskCompletionChanged.emit(task);
   }
 
-  drop(event: CdkDragDrop<Task[]>) {
+  drop(event: CdkDragDrop<Task[]>): void {
     moveItemInArray(this.tasksList, event.previousIndex, event.currentIndex);
   }
 
-  onDragEnded(event): void {
-    // The timeout makes sure that the list has finished reordering before we start updating the order prop of each task doc in the db.
-    setTimeout(() => {
-      this.tasksList.forEach((task, index) => {
-        const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${this.currentUser.uid}/tasks/${task.id}`);
-        const updatedTask: Task = {...task, order: index};
-
-        userTasksRef.set(updatedTask);
-      });
-    });
+  onDragEnded(): void {
+    this.dragEnded.emit(true);
   }
 
-  toggleEditMode(task: Task) {
+  toggleEditMode(task: Task): void {
     if (this.tasksInEditMode.hasOwnProperty(task.id)) {
       delete this.tasksInEditMode[task.id];
 
       if (!task.description) {
-        this.taskService.deleteTask(this.currentUser.uid, task.id);
+        this.taskDeleted.emit(task);
       } else {
-        this.taskService.updateTask(this.currentUser.uid, task);
+        this.taskUpdated.emit(task);
       }
     } else {
       this.tasksInEditMode[task.id] = task;
     }
   }
 
-  taskIsInEditMode(task) {
+  taskIsInEditMode(task: Task): boolean {
     return this.tasksInEditMode.hasOwnProperty(task.id);
   }
 
