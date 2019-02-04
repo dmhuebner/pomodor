@@ -36,6 +36,16 @@
     color: #fff;
   }
 
+  .current-task {
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    ::ng-deep .mat-checkbox-label {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  }
+
   .timer-container {
     border: 1px solid transparent;
   }
