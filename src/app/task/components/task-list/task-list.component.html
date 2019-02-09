@@ -9,9 +9,10 @@
                       *ngIf="!taskIsInEditMode(task)">
           {{task.description}}
         </mat-checkbox>
-        <form #editTaskForm *ngIf="taskIsInEditMode(task)" (ngSubmit)="toggleEditMode(task)">
+        <form #editTaskForm="ngForm" *ngIf="taskIsInEditMode(task)" (ngSubmit)="toggleEditMode(task)">
           <mat-form-field class="edit-task-description">
-            <input matInput placeholder="Edit Task"
+            <input matInput
+                   placeholder="Edit Task"
                    name="{{'task-' + task.id + '-edit'}}"
                    [(ngModel)]="task.description"
                    autocomplete="off">
