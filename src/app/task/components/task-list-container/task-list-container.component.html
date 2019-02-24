@@ -71,7 +71,13 @@
       <div class="task-list-header">
         <button class="delete-task-list-btn" *ngIf="!taskListRef.tasks || allTasksComplete(taskListRef.tasks)" mat-raised-button color="secondary" (click)="deleteEmptyTaskList(taskListRef)">Delete</button>
         <div class="task-list-header-inner-wrapper">
-          <h4 class="task-list-name" *ngIf="!taskListIsInEditMode(taskListRef)">{{taskListRef?.listName}}</h4>
+          <mat-icon
+            class="task-list-open-icon"
+            [class.open]="!taskListIsOpen(taskListRef)"
+            (click)="toggleTaskListIsOpen(taskListRef)">
+            keyboard_arrow_up
+          </mat-icon>
+          <h4 class="task-list-name" *ngIf="!taskListIsInEditMode(taskListRef)" (click)="toggleTaskListIsOpen(taskListRef)">{{taskListRef?.listName}}</h4>
           <form class="edit-task-list-name-form" #editTaskListNameForm="ngForm" *ngIf="taskListIsInEditMode(taskListRef)" (ngSubmit)="toggleTaskListEditMode(taskListRef)">
             <mat-form-field class="edit-task-list-name">
               <input matInput
@@ -87,7 +93,7 @@
         <button class="activate-task-list-btn" mat-raised-button color="secondary" (click)="activateTaskList(taskListRef)">Activate</button>
       </div>
       <pm-task-list
-        *ngIf="taskListRef.tasks"
+        *ngIf="taskListRef.tasks && taskListIsOpen(taskListRef)"
         [tasksList]="taskListRef?.tasks"
         [currentUser]="currentUser"
         [deviceIsMobile]="isHandset$ | async"
@@ -96,7 +102,7 @@
         (taskUpdated)="onTaskUpdated(taskListRef, $event)"
         (taskDeleted)="onTaskDeleted(taskListRef, $event)">
       </pm-task-list>
-      <pm-new-task (taskAdded)="onNewTaskAdded(taskListRef, $event)"></pm-new-task>
+      <pm-new-task *ngIf="taskListIsOpen(taskListRef)" (taskAdded)="onNewTaskAdded(taskListRef, $event)"></pm-new-task>
     </div>
   </section>
   <h4 class="header-text">Completed Tasks</h4>

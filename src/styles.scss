@@ -53,6 +53,14 @@ $xsBreakpoint: 467px;
   -moz-border-radius: $radius;
 }
 
+@mixin transform($transformExpression) {
+  -webkit-transform: $transformExpression;
+  -moz-transform: $transformExpression;
+  -ms-transform: $transformExpression;
+  -o-transform: $transformExpression;
+  transform: $transformExpression;
+}
+
 /*** Main Styles ***/
 
 html, body { height: 100%; }
