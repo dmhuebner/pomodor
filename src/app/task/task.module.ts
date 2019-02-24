@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NewTaskComponent } from './components/new-task/new-task.component';
 import { CompletedTaskListComponent } from './components/completed-task-list/completed-task-list.component';
 import { ActiveTaskListPipe } from './pipes/active-task-list.pipe';
+import { TaskListHeaderComponent } from './components/task-list-header/task-list-header.component';
 
 // TODO make sure SharedModule is needed below
 
@@ -19,7 +20,8 @@ import { ActiveTaskListPipe } from './pipes/active-task-list.pipe';
     TaskListComponent,
     NewTaskComponent,
     CompletedTaskListComponent,
-    ActiveTaskListPipe
+    ActiveTaskListPipe,
+    TaskListHeaderComponent
   ],
   imports: [
     CommonModule,
