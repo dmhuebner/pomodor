@@ -1,28 +1,26 @@
-<div class="task-list-container">
-  <div cdkDropList class="task-list" (cdkDropListDropped)="drop($event)">
-    <div class="task-item" *ngFor="let task of tasksList" cdkDrag (cdkDragDropped)="onDragEnded()">
-      <div class="task-item-inner-container">
-        <mat-checkbox [checked]="task.completed"
-                      [class.completed]="task.completed"
-                      labelPosition="after"
-                      (change)="onCompleteTask(task)"
-                      *ngIf="!taskIsInEditMode(task)">
-          {{task.description}}
-        </mat-checkbox>
-        <form #editTaskForm="ngForm" *ngIf="taskIsInEditMode(task)" (ngSubmit)="toggleEditMode(task)">
-          <mat-form-field class="edit-task-description">
-            <input matInput
-                   placeholder="Edit Task"
-                   name="{{'task-' + task.id + '-edit'}}"
-                   [(ngModel)]="task.description"
-                   autocomplete="off">
-          </mat-form-field>
-        </form>
-      </div>
-      <mat-icon *ngIf="!taskIsInEditMode(task)" class="edit-description-icon" (click)="toggleEditMode(task)">edit</mat-icon>
-      <mat-icon *ngIf="taskIsInEditMode(task)" class="save-edit-icon" (click)="toggleEditMode(task)">checkmark</mat-icon>
-      <mat-icon class="drag-indicator-icon" *ngIf="!deviceIsMobile">drag_indicator</mat-icon>
-      <mat-icon class="drag-indicator-icon" cdkDragHandle *ngIf="deviceIsMobile">drag_indicator</mat-icon>
+<div cdkDropList class="task-list" (cdkDropListDropped)="drop($event)">
+  <div class="task-item" *ngFor="let task of tasksList" cdkDrag (cdkDragDropped)="onDragEnded()">
+    <div class="task-item-inner-container">
+      <mat-checkbox [checked]="task.completed"
+                    [class.completed]="task.completed"
+                    labelPosition="after"
+                    (change)="onCompleteTask(task)"
+                    *ngIf="!taskIsInEditMode(task)">
+        {{task.description}}
+      </mat-checkbox>
+      <form #editTaskForm="ngForm" *ngIf="taskIsInEditMode(task)" (ngSubmit)="toggleEditMode(task)">
+        <mat-form-field class="edit-task-description">
+          <input matInput
+                 placeholder="Edit Task"
+                 name="{{'task-' + task.id + '-edit'}}"
+                 [(ngModel)]="task.description"
+                 autocomplete="off">
+        </mat-form-field>
+      </form>
     </div>
+    <mat-icon *ngIf="!taskIsInEditMode(task)" class="edit-description-icon" (click)="toggleEditMode(task)">edit</mat-icon>
+    <mat-icon *ngIf="taskIsInEditMode(task)" class="save-edit-icon" (click)="toggleEditMode(task)">checkmark</mat-icon>
+    <mat-icon class="drag-indicator-icon" *ngIf="!deviceIsMobile">drag_indicator</mat-icon>
+    <mat-icon class="drag-indicator-icon" cdkDragHandle *ngIf="deviceIsMobile">drag_indicator</mat-icon>
   </div>
 </div>

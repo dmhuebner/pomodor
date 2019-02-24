@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
+import { CompletedTimer } from '../../../shared/interfaces/completedTimer.interface';
 
 @Component({
   selector: 'pm-timer-history',

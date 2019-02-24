@@ -1,12 +1,11 @@
 import { Injectable, OnInit } from '@angular/core';
 import User from '../../interfaces/user.interface';
 import Task from '../../interfaces/task.interface';
-import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { switchMap, debounceTime } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DataService } from '../data/data.service';
 import {SettingsService} from '../settings/settings.service';
+import TaskList from '../../interfaces/taskList.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,40 +22,23 @@ export class TaskService implements OnInit {
     this.auth.user$.subscribe(user => this.currentUser = user);
   }
 
-  getTasks$(): Observable<Task[]> {
-    return this.auth.user$.pipe(
-      switchMap(user => {
-        if (user) {
-          // We debounce the valueChanges observable to make sure there is no visual skipping when reordering tasks
-          return this.dataService.getCollection$(`tasks/${user.uid}/tasks/`, 'order')
-            .pipe(debounceTime(50));
-          // TODO should we transform the dateCompleted from a Timestamp to a Date here?
-        } else {
-          return of(null);
-        }
-      })
-    );
-  }
-
-  postNewTask(userUid: string, newTaskDesc: string, order: number): Promise<void> {
+  postNewTask(userUid: string, taskList: TaskList, newTaskDesc: string): Promise<void> {
     const payload: Task = {
       description: newTaskDesc,
       completed: false,
-      dateCreated: new Date(),
+      dateCreated: new Date().toISOString(),
       dateCompleted: null,
-      order: order,
-      id: null
+      id: this.dataService.createId()
     };
 
-    return this.dataService.postNewItem(`tasks/${userUid}/tasks/`, payload);
+    taskList.tasks ? taskList.tasks.push(payload) : taskList.tasks = [payload];
+
+    return this.dataService.updateItem(`taskLists/${userUid}/${taskList.id}/tasks/`, taskList.tasks);
   }
 
-  updateTask(userUid: string, task: Task): Promise<void> {
-    return this.dataService.updateItem(`tasks/${userUid}/tasks/${task.id}`, task);
-  }
-
-  deleteTask(userUid: string, taskId: string): Promise<void> {
-    return this.dataService.deleteItem(`tasks/${userUid}/tasks/${taskId}`);
+  updateTask(userUid: string, taskList: TaskList, task: Task): Promise<void> {
+    const taskIndex = taskList.tasks.findIndex(t => t.id === task.id);
+    return this.dataService.updateItem(`taskLists/${userUid}/${taskList.id}/tasks/${taskIndex}`, task);
   }
 
   // Returns true if the task should be placed in the completedTasks list
@@ -77,16 +59,6 @@ export class TaskService implements OnInit {
       return 1;
     }
     if (taskA.dateCompleted > taskB.dateCompleted) {
-      return -1;
-    }
-    return 0;
-  }
-
-  compareOrder(taskA, taskB) {
-    if (taskA.order < taskB.order) {
-      return 1;
-    }
-    if (taskA.order > taskB.order) {
       return -1;
     }
     return 0;
