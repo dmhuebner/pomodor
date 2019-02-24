@@ -1,0 +1,52 @@
+<div class="task-list-header">
+  <button class="delete-task-list-btn"
+          *ngIf="manageListActions && (!taskList.tasks || allTasksInListAreComplete)"
+          mat-raised-button
+          color="secondary"
+          (click)="deleteEmptyTaskList()">
+    Delete
+  </button>
+  <div class="task-list-header-inner-wrapper">
+    <mat-icon class="task-list-open-icon"
+              *ngIf="manageListActions"
+              [class.open]="taskList.open"
+              (click)="toggleTaskListOpen()">
+      keyboard_arrow_up
+    </mat-icon>
+    <h4 class="task-list-name"
+        [class.is-a-button]="manageListActions"
+        *ngIf="!taskListIsInEditMode(taskList)"
+        (click)="toggleTaskListOpen()">
+      {{taskList?.listName}}
+    </h4>
+    <form class="edit-task-list-name-form"
+          #editTaskListNameForm="ngForm"
+          *ngIf="taskListIsInEditMode(taskList)"
+          (ngSubmit)="toggleTaskListEditMode(taskList)">
+      <mat-form-field class="edit-task-list-name">
+        <input matInput
+               placeholder="Edit Task List Name"
+               name="{{'task-list-' + taskList.id + '-edit'}}"
+               [(ngModel)]="taskList.listName"
+               autocomplete="off">
+      </mat-form-field>
+    </form>
+    <mat-icon *ngIf="!taskListIsInEditMode(taskList)"
+              class="edit-task-list-name-icon"
+              (click)="toggleTaskListEditMode(taskList)">
+      edit
+    </mat-icon>
+    <mat-icon *ngIf="taskListIsInEditMode(taskList)"
+              class="save-task-list-name-icon"
+              (click)="toggleTaskListEditMode(taskList)">
+      checkmark
+    </mat-icon>
+  </div>
+  <button class="activate-task-list-btn"
+          mat-raised-button
+          color="secondary"
+          *ngIf="manageListActions"
+          (click)="activateTaskList(taskList)">
+    Activate
+  </button>
+</div>

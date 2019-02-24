@@ -26,8 +26,6 @@ export class TaskListContainerComponent implements OnInit {
   currentUser: User;
 
   newTaskListName: FormControl = new FormControl('');
-  taskListEditModeRef: string[] = [];
-  taskListClosedRef: string[] = [];
   showNewTaskListInput = false;
   userTaskListLimit = CONSTANTS.userTaskListLimit;
 
@@ -123,6 +121,7 @@ export class TaskListContainerComponent implements OnInit {
   }
 
   createNewTaskList(taskListName: string, activate: boolean = false) {
+    // Check to see if the user can create more taskLists
     if (this.userTaskLists && this.userTaskLists.length < this.userTaskListLimit) {
       this.showNewTaskListInput = false;
       return this.taskListService.createTaskList(this.currentUser.uid, taskListName, activate)
@@ -135,20 +134,7 @@ export class TaskListContainerComponent implements OnInit {
     }
   }
 
-  taskListIsInEditMode(taskList: TaskList): boolean {
-    return taskList ? this.taskListEditModeRef.includes(taskList.id) : false;
-  }
-
-  toggleTaskListEditMode(taskList: TaskList): void {
-    if (this.taskListEditModeRef.includes(taskList.id)) {
-      this.taskListEditModeRef.splice(this.taskListEditModeRef.indexOf(taskList.id), 1);
-      this.taskListService.updateTaskList(this.currentUser.uid, taskList);
-    } else {
-      this.taskListEditModeRef.push(taskList.id);
-    }
-  }
-
-  activateTaskList(taskList: TaskList) {
+  onActivateTaskList(taskList: TaskList): Promise<void[]> {
     this.activeTasksListRef.active = false;
     taskList.active = true;
 
@@ -158,25 +144,17 @@ export class TaskListContainerComponent implements OnInit {
     ]);
   }
 
-  deleteEmptyTaskList(taskList: TaskList) {
+  deleteEmptyTaskList(taskList: TaskList): Promise<void> {
     if (!taskList.tasks || !!taskList.tasks.length || this.allTasksComplete(taskList.tasks)) {
-      this.taskListService.deleteTaskList(this.currentUser.uid, taskList.id);
+      return this.taskListService.deleteTaskList(this.currentUser.uid, taskList.id);
     }
   }
 
   allTasksComplete(tasks): boolean {
-    return tasks.every(task => this.taskService.checkTaskCompleted(task));
+    return tasks ? tasks.every(task => this.taskService.checkTaskCompleted(task)) : false;
   }
 
-  taskListIsOpen(taskList: TaskList): boolean {
-    return !this.taskListClosedRef.includes(taskList.id);
-  }
-
-  toggleTaskListIsOpen(taskList: TaskList): void {
-    if (this.taskListClosedRef.includes(taskList.id)) {
-      this.taskListClosedRef.splice(this.taskListClosedRef.indexOf(taskList.id), 1);
-    } else {
-      this.taskListClosedRef.push(taskList.id);
-    }
+  onTaskListUpdated(taskList: TaskList): Promise<void> {
+    return this.taskListService.updateTaskList(this.currentUser.uid, taskList);
   }
 }

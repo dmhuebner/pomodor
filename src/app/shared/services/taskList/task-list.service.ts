@@ -38,8 +38,11 @@ export class TaskListService implements OnInit {
       id: null,
       listName: taskListName,
       active: activate,
-      tasks: []
+      tasks: [],
+      open: true
     };
+
+    // TODO the taskList.open property can be defaulted in the settings at some point
 
     return this.dataService.postNewItem(`taskLists/${userUid}/`, payload);
   }
