@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { TaskService } from '../../../shared/services/task/task.service';
 import Task from '../../../shared/interfaces/task.interface';
@@ -8,6 +7,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { TaskListService } from '../../../shared/services/taskList/task-list.service';
+import TaskList from '../../../shared/interfaces/taskList.interface';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'pm-task-list-container',
@@ -16,79 +18,131 @@ import { map } from 'rxjs/operators';
 })
 export class TaskListContainerComponent implements OnInit {
 
-  tasksList: Task[] = [];
+  activeTasksListRef: TaskList;
   completedTasksList: Task[] = [];
+  userTaskLists: TaskList[] = [];
   currentUser: User;
+
+  newTaskListName: FormControl = new FormControl('');
+  taskListEditModeRef: string[] = [];
+  showNewTaskListInput = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(private afs: AngularFirestore,
-              private auth: AuthService,
+  constructor(private auth: AuthService,
               private taskService: TaskService,
+              private taskListService: TaskListService,
               private spinner: NgxSpinnerService,
               public breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.spinner.show();
     this.auth.user$.subscribe(user => this.currentUser = user);
-    this.taskService.getTasks$().subscribe(tasks => {
-      tasks = tasks ? tasks : [];
 
-      this.tasksList = tasks.filter(task => {
-        if (task.dateCompleted) {
-          // Transform dateCompleted into a date if there is a toDate function (if its a Timestamp) - We might wanna change this...
-          task.dateCompleted = typeof task.dateCompleted.toDate ? task.dateCompleted.toDate() : task.dateCompleted;
-          return !this.taskService.checkTaskCompleted(task);
-        } else {
-          return true;
-        }
-      });
-
-      this.completedTasksList = tasks.filter(task => {
-        if (task.dateCompleted) {
-          if (this.taskService.taskIsExpired(task)) {
-            this.taskService.deleteTask(this.currentUser.uid, task.id);
-            return false;
-          } else {
-            return this.taskService.checkTaskCompleted(task);
+    this.taskListService.getTaskLists$().subscribe(taskLists => {
+      if (taskLists) {
+        this.completedTasksList = [];
+        // Remove completedTasks from each taskList and map them into a completedTasksList
+        taskLists.forEach(taskList => {
+          if (taskList.tasks) {
+            taskList.tasks.filter(task => {
+              if (task.completed) {
+                if (task.dateCompleted) {
+                  if (this.taskService.taskIsExpired(task)) {
+                    // Delete expired tasks
+                    taskList.tasks.splice(taskList.tasks.findIndex(t => t.id === task.id), 1);
+                    this.taskListService.updateTaskList(this.currentUser.uid, taskList);
+                  } else {
+                    if (this.taskService.checkTaskCompleted(task)) {
+                      this.completedTasksList.push(task);
+                    }
+                  }
+                }
+                return true;
+              }
+            });
           }
-        }
-      }).sort(this.taskService.compareDateCompleted);
+        });
 
-      this.spinner.hide();
+        this.completedTasksList.sort(this.taskService.compareDateCompleted);
+
+        // Remove completedTasks from taskLists
+        this.userTaskLists = taskLists.map(taskList => {
+          if (taskList.tasks) {
+            taskList.tasks = taskList.tasks.filter(task => !this.taskService.checkTaskCompleted(task));
+          }
+          return taskList;
+        });
+
+        // Find activeTasksList
+        this.activeTasksListRef = this.taskListService.getActiveTaskList(taskLists);
+      }
+
+        this.spinner.hide();
     });
   }
 
-  onNewTaskAdded(event): Promise<void> {
-    return this.taskService.postNewTask(this.currentUser.uid, event, this.tasksList.length);
+  onNewTaskAdded(taskList: TaskList, event: string): Promise<void> {
+    return this.taskService.postNewTask(this.currentUser.uid, taskList, event);
   }
 
-  onTaskUpdated(task: Task) {
-    return this.taskService.updateTask(this.currentUser.uid, task);
+  onTaskUpdated(taskList: TaskList, task: Task) {
+    return this.taskService.updateTask(this.currentUser.uid, taskList, task);
   }
 
-  onTaskDeleted(task: Task) {
-    return this.taskService.deleteTask(this.currentUser.uid, task.id);
+  onTaskDeleted(taskList: TaskList, task: Task) {
+    const indexToRemove = taskList.tasks.findIndex(t => t.id === task.id);
+    taskList.tasks.splice(indexToRemove, 1);
+    return this.taskListService.updateTaskList(this.currentUser.uid, taskList);
   }
 
-  toggleTaskComplete(task: Task): Promise<void> {
+  toggleTaskComplete(taskList: TaskList, task: Task): Promise<void> {
     task.completed = !task.completed;
-    task.dateCompleted = task.completed ? new Date() : null;
-    return this.taskService.updateTask(this.currentUser.uid, task);
+    task.dateCompleted = task.completed ? new Date().toISOString() : null;
+    return this.taskService.updateTask(this.currentUser.uid, taskList, task);
   }
 
-  onDragEnded(): void {
-    // The timeout makes sure that the list has finished reordering before we start updating the order prop of each task doc in the db.
+  onDragEnded(taskListRef): void {
+    // The timeout makes sure that the list has finished reordering before we update the taskList with the new order
     setTimeout(() => {
-      this.tasksList.forEach((task, index) => {
-        const userTasksRef: AngularFirestoreDocument = this.afs.doc(`tasks/${this.currentUser.uid}/tasks/${task.id}`);
-        const updatedTask: Task = {...task, order: index};
-
-        userTasksRef.set(updatedTask);
-      });
+      return this.taskListService.updateTaskList(this.currentUser.uid, taskListRef);
     });
+  }
+
+  createNewTaskList(taskListName: string) {
+    this.showNewTaskListInput = false;
+    return this.taskListService.createTaskList(this.currentUser.uid, taskListName).then(() => this.newTaskListName = new FormControl(''));
+  }
+
+  taskListIsInEditMode(taskList: TaskList): boolean {
+    return taskList ? this.taskListEditModeRef.includes(taskList.id) : false;
+  }
+
+  toggleTaskListEditMode(taskList: TaskList): void {
+    if (this.taskListEditModeRef.includes(taskList.id)) {
+      this.taskListEditModeRef.splice(this.taskListEditModeRef.indexOf(taskList.id), 1);
+      this.taskListService.updateTaskList(this.currentUser.uid, taskList);
+    } else {
+      this.taskListEditModeRef.push(taskList.id);
+    }
+  }
+
+  activateTaskList(taskList: TaskList) {
+    this.activeTasksListRef.active = false;
+    taskList.active = true;
+
+    return Promise.all([
+      this.taskListService.updateTaskList(this.currentUser.uid, this.activeTasksListRef),
+      this.taskListService.updateTaskList(this.currentUser.uid, taskList)
+    ]);
+  }
+
+  deleteEmptyTaskList(taskList: TaskList) {
+    if (!taskList.tasks || !!taskList.tasks.length) {
+      this.taskListService.deleteTaskList(this.currentUser.uid, taskList.id);
+    }
   }
 }

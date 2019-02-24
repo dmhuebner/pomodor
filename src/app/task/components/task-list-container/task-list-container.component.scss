@@ -17,6 +17,23 @@
       font-weight: 400;
       margin: 0 0 0.8rem 0.8rem;
     }
+
+    .show-add-task-list-toggle {
+      cursor: pointer;
+      position: relative;
+      top: 0.3rem;
+    }
+  }
+
+  .new-task-list-form {
+    max-width: 40rem;
+    margin: auto;
+
+    mat-form-field {
+      min-width: 100%;
+      text-align: center;
+
+    }
   }
 
   .tasks-container {
@@ -25,11 +42,163 @@
     background-color: #fff;
     border: 1px solid #cdd;
     @include transition(1s);
+
+    .task-list-container {
+      padding: 0 4rem;
+
+      .task-list-header {
+        display: flex;
+
+        .task-list-header-inner-wrapper {
+          margin: auto;
+          width: 100%;
+
+          .active-task-list-name {
+            color: $primary;
+            display: inline-block;
+          }
+
+          .edit-task-list-name-icon,
+          .save-task-list-name-icon {
+            padding: 0.5rem;
+            position: relative;
+            top: 0.3rem;
+            cursor: pointer;
+          }
+
+          .edit-task-list-name-icon {
+            color: #888;
+          }
+
+          .save-task-list-name-icon {
+            color: green;
+          }
+
+          .edit-task-list-name-form {
+            display: inline-block;
+            padding: 1rem 1rem 0 1rem;
+            width: 85%;
+
+            mat-form-field {
+              min-width: 100%;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .inactive-task-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .task-list {
+      width: 28rem;
+      margin: 1.5rem 2rem;
+      background-color: #fff;
+
+      .task-list-header {
+        display: flex;
+        margin-bottom: 0.5rem;
+
+        .delete-task-list-btn {
+          margin-left: auto;
+          font-size: 0.6rem;
+          padding: 0.1rem 0.3rem;
+          max-height: 2.5rem;
+          @include box-shadow(0px, 4px, #990000);
+
+          &:hover {
+            background-color: #990000;
+            color: #fff;
+          }
+        }
+
+        .task-list-header-inner-wrapper {
+          width: 100%;
+
+          .task-list-name {
+            display: inline-block;
+            margin: 0;
+            padding: 1rem 1rem 0 1rem;
+            color: $primary;
+            max-width: 80%;
+          }
+
+          .edit-task-list-name-icon,
+          .save-task-list-name-icon {
+            padding: 0.5rem 0.5rem 0.5rem 0;
+            position: relative;
+            top: 0.3rem;
+            cursor: pointer;
+          }
+
+          .edit-task-list-name-icon {
+            color: #888;
+          }
+
+          .save-task-list-name-icon {
+            color: green;
+          }
+
+          .edit-task-list-name-form {
+            display: inline-block;
+            padding: 1rem 1rem 0 1rem;
+            width: 80%;
+
+            mat-form-field {
+              min-width: 100%;
+              text-align: center;
+
+            }
+          }
+        }
+
+        .activate-task-list-btn {
+          margin-left: auto;
+          font-size: 0.6rem;
+          padding: 0.1rem 0.3rem;
+          max-height: 2.5rem;
+          @include box-shadow(0px, 4px, $primary);
+
+          &:hover {
+            background-color: $primary;
+            color: #fff;
+          }
+        }
+      }
+
+      .task-list-container {
+        padding: 0 1rem;
+      }
+    }
   }
 
   .completed-tasks-hr {
     border: 0;
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  }
+}
+
+@media (max-width: $smBreakpoint) {
+  .tasks-page-container {
+
+    .inactive-task-list {
+      flex-direction: column;
+
+      .task-list {
+        margin: 1.5rem auto;
+      }
+    }
+
+    .tasks-container {
+
+      .task-list-container {
+        padding: 0 1rem;
+      }
+    }
   }
 }
