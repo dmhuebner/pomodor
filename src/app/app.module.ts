@@ -31,6 +31,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SettingsService } from './shared/services/settings/settings.service';
 import { TaskService } from './shared/services/task/task.service';
 import { ToastrModule } from 'ngx-toastr';
+import { LoggedInGuard } from './shared/guards/logged-in.guard';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { ToastrModule } from 'ngx-toastr';
     AuthService,
     TimerService,
     SettingsService,
-    TaskService
+    TaskService,
+    LoggedInGuard
   ],
   bootstrap: [AppComponent]
 })

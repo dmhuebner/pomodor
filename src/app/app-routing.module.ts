@@ -5,12 +5,13 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { TimerContainerComponent } from './timer/components/timer-container/timer-container.component';
 import { SettingsComponent } from './settings/components/settings-container/settings.component';
 import { TaskListContainerComponent } from './task/components/task-list-container/task-list-container.component';
+import { LoggedInGuard } from './shared/guards/logged-in.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'timer', component: TimerContainerComponent },
-  { path: 'tasks', component: TaskListContainerComponent },
+  { path: 'tasks', component: TaskListContainerComponent, canActivate: [LoggedInGuard] },
   { path: 'settings', component: SettingsComponent },
   { path: '**', component: NotFoundComponent }
 ];
