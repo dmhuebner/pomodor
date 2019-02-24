@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyDNVHmGrS9hWxnyiwUWHPyKQL_Tv4f3p0M',
-    authDomain: 'pomodor-7bdd1.firebaseapp.com',
-    databaseURL: 'https://pomodor-7bdd1.firebaseio.com',
-    projectId: 'pomodor-7bdd1',
-    storageBucket: 'pomodor-7bdd1.appspot.com',
-    messagingSenderId: '262740402954'
+    apiKey: 'AIzaSyAjrTue4kmMY5lHLBE9FfLUFG6rfQ7SR5w',
+    authDomain: 'pomodor-test.firebaseapp.com',
+    databaseURL: 'https://pomodor-test.firebaseio.com',
+    projectId: 'pomodor-test',
+    storageBucket: 'pomodor-test.appspot.com',
+    messagingSenderId: '506373942871'
   },
   localUSBLightBaseUrl: 'http://127.0.0.1:5033/'
 };

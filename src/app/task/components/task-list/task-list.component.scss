@@ -1,75 +1,71 @@
 @import "../../../../styles.scss";
 
-.task-list-container {
-  padding: 0 1rem;
+.task-list {
+  text-align: left;
+  margin: 1rem auto;
+  padding: 1rem;
 
-  .task-list {
-    text-align: left;
-    margin: 1rem auto;
-    padding: 1rem;
-
-    &.cdk-drop-list-dragging {
-      .task-item:not(.cdk-drag-placeholder) {
-        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-      }
+  &.cdk-drop-list-dragging {
+    .task-item:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
     }
+  }
 
-    .task-item {
-      display: flex;
-      cursor: pointer;
-      padding: 0.5rem;
-      border-bottom: 1px solid #eef;
+  .task-item {
+    display: flex;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eef;
 
-      .task-item-inner-container {
-        display: inline-block;
+    .task-item-inner-container {
+      display: inline-block;
+      width: 100%;
+
+      mat-checkbox.completed {
+        text-decoration: line-through;
+        text-decoration-color: $primary;
+      }
+
+      .edit-task-description {
         width: 100%;
-
-        mat-checkbox.completed {
-          text-decoration: line-through;
-          text-decoration-color: $primary;
-        }
-
-        .edit-task-description {
-          width: 100%;
-        }
-
-        ::ng-deep .mat-checkbox-inner-container {
-          margin-top: 0.2rem;
-        }
-
-        ::ng-deep .mat-checkbox-label {
-          white-space: pre-wrap;
-          word-wrap: break-word;
-        }
-
-        &:last-child {
-          border: none;
-        }
       }
 
-      .edit-description-icon {
-        color: #888;
+      ::ng-deep .mat-checkbox-inner-container {
+        margin-top: 0.2rem;
       }
 
-      .save-edit-icon {
-        color: green;
-        font-weight: 700;
+      ::ng-deep .mat-checkbox-label {
+        white-space: pre-wrap;
+        word-wrap: break-word;
       }
 
-      .drag-indicator-icon {
-        margin-left: auto;
-        color: #999;
+      &:last-child {
+        border: none;
       }
     }
-  }
 
-  .cdk-drag-placeholder {
-    opacity: 0;
-  }
+    .edit-description-icon {
+      color: #888;
+    }
 
-  .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    .save-edit-icon {
+      color: green;
+      font-weight: 700;
+    }
+
+    .drag-indicator-icon {
+      margin-left: auto;
+      color: #999;
+    }
   }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 ::ng-deep .cdk-drag-preview {
@@ -89,11 +85,5 @@
   
   .mat-icon {
     display: none;
-  }
-}
-
-@media (min-width: $smBreakpoint) {
-  .task-list-container {
-    padding: 0 4rem;
   }
 }

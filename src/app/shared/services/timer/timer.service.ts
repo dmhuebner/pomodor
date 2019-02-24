@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
+import { CompletedTimer } from '../../interfaces/completedTimer.interface';
 import { SettingsService } from '../settings/settings.service';
 import { UsbLightService } from '../usbLight/usb-light.service';
 import { TimerPipe } from '../../pipes/timer.pipe';

@@ -54,7 +54,7 @@ export class TaskListComponent implements OnInit {
   }
 
   taskIsInEditMode(task: Task): boolean {
-    return this.tasksInEditMode.hasOwnProperty(task.id);
+    return task ? this.tasksInEditMode.hasOwnProperty(task.id) : false;
   }
 
 }

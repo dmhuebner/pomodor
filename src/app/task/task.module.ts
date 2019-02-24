@@ -9,11 +9,18 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NewTaskComponent } from './components/new-task/new-task.component';
 import { CompletedTaskListComponent } from './components/completed-task-list/completed-task-list.component';
+import { ActiveTaskListPipe } from './pipes/active-task-list.pipe';
 
 // TODO make sure SharedModule is needed below
 
 @NgModule({
-  declarations: [TaskListContainerComponent, TaskListComponent, NewTaskComponent, CompletedTaskListComponent],
+  declarations: [
+    TaskListContainerComponent,
+    TaskListComponent,
+    NewTaskComponent,
+    CompletedTaskListComponent,
+    ActiveTaskListPipe
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

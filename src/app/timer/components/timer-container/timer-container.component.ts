@@ -6,7 +6,9 @@ import { SettingsService } from '../../../shared/services/settings/settings.serv
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import User from '../../../shared/interfaces/user.interface';
 import Settings from '../../../shared/interfaces/settings.interface';
-import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
+import { CompletedTimer } from '../../../shared/interfaces/completedTimer.interface';
+import { TaskListService } from '../../../shared/services/taskList/task-list.service';
+import TaskList from '../../../shared/interfaces/taskList.interface';
 
 @Component({
   selector: 'pm-timer-container',
@@ -21,19 +23,22 @@ export class TimerContainerComponent implements OnInit {
   currentUser: User;
   currentSettings: Settings = {...this.settingsService.defaultSettings};
   currentTimer: CompletedTimer = {completed: false, completedWithBreak: false};
+  activeTaskList: TaskList;
 
   constructor(public timerService: TimerService,
               public taskService: TaskService,
               public settingsService: SettingsService,
-              private auth: AuthService) {}
+              private auth: AuthService,
+              private taskListService: TaskListService) {}
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.currentUser = user);
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
-    this.taskService.getTasks$().subscribe(tasks => {
-      tasks = tasks ? tasks : [];
-      this.currentTask = tasks.filter(task => !task.completed).sort(this.taskService.compareOrder).pop();
+    this.taskListService.getTaskLists$().subscribe(taskLists => {
+      taskLists = taskLists ? taskLists : [];
+      this.activeTaskList = this.taskListService.getActiveTaskList(taskLists);
+      this.currentTask = this.activeTaskList.tasks.filter(task => !task.completed)[0];
     });
     this.settingsService.currentSettings$.subscribe(settings => {
       this.currentSettings = settings;
@@ -43,10 +48,10 @@ export class TimerContainerComponent implements OnInit {
     });
   }
 
-  completeTask(task: Task): Promise<void> {
+  completeTask(taskList, task: Task): Promise<void> {
     task.completed = !task.completed;
-    task.dateCompleted = task.completed ? new Date() : null;
-    return this.taskService.updateTask(this.currentUser.uid, task);
+    task.dateCompleted = task.completed ? new Date().toISOString() : null;
+    return this.taskService.updateTask(this.currentUser.uid, taskList, task);
   }
 
   onStartTime() {
