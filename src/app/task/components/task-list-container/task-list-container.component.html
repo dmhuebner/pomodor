@@ -69,7 +69,7 @@
   <section class="inactive-task-list">
     <div class="task-list" *ngFor="let taskListRef of userTaskLists | activeTaskList">
       <div class="task-list-header">
-        <button class="delete-task-list-btn" *ngIf="!taskListRef.tasks" mat-raised-button color="secondary" (click)="deleteEmptyTaskList(taskListRef)">Delete</button>
+        <button class="delete-task-list-btn" *ngIf="!taskListRef.tasks || allTasksComplete(taskListRef.tasks)" mat-raised-button color="secondary" (click)="deleteEmptyTaskList(taskListRef)">Delete</button>
         <div class="task-list-header-inner-wrapper">
           <h4 class="task-list-name" *ngIf="!taskListIsInEditMode(taskListRef)">{{taskListRef?.listName}}</h4>
           <form class="edit-task-list-name-form" #editTaskListNameForm="ngForm" *ngIf="taskListIsInEditMode(taskListRef)" (ngSubmit)="toggleTaskListEditMode(taskListRef)">
