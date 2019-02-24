@@ -6,7 +6,7 @@ import { SettingsService } from '../../../shared/services/settings/settings.serv
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import User from '../../../shared/interfaces/user.interface';
 import Settings from '../../../shared/interfaces/settings.interface';
-import { CompletedTimer } from '../../../shared/interfaces/completedTimer.interface';
+import { CompletedTimer } from '../../../shared/interfaces/CompletedTimer.interface';
 import { TaskListService } from '../../../shared/services/taskList/task-list.service';
 import TaskList from '../../../shared/interfaces/taskList.interface';
 
