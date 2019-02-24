@@ -25,6 +25,7 @@ export class TaskListContainerComponent implements OnInit {
 
   newTaskListName: FormControl = new FormControl('');
   taskListEditModeRef: string[] = [];
+  taskListClosedRef: string[] = [];
   showNewTaskListInput = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -154,5 +155,17 @@ export class TaskListContainerComponent implements OnInit {
 
   allTasksComplete(tasks): boolean {
     return tasks.every(task => this.taskService.checkTaskCompleted(task));
+  }
+
+  taskListIsOpen(taskList: TaskList): boolean {
+    return !this.taskListClosedRef.includes(taskList.id);
+  }
+
+  toggleTaskListIsOpen(taskList: TaskList): void {
+    if (this.taskListClosedRef.includes(taskList.id)) {
+      this.taskListClosedRef.splice(this.taskListClosedRef.indexOf(taskList.id), 1);
+    } else {
+      this.taskListClosedRef.push(taskList.id);
+    }
   }
 }
