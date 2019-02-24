@@ -43,7 +43,7 @@ export class TaskListContainerComponent implements OnInit {
     this.auth.user$.subscribe(user => this.currentUser = user);
 
     this.taskListService.getTaskLists$().subscribe(taskLists => {
-      if (taskLists) {
+      if (taskLists && taskLists.length) {
         this.completedTasksList = [];
         // Remove completedTasks from each taskList and map them into a completedTasksList
         taskLists.forEach(taskList => {
@@ -79,9 +79,14 @@ export class TaskListContainerComponent implements OnInit {
 
         // Find activeTasksList
         this.activeTasksListRef = this.taskListService.getActiveTaskList(taskLists);
+      } else {
+        this.createNewTaskList('My List', true).then(() => {
+          // TODO don't do this...
+          this.ngOnInit();
+        });
       }
 
-        this.spinner.hide();
+      this.spinner.hide();
     });
   }
 
@@ -112,9 +117,10 @@ export class TaskListContainerComponent implements OnInit {
     });
   }
 
-  createNewTaskList(taskListName: string) {
+  createNewTaskList(taskListName: string, activate: boolean = false) {
     this.showNewTaskListInput = false;
-    return this.taskListService.createTaskList(this.currentUser.uid, taskListName).then(() => this.newTaskListName = new FormControl(''));
+    return this.taskListService.createTaskList(this.currentUser.uid, taskListName, activate)
+      .then(() => this.newTaskListName = new FormControl(''));
   }
 
   taskListIsInEditMode(taskList: TaskList): boolean {

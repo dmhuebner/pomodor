@@ -33,11 +33,11 @@ export class TaskListService implements OnInit {
     return this.dataService.updateItem(`taskLists/${userUid}/${taskList.id}/`, taskList);
   }
 
-  createTaskList(userUid: string, taskListName: string): Promise<string> {
+  createTaskList(userUid: string, taskListName: string, activate: boolean = false): Promise<string> {
     const payload: TaskList = {
       id: null,
       listName: taskListName,
-      active: false,
+      active: activate,
       tasks: []
     };
 

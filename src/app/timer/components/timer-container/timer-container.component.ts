@@ -38,7 +38,9 @@ export class TimerContainerComponent implements OnInit {
     this.taskListService.getTaskLists$().subscribe(taskLists => {
       taskLists = taskLists ? taskLists : [];
       this.activeTaskList = this.taskListService.getActiveTaskList(taskLists);
-      this.currentTask = this.activeTaskList.tasks.filter(task => !task.completed)[0];
+      this.currentTask = this.activeTaskList && this.activeTaskList.tasks
+        ? this.activeTaskList.tasks.filter(task => !task.completed)[0]
+        : null;
     });
     this.settingsService.currentSettings$.subscribe(settings => {
       this.currentSettings = settings;
