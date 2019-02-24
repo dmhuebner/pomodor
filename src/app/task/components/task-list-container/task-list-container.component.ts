@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 import { TaskListService } from '../../../shared/services/taskList/task-list.service';
 import TaskList from '../../../shared/interfaces/taskList.interface';
 import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { CONSTANTS } from '../../../shared/constants/global-constants';
 
 @Component({
   selector: 'pm-task-list-container',
@@ -27,6 +29,7 @@ export class TaskListContainerComponent implements OnInit {
   taskListEditModeRef: string[] = [];
   taskListClosedRef: string[] = [];
   showNewTaskListInput = false;
+  userTaskListLimit = CONSTANTS.userTaskListLimit;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -37,7 +40,8 @@ export class TaskListContainerComponent implements OnInit {
               private taskService: TaskService,
               private taskListService: TaskListService,
               private spinner: NgxSpinnerService,
-              public breakpointObserver: BreakpointObserver) { }
+              public breakpointObserver: BreakpointObserver,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -119,9 +123,16 @@ export class TaskListContainerComponent implements OnInit {
   }
 
   createNewTaskList(taskListName: string, activate: boolean = false) {
-    this.showNewTaskListInput = false;
-    return this.taskListService.createTaskList(this.currentUser.uid, taskListName, activate)
-      .then(() => this.newTaskListName = new FormControl(''));
+    if (this.userTaskLists && this.userTaskLists.length < this.userTaskListLimit) {
+      this.showNewTaskListInput = false;
+      return this.taskListService.createTaskList(this.currentUser.uid, taskListName, activate)
+        .then(() => {
+          this.toastr.success(null, `Created "${taskListName}"`);
+          this.newTaskListName = new FormControl('');
+        });
+    } else {
+      this.toastr.warning(null, `You can't create more than ${this.userTaskListLimit} Task lists`);
+    }
   }
 
   taskListIsInEditMode(taskList: TaskList): boolean {
