@@ -42,11 +42,8 @@ export class NavbarComponent implements OnInit {
   }
 
   async loginUser() {
-    const authResult = await this.authService.login();
-    console.log(authResult);
-    if (this.currentUser) {
-      this.toastr.success(null, `${this.currentUser.displayName} Logged In!`);
-    }
+    await this.authService.login();
+    this.toastr.success(null, `${this.currentUser.displayName} Logged In!`);
   }
 
   async logout(): Promise<void> {
