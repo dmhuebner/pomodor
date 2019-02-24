@@ -51,7 +51,7 @@ export class TaskListContainerComponent implements OnInit {
       if (taskLists && taskLists.length) {
         this.completedTasksList = [];
         // Remove completedTasks from each taskList and map them into a completedTasksList
-        taskLists.forEach(taskList => {
+        taskLists.sort(this.taskListService.compareListName).forEach(taskList => {
           if (taskList.tasks) {
             taskList.tasks.filter(task => {
               if (task.completed) {

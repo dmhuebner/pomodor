@@ -51,4 +51,14 @@ export class TaskListService implements OnInit {
   deleteTaskList(userUid: string, taskListId: string) {
     return this.dataService.deleteItem(`taskLists/${userUid}/${taskListId}`);
   }
+
+  compareListName(a, b) {
+    if (a.listName.toLowerCase() < b.listName.toLowerCase()) {
+      return -1;
+    }
+    if (a.listName.toLowerCase() > b.listName.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  }
 }
