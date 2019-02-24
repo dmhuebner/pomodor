@@ -119,12 +119,25 @@
         .task-list-header-inner-wrapper {
           width: 100%;
 
+          .task-list-open-icon {
+            position: relative;
+            top: 0.45rem;
+            cursor: pointer;
+            color: $primary;
+            @include transition(0.5s);
+            
+            &.open {
+              @include transform(rotate(180deg));
+            }
+          }
+
           .task-list-name {
             display: inline-block;
             margin: 0;
-            padding: 1rem 1rem 0 1rem;
+            padding: 1rem 1rem 0 0.3rem;
             color: $primary;
             max-width: 80%;
+            cursor: pointer;
           }
 
           .edit-task-list-name-icon,
