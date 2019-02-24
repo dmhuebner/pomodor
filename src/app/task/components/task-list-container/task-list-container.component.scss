@@ -45,47 +45,6 @@
 
     .task-list-container {
       padding: 0 4rem;
-
-      .task-list-header {
-        display: flex;
-
-        .task-list-header-inner-wrapper {
-          margin: auto;
-          width: 100%;
-
-          .active-task-list-name {
-            color: $primary;
-            display: inline-block;
-          }
-
-          .edit-task-list-name-icon,
-          .save-task-list-name-icon {
-            padding: 0.5rem;
-            position: relative;
-            top: 0.3rem;
-            cursor: pointer;
-          }
-
-          .edit-task-list-name-icon {
-            color: #888;
-          }
-
-          .save-task-list-name-icon {
-            color: green;
-          }
-
-          .edit-task-list-name-form {
-            display: inline-block;
-            padding: 1rem 1rem 0 1rem;
-            width: 85%;
-
-            mat-form-field {
-              min-width: 100%;
-              text-align: center;
-            }
-          }
-        }
-      }
     }
   }
 
@@ -98,90 +57,6 @@
       width: 28rem;
       margin: 1.5rem 2rem;
       background-color: #fff;
-
-      .task-list-header {
-        display: flex;
-        margin-bottom: 0.5rem;
-
-        .delete-task-list-btn {
-          margin-left: auto;
-          font-size: 0.6rem;
-          padding: 0.1rem 0.3rem;
-          max-height: 2.5rem;
-          @include box-shadow(0px, 4px, #990000);
-
-          &:hover {
-            background-color: #990000;
-            color: #fff;
-          }
-        }
-
-        .task-list-header-inner-wrapper {
-          width: 100%;
-
-          .task-list-open-icon {
-            position: relative;
-            top: 0.45rem;
-            cursor: pointer;
-            color: $primary;
-            @include transition(0.5s);
-            
-            &.open {
-              @include transform(rotate(180deg));
-            }
-          }
-
-          .task-list-name {
-            display: inline-block;
-            margin: 0;
-            padding: 1rem 1rem 0 0.3rem;
-            color: $primary;
-            max-width: 80%;
-            cursor: pointer;
-          }
-
-          .edit-task-list-name-icon,
-          .save-task-list-name-icon {
-            padding: 0.5rem 0.5rem 0.5rem 0;
-            position: relative;
-            top: 0.3rem;
-            cursor: pointer;
-          }
-
-          .edit-task-list-name-icon {
-            color: #888;
-          }
-
-          .save-task-list-name-icon {
-            color: green;
-          }
-
-          .edit-task-list-name-form {
-            display: inline-block;
-            padding: 1rem 1rem 0 1rem;
-            width: 80%;
-
-            mat-form-field {
-              min-width: 100%;
-              text-align: center;
-
-            }
-          }
-        }
-
-        .activate-task-list-btn {
-          margin-left: auto;
-          font-size: 0.6rem;
-          padding: 0.1rem 0.3rem;
-          max-height: 2.5rem;
-          @include box-shadow(0px, 4px, $primary);
-
-          &:hover {
-            background-color: $primary;
-            color: #fff;
-          }
-        }
-      }
 
       .task-list-container {
         padding: 0 1rem;

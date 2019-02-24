@@ -13,22 +13,15 @@
       <p style="font-size: 20px; color: #3E51B5">Loading...</p>
     </ngx-spinner>
     <div class="task-list-container">
-      <div class="task-list-header">
-        <div class="task-list-header-inner-wrapper" *ngIf="activeTasksListRef">
-          <h4 class="active-task-list-name" *ngIf="!taskListIsInEditMode(activeTasksListRef)">{{activeTasksListRef?.listName}}</h4>
-          <form class="edit-task-list-name-form" #editTaskListNameForm="ngForm" *ngIf="taskListIsInEditMode(activeTasksListRef)" (ngSubmit)="toggleTaskListEditMode(activeTasksListRef)">
-            <mat-form-field class="edit-task-list-name">
-              <input matInput
-                     placeholder="Edit Task List Name"
-                     name="{{'task-list-' + activeTasksListRef.id + '-edit'}}"
-                     [(ngModel)]="activeTasksListRef.listName"
-                     autocomplete="off">
-            </mat-form-field>
-          </form>
-          <mat-icon *ngIf="!taskListIsInEditMode(activeTasksListRef)" class="edit-task-list-name-icon" (click)="toggleTaskListEditMode(activeTasksListRef)">edit</mat-icon>
-          <mat-icon *ngIf="taskListIsInEditMode(activeTasksListRef)" class="save-task-list-name-icon" (click)="toggleTaskListEditMode(activeTasksListRef)">checkmark</mat-icon>
-        </div>
-      </div>
+      <pm-task-list-header
+        *ngIf="activeTasksListRef"
+        [taskList]="activeTasksListRef"
+        [allTasksInListAreComplete]="allTasksComplete(activeTasksListRef.tasks)"
+        [manageListActions]="false"
+        (taskListDeleted)="deleteEmptyTaskList(activeTasksListRef)"
+        (taskListUpdated)="onTaskListUpdated($event)"
+        (taskListActivated)="onActivateTaskList($event)">
+      </pm-task-list-header>
       <pm-task-list
         *ngIf="activeTasksListRef"
         [tasksList]="activeTasksListRef?.tasks"
@@ -68,32 +61,16 @@
   <hr class="completed-tasks-hr">
   <section class="inactive-task-list">
     <div class="task-list" *ngFor="let taskListRef of userTaskLists | activeTaskList">
-      <div class="task-list-header">
-        <button class="delete-task-list-btn" *ngIf="!taskListRef.tasks || allTasksComplete(taskListRef.tasks)" mat-raised-button color="secondary" (click)="deleteEmptyTaskList(taskListRef)">Delete</button>
-        <div class="task-list-header-inner-wrapper">
-          <mat-icon
-            class="task-list-open-icon"
-            [class.open]="!taskListIsOpen(taskListRef)"
-            (click)="toggleTaskListIsOpen(taskListRef)">
-            keyboard_arrow_up
-          </mat-icon>
-          <h4 class="task-list-name" *ngIf="!taskListIsInEditMode(taskListRef)" (click)="toggleTaskListIsOpen(taskListRef)">{{taskListRef?.listName}}</h4>
-          <form class="edit-task-list-name-form" #editTaskListNameForm="ngForm" *ngIf="taskListIsInEditMode(taskListRef)" (ngSubmit)="toggleTaskListEditMode(taskListRef)">
-            <mat-form-field class="edit-task-list-name">
-              <input matInput
-                     placeholder="Edit Task List Name"
-                     name="{{'task-list-' + taskListRef.id + '-edit'}}"
-                     [(ngModel)]="taskListRef.listName"
-                     autocomplete="off">
-            </mat-form-field>
-          </form>
-          <mat-icon *ngIf="!taskListIsInEditMode(taskListRef)" class="edit-task-list-name-icon" (click)="toggleTaskListEditMode(taskListRef)">edit</mat-icon>
-          <mat-icon *ngIf="taskListIsInEditMode(taskListRef)" class="save-task-list-name-icon" (click)="toggleTaskListEditMode(taskListRef)">checkmark</mat-icon>
-        </div>
-        <button class="activate-task-list-btn" mat-raised-button color="secondary" (click)="activateTaskList(taskListRef)">Activate</button>
-      </div>
+      <pm-task-list-header
+        [taskList]="taskListRef"
+        [allTasksInListAreComplete]="allTasksComplete(taskListRef.tasks)"
+        [manageListActions]="true"
+        (taskListDeleted)="deleteEmptyTaskList(taskListRef)"
+        (taskListUpdated)="onTaskListUpdated($event)"
+        (taskListActivated)="onActivateTaskList($event)">
+      </pm-task-list-header>
       <pm-task-list
-        *ngIf="taskListRef.tasks && taskListIsOpen(taskListRef)"
+        *ngIf="taskListRef.tasks && taskListRef.open"
         [tasksList]="taskListRef?.tasks"
         [currentUser]="currentUser"
         [deviceIsMobile]="isHandset$ | async"
@@ -102,7 +79,7 @@
         (taskUpdated)="onTaskUpdated(taskListRef, $event)"
         (taskDeleted)="onTaskDeleted(taskListRef, $event)">
       </pm-task-list>
-      <pm-new-task *ngIf="taskListIsOpen(taskListRef)" (taskAdded)="onNewTaskAdded(taskListRef, $event)"></pm-new-task>
+      <pm-new-task *ngIf="taskListRef.open" (taskAdded)="onNewTaskAdded(taskListRef, $event)"></pm-new-task>
     </div>
   </section>
   <h4 class="header-text">Completed Tasks</h4>

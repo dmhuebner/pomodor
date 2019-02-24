@@ -5,4 +5,5 @@ export default interface TaskList {
   id: string;
   listName: string;
   tasks: Task[];
+  open: boolean;
 }
