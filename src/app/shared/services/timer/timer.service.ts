@@ -5,6 +5,7 @@ import { SettingsService } from '../settings/settings.service';
 import { UsbLightService } from '../usbLight/usb-light.service';
 import { TimerPipe } from '../../pipes/timer.pipe';
 import Settings from '../../interfaces/settings.interface';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,8 @@ export class TimerService implements OnInit {
   currentSettings: Settings = {...this.settingsService.defaultSettings};
 
   constructor(private settingsService: SettingsService,
-              private usbLightService: UsbLightService) { }
+              private usbLightService: UsbLightService,
+              private notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
     // Subscribe to subject observable and set value
@@ -130,6 +132,8 @@ export class TimerService implements OnInit {
     //     completedWithBreak: false
     //   };
     // }
+    const notifyMessage = this.onBreak ? 'Break has ended!' : 'Timer has ended!';
+    this.notificationsService.notify(notifyMessage);
     this.setOnBreak(!this.onBreak);
     this.setTimeLeft();
   }
