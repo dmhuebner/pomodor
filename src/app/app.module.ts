@@ -32,6 +32,7 @@ import { SettingsService } from './shared/services/settings/settings.service';
 import { TaskService } from './shared/services/task/task.service';
 import { ToastrModule } from 'ngx-toastr';
 import { LoggedInGuard } from './shared/guards/logged-in.guard';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { LoggedInGuard } from './shared/guards/logged-in.guard';
     TimerModule,
     TaskModule,
     SettingsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     AuthService,
