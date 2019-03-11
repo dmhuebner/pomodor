@@ -146,7 +146,9 @@ export class TaskListContainerComponent implements OnInit {
 
   deleteEmptyTaskList(taskList: TaskList): Promise<void> {
     if (!taskList.tasks || !!taskList.tasks.length || this.allTasksComplete(taskList.tasks)) {
-      return this.taskListService.deleteTaskList(this.currentUser.uid, taskList.id);
+      return this.taskListService.deleteTaskList(this.currentUser.uid, taskList.id).then(() => {
+        this.toastr.warning(null, `Deleted "${taskList.listName}" list`);
+      });
     }
   }
 
