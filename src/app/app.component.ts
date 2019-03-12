@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './shared/services/auth/auth.service';
-import { SettingsService } from './shared/services/settings/settings.service';
+import { AuthService } from '@shared/services';
+import { SettingsService } from '@settings/services';
 
 @Component({
   selector: 'pm-root',

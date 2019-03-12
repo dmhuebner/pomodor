@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import Task from '../../../shared/interfaces/task.interface';
+import Task from '../../interfaces/task.interface';
 
 @Component({
   selector: 'pm-completed-task-list',

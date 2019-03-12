@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimerComponent } from './components/timer/timer.component';
-import { TimerContainerComponent } from './components/timer-container/timer-container.component';
+import { TimerContainerComponent } from './containers/timer-container/timer-container.component';
 import { MatButtonModule, MatCheckboxModule, MatIconModule } from '@angular/material';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { TimerHistoryComponent } from './components/timer-history/timer-history.component';
-import { TimerHistoryContainerComponent } from './components/timer-history-container/timer-history-container.component';
+import { TimerHistoryContainerComponent } from './containers/timer-history-container/timer-history-container.component';
 
 @NgModule({
   declarations: [

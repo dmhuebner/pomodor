@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import TaskList from '../../shared/interfaces/taskList.interface';
+import TaskList from '../interfaces/taskList.interface';
 
 @Pipe({
   name: 'activeTaskList'

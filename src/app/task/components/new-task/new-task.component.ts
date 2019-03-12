@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import Task from '../../../shared/interfaces/task.interface';
+import Task from '../../interfaces/task.interface';
 
 @Component({
   selector: 'pm-new-task',

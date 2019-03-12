@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import TaskList from '../../../shared/interfaces/taskList.interface';
+import TaskList from '../../interfaces/taskList.interface';
 
 @Component({
   selector: 'pm-task-list-header',
