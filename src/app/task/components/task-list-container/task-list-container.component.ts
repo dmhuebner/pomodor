@@ -46,7 +46,9 @@ export class TaskListContainerComponent implements OnInit {
     this.auth.user$.subscribe(user => this.currentUser = user);
 
     this.taskListService.getTaskLists$().subscribe(taskLists => {
-      if (taskLists && taskLists.length) {
+      if (!taskLists || !taskLists.length) {
+        this.createNewTaskList('My List', true);
+      } else {
         this.completedTasksList = [];
         // Remove completedTasks from each taskList and map them into a completedTasksList
         taskLists.sort(this.taskListService.compareListName).forEach(taskList => {
@@ -82,11 +84,6 @@ export class TaskListContainerComponent implements OnInit {
 
         // Find activeTasksList
         this.activeTasksListRef = this.taskListService.getActiveTaskList(taskLists);
-      } else {
-        this.createNewTaskList('My List', true).then(() => {
-          // TODO don't do this...
-          this.ngOnInit();
-        });
       }
 
       this.spinner.hide();
