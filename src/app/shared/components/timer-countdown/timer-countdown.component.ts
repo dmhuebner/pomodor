@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from '../../services/timer/timer.service';
+import { TimerService } from '@timer/services';
 
 @Component({
   selector: 'pm-timer-countdown',

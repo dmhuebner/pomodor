@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import Task from '../../../shared/interfaces/task.interface';
-import User from '../../../shared/interfaces/user.interface';
+import Task from '../../interfaces/task.interface';
+import User from '@shared/interfaces/user.interface';
 
 @Component({
   selector: 'pm-task-list',

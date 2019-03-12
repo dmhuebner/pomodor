@@ -16,6 +16,32 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@task/*": [
+        "./src/app/task/*"
+      ],
+      "@task": [
+        "./src/app/task/index"
+      ],
+      "@timer/*": [
+        "./src/app/timer/*"
+      ],
+      "@timer": [
+        "./src/app/timer/index"
+      ],
+      "@settings/*": [
+        "./src/app/settings/*"
+      ],
+      "@settings": [
+        "./src/app/settings/index"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ],
+      "@shared": [
+        "./src/app/shared/index"
+      ]
+    }
   }
 }
