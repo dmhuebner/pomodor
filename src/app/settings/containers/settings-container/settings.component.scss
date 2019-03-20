@@ -13,7 +13,11 @@
     margin: auto;
 
     .settings-button-group {
-      button {
+      display: flex;
+      justify-content: center;
+
+      .save-settings,
+      .restore-default-settings {
         margin: 0.5rem 1rem;
         width: 10rem;
       }
