@@ -9,25 +9,23 @@
     <p style="font-size: 20px; color: #3E51B5">Loading Settings...</p>
   </ngx-spinner>
   <div class="settings-form" *ngIf="!loading">
-    <pm-settings-form [currentSettings]="currentSettings" [shouldShowBumperLengthField]="currentSettings.useTimerBumpers.value"></pm-settings-form>
-    <div class="settings-button-group">
-      <button type="button"
-              class="save-settings"
-              aria-label="save settings"
-              mat-raised-button
-              color="primary"
-              (click)="onSaveSettings()"
-              [disabled]="shouldDisableSaveButton()">
-        Save Settings
-      </button>
-      <button type="button"
-              class="restore-default-settings"
-              aria-label="restore default settings"
-              mat-raised-button
-              color="secondary"
-              (click)="onRestoreDefaults()">
-        Restore Defaults
-      </button>
-    </div>
+    <pm-settings-form
+      [currentSettings]="currentSettings"
+      [shouldShowBumperLengthField]="currentSettings.useTimerBumpers.value">
+      <div class="settings-button-group">
+        <pm-raised-button
+          class="save-settings"
+          [isDisabled]="shouldDisableSaveButton()"
+          (clicked)="onSaveSettings()">
+          Save Settings
+        </pm-raised-button>
+        <pm-raised-button
+          class="restore-default-settings"
+          [color]="'secondary'"
+          (clicked)="onRestoreDefaults()">
+          Restore Defaults
+        </pm-raised-button>
+      </div>
+    </pm-settings-form>
   </div>
 </section>
