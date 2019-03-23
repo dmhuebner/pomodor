@@ -121,11 +121,14 @@ export class TaskListContainerComponent implements OnInit {
     // Check to see if the user can create more taskLists
     if (this.userTaskLists && this.userTaskLists.length < this.userTaskListLimit) {
       this.showNewTaskListInput = false;
-      return this.taskListService.createTaskList(this.currentUser.uid, taskListName, activate)
-        .then(() => {
-          this.toastr.success(null, `Created "${taskListName}"`);
-          this.newTaskListName = new FormControl('');
-        });
+
+      if (this.currentUser) {
+        return this.taskListService.createTaskList(this.currentUser.uid, taskListName, activate)
+          .then(() => {
+            this.toastr.success(null, `Created "${taskListName}"`);
+            this.newTaskListName = new FormControl('');
+          });
+      }
     } else {
       this.toastr.warning(null, `You can't create more than ${this.userTaskListLimit} Task lists`);
     }

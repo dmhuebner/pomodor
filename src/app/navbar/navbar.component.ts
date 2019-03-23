@@ -49,7 +49,11 @@ export class NavbarComponent implements OnInit {
   async logout(): Promise<void> {
     this.timerService.resetTimer();
     this.toastr.success(null, `${this.currentUser.displayName} Logged Out`);
-    return this.authService.logout();
+    await this.authService.logout();
+    // TODO shouldn't have to reload when we logout - fix this
+    // TODO Its also making it so the logout toastr isn't firing
+    // TODO this reload is not cross platform
+    window.location.reload();
   }
 
 }

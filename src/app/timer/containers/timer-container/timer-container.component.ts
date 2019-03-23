@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TimerService } from '../../services/timer/timer.service';
 import { TaskService } from '@task/services';
 import Task from '@task/interfaces/task.interface';
@@ -12,6 +12,7 @@ import TaskList from '@task/interfaces/taskList.interface';
 
 @Component({
   selector: 'pm-timer-container',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './timer-container.component.html',
   styleUrls: ['./timer-container.component.scss']
 })
@@ -33,6 +34,7 @@ export class TimerContainerComponent implements OnInit {
 
   ngOnInit() {
     this.auth.user$.subscribe(user => this.currentUser = user);
+    // TODO async pipe these
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
     this.taskListService.getTaskLists$().subscribe(taskLists => {
