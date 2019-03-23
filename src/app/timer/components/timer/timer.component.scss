@@ -86,7 +86,7 @@ body {
 
 .timer-container.timeron.onbreak {
   background-color: $break;
-  @include box-shadow(0px, 55px, #803a19);
+  @include box-shadow(0px, 55px, darken($break, 30%));
 }
 
 .timer-button-container {
@@ -97,7 +97,7 @@ body {
   }
   
   .timer-start-button.onbreak {
-    border: 1px solid #ff7332;
+    border: 1px solid darken($break, 10%);
     background-color: $break;
     color: #FFF;
   }

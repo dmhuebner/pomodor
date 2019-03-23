@@ -5,12 +5,13 @@
 $softBlue: #00a9ff;
 $pomColor: #ff6868;
 $mellow: #ffc270;
-$break: #FF7F1C;
+$links: #FF7F1C;
+$break: #24994f;
 $green: #009900;
 $darkerBackground: #333;
 $primary: #3E51B5;
 $primaryLighter: #7881b5;
-$lightOnBreak: #fffaef;
+$lightOnBreak: lighten($break, 55%);
 $lightPrimary: #dfefff;
 
 $lightGrey: #aaa;
@@ -71,7 +72,7 @@ body {
 
   a {
     text-decoration: none;
-    color: $break;
+    color: $links;
 
     &:hover {
       color: #be470c;
@@ -83,7 +84,7 @@ body {
   }
 }
 
-///*** Toastr Styles ***/
+/*** Toastr Styles ***/
 
 .toast-container {
   margin-top: 3.5rem;
