@@ -41,6 +41,7 @@ export class TimerService implements OnInit {
 
   ngOnInit(): void {
     // Subscribe to subject observable and set value
+    // TODO are these top couple subscriptions necessary?
     this.onBreak$.subscribe(val => this.onBreak = val);
     this.timerOn$.subscribe(val => this.timerOn = val);
     this.settingsService.currentSettings$.subscribe(settings => {

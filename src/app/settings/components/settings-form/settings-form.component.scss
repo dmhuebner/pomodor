@@ -1,20 +1,33 @@
 @import "../../../../styles";
 
-.checkbox-field {
-  margin: 1rem 0 2rem 0;
-}
+form {
 
-mat-form-field {
-  min-width: 70%;
-  text-align: center;
-  font-size: 1.25rem;
-  color: $primary;
-}
+  mat-form-field,
+  pm-input-field,
+  pm-checkbox-field {
+    display: block;
+    width: 70%;
+    margin: auto;
+    text-align: left;
+    color: $primary;
+  }
 
-.shorter-number-field {
-  width: 10rem;
-}
+  mat-form-field,
+  pm-input-field {
+    font-size: 1.25rem;
+  }
 
-input {
-  text-align: center;
+  pm-checkbox-field {
+    font-size: 1rem;
+    margin: 1.4rem auto;
+  }
+
+  .shorter-number-field {
+    width: 10rem;
+  }
+
+  input {
+    text-align: center;
+  }
+
 }
