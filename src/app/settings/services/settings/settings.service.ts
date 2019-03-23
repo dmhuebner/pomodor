@@ -9,7 +9,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class SettingsService {
 
-  // Defaults settings
+  /* Defaults Settings */
   defaultSettings: Settings = {
     timerLength: 25,
     breakLength: 5,
@@ -20,9 +20,8 @@ export class SettingsService {
     completedTaskExpirationInDays: 7
   };
 
-  currentSettings: Settings = {...this.defaultSettings};
-
-  currentSettingsSubject: BehaviorSubject<Settings> = new BehaviorSubject<Settings>(this.currentSettings);
+  currentSettings: Settings;
+  currentSettingsSubject: BehaviorSubject<Settings> = new BehaviorSubject<Settings>(this.defaultSettings);
   currentSettings$: Observable<Settings> = this.currentSettingsSubject.asObservable();
 
   constructor(private dataService: DataService<Settings>) { }
@@ -71,12 +70,7 @@ export class SettingsService {
   }
 
   setCurrentSettings(settings: Settings) {
-    for (const setting in settings) {
-      if (settings.hasOwnProperty(setting)) {
-        this.currentSettings[setting] = settings[setting];
-      }
-    }
-
+    this.currentSettings = settings;
     this.currentSettingsSubject.next(this.currentSettings);
   }
 }

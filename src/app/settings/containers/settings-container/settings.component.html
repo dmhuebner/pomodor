@@ -10,13 +10,13 @@
   </ngx-spinner>
   <div class="settings-form" *ngIf="!loading">
     <pm-settings-form
-      [currentSettings]="currentSettings"
-      [shouldShowBumperLengthField]="currentSettings.useTimerBumpers.value">
+      (submitted)="onSaveSettings($event.value)"
+      [currentSettings]="settingsService.currentSettings$ | async">
       <div class="settings-button-group">
         <pm-raised-button
           class="save-settings"
-          [isDisabled]="shouldDisableSaveButton()"
-          (clicked)="onSaveSettings()">
+          buttonType="submit"
+          [isDisabled]="shouldDisableSaveButton()">
           Save Settings
         </pm-raised-button>
         <pm-raised-button
