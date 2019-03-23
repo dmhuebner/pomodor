@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import Settings from '../../interfaces/settings.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,6 +12,7 @@ export class SettingsFormComponent implements OnInit, OnChanges {
   @Input() currentSettings: Settings;
 
   @Output() submitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() formValuesChanged: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   settingsForm: FormGroup;
 
@@ -23,7 +24,6 @@ export class SettingsFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.settingsForm = this.populateSettingsForm(changes.currentSettings.currentValue);
-
   }
 
   onSubmit(): void {
@@ -33,7 +33,7 @@ export class SettingsFormComponent implements OnInit, OnChanges {
   }
 
   populateSettingsForm(settings: Settings): FormGroup {
-    return this.fb.group({
+    const formGroup = this.fb.group({
       timerLength: [settings.timerLength, [Validators.required]],
       breakLength: [settings.breakLength, [Validators.required]],
       bumperLengthInMinutes: [settings.bumperLengthInMinutes, [Validators.min(1)]],
@@ -42,5 +42,12 @@ export class SettingsFormComponent implements OnInit, OnChanges {
       moveCompletedTaskToCompletedListTimeInMin: [settings.moveCompletedTaskToCompletedListTimeInMin, [Validators.required]],
       completedTaskExpirationInDays: [settings.completedTaskExpirationInDays, [Validators.required]]
     });
+
+    /* Subscribe to formGroup valueChanges and emit changes */
+    formGroup.valueChanges.subscribe(() => {
+      this.formValuesChanged.emit(this.settingsForm);
+    });
+
+    return formGroup;
   }
 }

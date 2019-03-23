@@ -6,6 +6,7 @@ import User from '@shared/interfaces/user.interface';
 import { AuthService } from '@shared/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'pm-settings',
@@ -17,6 +18,7 @@ export class SettingsComponent implements OnInit {
   currentSettings: Settings;
   currentUser: User;
   loading = false;
+  saveButtonDisabled = false;
 
   constructor(public settingsService: SettingsService,
               private timerService: TimerService,
@@ -52,12 +54,8 @@ export class SettingsComponent implements OnInit {
     return this.onSaveSettings(this.settingsService.defaultSettings);
   }
 
-  shouldDisableSaveButton() {
-    // return !this.currentSettings.timerLength.value
-    //   || !this.currentSettings.breakLength.value
-    //   || !this.currentSettings.moveCompletedTaskToCompletedListTimeInMin.value
-    //   || !this.currentSettings.completedTaskExpirationInDays.value
-    //   || (this.currentSettings.useTimerBumpers.value && !this.currentSettings.bumperLengthInMinutes.value);
+  onFormValuesChanged(settingsForm: FormGroup): void {
+    this.saveButtonDisabled = settingsForm.invalid;
   }
 
   private initializeSettingsForm() {
