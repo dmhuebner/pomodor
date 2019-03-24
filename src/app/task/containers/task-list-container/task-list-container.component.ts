@@ -12,6 +12,8 @@ import TaskList from '../../interfaces/taskList.interface';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CONSTANTS } from '@shared/constants';
+import { TimerService } from '@timer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pm-task-list-container',
@@ -39,7 +41,9 @@ export class TaskListContainerComponent implements OnInit {
               private taskListService: TaskListService,
               private spinner: NgxSpinnerService,
               public breakpointObserver: BreakpointObserver,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              public timerService: TimerService,
+              private router: Router) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -158,5 +162,9 @@ export class TaskListContainerComponent implements OnInit {
 
   onTaskListUpdated(taskList: TaskList): Promise<void> {
     return this.taskListService.updateTaskList(this.currentUser.uid, taskList);
+  }
+
+  navigateToTimer() {
+    this.router.navigate(['/timer']);
   }
 }

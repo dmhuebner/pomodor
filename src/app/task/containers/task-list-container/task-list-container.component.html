@@ -1,8 +1,18 @@
 <div class="tasks-page-container">
   <h2 class="header-text">
     Tasks
-    <pm-timer-countdown></pm-timer-countdown>
+    <pm-timer-countdown
+      *ngIf="timerService.timerOn$ | async; else timerButton"
+      (click)="navigateToTimer()">
+    </pm-timer-countdown>
   </h2>
+  <ng-template #timerButton>
+    <div class="timer-nav-button">
+      <pm-raised-button (clicked)="navigateToTimer()" color="secondary">
+        <mat-icon aria-label="Timer">watch</mat-icon>
+      </pm-raised-button>
+    </div>
+  </ng-template>
   <section class="tasks-container">
     <ngx-spinner
       bdColor="rgba(62, 81, 181, 0.2)"
