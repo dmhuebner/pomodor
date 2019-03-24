@@ -29,6 +29,11 @@
     controlName="tasksLinkedToTimer">
     <span class="field-label">Link highest priority Task to Timer?</span>
   </pm-checkbox-field>
+  <pm-checkbox-field
+    [group]="settingsForm"
+    controlName="autoBreak">
+    <span class="field-label">Automatically start a break after timer is over?</span>
+  </pm-checkbox-field>
   <pm-input-field
     [group]="settingsForm"
     inputType="number"

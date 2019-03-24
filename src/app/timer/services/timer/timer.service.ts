@@ -137,6 +137,10 @@ export class TimerService implements OnInit {
     this.notificationsService.notify(notifyMessage);
     this.setOnBreak(!this.onBreak);
     this.setTimeLeft();
+    /* Automatically start break if autoBreak setting is on */
+    if (this.onBreak && this.settingsService.getAutoBreak()) {
+      this.startTimer();
+    }
   }
 
   private endTimer() {
