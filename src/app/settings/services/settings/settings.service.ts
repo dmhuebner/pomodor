@@ -16,6 +16,7 @@ export class SettingsService {
     bumperLengthInMinutes: 2,
     useTimerBumpers: false,
     tasksLinkedToTimer: true,
+    autoBreak: false,
     moveCompletedTaskToCompletedListTimeInMin: 15,
     completedTaskExpirationInDays: 7
   };
@@ -51,6 +52,10 @@ export class SettingsService {
 
   getTasksLinkedToTimer(): boolean {
     return this.currentSettings ? this.currentSettings.tasksLinkedToTimer : this.defaultSettings.tasksLinkedToTimer;
+  }
+
+  getAutoBreak(): boolean {
+    return this.currentSettings ? this.currentSettings.autoBreak : this.defaultSettings.autoBreak;
   }
 
   getMoveCompletedTaskToCompletedListTimeInMin(): number {

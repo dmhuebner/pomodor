@@ -4,6 +4,7 @@ export default interface Settings {
   bumperLengthInMinutes: number;
   useTimerBumpers: boolean;
   tasksLinkedToTimer: boolean;
+  autoBreak: boolean;
   moveCompletedTaskToCompletedListTimeInMin: number;
   completedTaskExpirationInDays: number;
 }

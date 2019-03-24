@@ -39,6 +39,7 @@ export class SettingsFormComponent implements OnInit, OnChanges {
       bumperLengthInMinutes: [settings.bumperLengthInMinutes, [Validators.min(1)]],
       useTimerBumpers: [settings.useTimerBumpers, [Validators.required]],
       tasksLinkedToTimer: [settings.tasksLinkedToTimer, [Validators.required]],
+      autoBreak: [settings.autoBreak, [Validators.required]],
       moveCompletedTaskToCompletedListTimeInMin: [settings.moveCompletedTaskToCompletedListTimeInMin, [Validators.required]],
       completedTaskExpirationInDays: [settings.completedTaskExpirationInDays, [Validators.required]]
     });

@@ -65,6 +65,7 @@ export class SettingsComponent implements OnInit {
       bumperLengthInMinutes: this.settingsService.getBumperLengthInMinutes(),
       useTimerBumpers: this.settingsService.getUseTimerBumpers(),
       tasksLinkedToTimer: this.settingsService.getTasksLinkedToTimer(),
+      autoBreak: this.settingsService.getAutoBreak(),
       moveCompletedTaskToCompletedListTimeInMin: this.settingsService.getMoveCompletedTaskToCompletedListTimeInMin(),
       completedTaskExpirationInDays: this.settingsService.getCompletedTaskExpirationInDays()
     };
