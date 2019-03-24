@@ -11,6 +11,7 @@ import { NewTaskComponent } from './components/new-task/new-task.component';
 import { CompletedTaskListComponent } from './components/completed-task-list/completed-task-list.component';
 import { ActiveTaskListPipe } from './pipes/active-task-list.pipe';
 import { TaskListHeaderComponent } from './components/task-list-header/task-list-header.component';
+import { PmFormsModule } from '@shared';
 
 // TODO make sure SharedModule is needed below
 
@@ -34,7 +35,8 @@ import { TaskListHeaderComponent } from './components/task-list-header/task-list
     MatButtonModule,
     MatIconModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    PmFormsModule
   ]
 })
 export class TaskModule { }
