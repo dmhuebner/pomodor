@@ -9,6 +9,8 @@ import Settings from '@settings/interfaces/settings.interface';
 import { CompletedTimer } from '../../interfaces/CompletedTimer.interface';
 import { TaskListService } from '@task/services';
 import TaskList from '@task/interfaces/taskList.interface';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'pm-timer-container',
@@ -25,6 +27,7 @@ export class TimerContainerComponent implements OnInit {
   currentSettings: Settings = {...this.settingsService.defaultSettings};
   currentTimer: CompletedTimer = {completed: false, completedWithBreak: false};
   activeTaskList: TaskList;
+  getActiveTaskDescription$: Observable<string>;
 
   constructor(public timerService: TimerService,
               public taskService: TaskService,
@@ -37,13 +40,17 @@ export class TimerContainerComponent implements OnInit {
     // TODO async pipe these
     this.timerService.onBreak$.subscribe(val => this.onBreak = val);
     this.timerService.timerOn$.subscribe(val => this.timerOn = val);
-    this.taskListService.getTaskLists$().subscribe(taskLists => {
-      taskLists = taskLists ? taskLists : [];
-      this.activeTaskList = this.taskListService.getActiveTaskList(taskLists);
-      this.currentTask = this.activeTaskList && this.activeTaskList.tasks
-        ? this.activeTaskList.tasks.filter(task => !task.completed)[0]
-        : null;
-    });
+    this.getActiveTaskDescription$ = this.taskListService.getTaskLists$().pipe(
+      map(taskLists => {
+        taskLists = taskLists ? taskLists : [];
+        this.activeTaskList = this.taskListService.getActiveTaskList(taskLists);
+        this.currentTask = this.activeTaskList && this.activeTaskList.tasks
+          ? this.activeTaskList.tasks.filter(task => !task.completed)[0]
+          : null;
+
+        return this.currentTask ? this.currentTask.description : null;
+      })
+    );
     this.settingsService.currentSettings$.subscribe(settings => {
       this.currentSettings = settings;
       if (!this.timerOn) {
