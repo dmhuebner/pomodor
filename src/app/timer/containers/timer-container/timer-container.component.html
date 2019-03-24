@@ -1,14 +1,28 @@
 <div class="timer-page-container" [class.container-timer-on]="timerOn" [class.container-on-break]="onBreak && timerOn">
   <h2 class="header-text" *ngIf="!onBreak && !timerOn">Timer</h2>
-  <h2 class="header-text" *ngIf="!onBreak && timerOn && (!currentTask || !settingsService.currentSettings.tasksLinkedToTimer)">Focus</h2>
-  <h2 class="header-text current-task" *ngIf="!onBreak && timerOn && settingsService.currentSettings.tasksLinkedToTimer">
-    <mat-checkbox id="complete-task-checkbox" [checked]="currentTask?.completed" (change)="completeTask(activeTaskList, currentTask)">{{currentTask?.description}}</mat-checkbox>
+  <h2 class="header-text"
+      *ngIf="!onBreak &&
+      timerOn &&
+      (!currentTask || !settingsService.currentSettings.tasksLinkedToTimer) &&
+      !currentUser; else currentTaskHeader">
+    Focus
   </h2>
+  <ng-template #currentTaskHeader>
+    <h2 class="header-text current-task">
+      <mat-checkbox id="complete-task-checkbox"
+                    *ngIf="!onBreak && timerOn && settingsService.currentSettings.tasksLinkedToTimer"
+                    [checked]="currentTask?.completed"
+                    (change)="completeTask(activeTaskList, currentTask)">
+        {{getActiveTaskDescription$ | async}}
+      </mat-checkbox>
+    </h2>
+  </ng-template>
+  <h4 class="header-text" *ngIf="!timerOn && !onBreak">{{getActiveTaskDescription$ | async}}</h4>
   <h2 class="on-break" *ngIf="onBreak && !timerOn">Recharge</h2>
   <h2 class="on-break" *ngIf="onBreak && timerOn">Recharging...</h2>
   <section class="timer-container">
-    <pm-timer [onBreak]="onBreak"
-              [timerOn]="timerOn"
+    <pm-timer [onBreak]="timerService.onBreak$ | async"
+              [timerOn]="timerService.timerOn$ | async"
               [useTimerBumpers]="currentSettings.useTimerBumpers"
               [bumperLengthInMinutes]="currentSettings.bumperLengthInMinutes"
               [currentTimerValue]="timerService.currentTimerValue$ | async"
