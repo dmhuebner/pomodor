@@ -5,10 +5,12 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule 
 import { InputFieldComponent } from './fields/input-field/input-field.component';
 import { RaisedButtonComponent } from './fields/raised-button/raised-button.component';
 import { CheckboxFieldComponent } from '@shared/forms/fields/checkbox-field/checkbox-field.component';
+import { FabComponent } from '@shared/forms/fields/fab/fab.component';
 
 const DECLARATIONS: any[] = [
   InputFieldComponent,
   RaisedButtonComponent,
+  FabComponent,
   CheckboxFieldComponent
 ];
 
