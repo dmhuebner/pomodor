@@ -1,27 +1,35 @@
 # Pomodor
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
+Pomodor is a simple, time management app that helps you work efficiently while tracking and organizing your work with Timers and  Task Lists.
 
-## Development server
+It includes a **Timer** feature to help you focus and work efficiently as well as a **Task Lists** feature that allows you to create multiple task lists and prioritize tasks by dragging and dropping them into the desired order. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+It uses the [Pomodoro time management technique](https://en.wikipedia.org/wiki/Pomodoro_Technique "Pomodoro time management technique") that encourages incremental bursts of high focus productivity followed by short breaks.
 
-## Code scaffolding
+You can change a wide variety of the timer controls in the **Settings** located in the main menu.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### To Run Locally:
 
-## Build
+```npm run develop```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+#### Building:
 
-## Running unit tests
+Pomodor is a Progressive Web App that runs in the browser but also uses Capacitor and Electron to let you build to both Mac OS and Windows.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+If you want to build to Mac OS or Windows you will need to cd into the /electron directory and run:
+ 
+```npm install```
 
-## Running end-to-end tests
+Be sure to cd back out into the root directory of the application before running the build commands below.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Then, you will need to run a build of the app with the --base-href flag for capacitor to use to build the Electron app:
 
-## Further help
+```ng build --base-href ./```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To build to Mac OS or Windows:
+
+```npm run build-electron-mac```
+
+or
+
+```npm run build-electron-win```

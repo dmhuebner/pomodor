@@ -38,3 +38,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Capacitor
+/electron/node_modules
+/electron/app
