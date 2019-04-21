@@ -22,9 +22,9 @@ If you want to build to Mac OS or Windows you will need to cd into the /electron
 
 Be sure to cd back out into the root directory of the application before running the build commands below.
 
-Then, you will need to run a prod build of the app for capacitor to use to build the Electron app:
+Then, you will need to run a build of the app with the --base-href flag for capacitor to use to build the Electron app:
 
-```ng build --prod```
+```ng build --base-href ./```
 
 To build to Mac OS or Windows:
 
