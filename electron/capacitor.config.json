@@ -1,0 +1,6 @@
+{
+  "appId": "com.dhuebner.pomodor",
+  "appName": "Pomodor",
+  "bundledWebRuntime": false,
+  "webDir": "dist/pomodor"
+}

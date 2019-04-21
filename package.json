@@ -1,11 +1,13 @@
 {
   "name": "pomodor",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
     "develop": "ng serve",
     "build": "ng build",
+    "build-electron-mac": "npx cap copy && cd electron && npx electron-packager . --platform=darwin && cd ..",
+    "build-electron-win": "npx cap copy && cd electron && npx electron-packager . --platform=win32 && cd ..",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -15,7 +17,6 @@
   "dependencies": {
     "@angular/animations": "^7.0.4",
     "@angular/cdk": "~7.1.0",
-    "@angular/cli": "^7.3.0",
     "@angular/common": "~7.0.0",
     "@angular/compiler": "~7.0.0",
     "@angular/core": "~7.0.0",
@@ -25,9 +26,11 @@
     "@angular/material": "^7.1.0",
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
-    "@angular/pwa": "^0.12.4",
+    "@angular/pwa": "^0.13.8",
     "@angular/router": "~7.0.0",
     "@angular/service-worker": "~7.0.0",
+    "@capacitor/cli": "^1.0.0-beta.19",
+    "@capacitor/core": "^1.0.0-beta.19",
     "core-js": "^2.5.4",
     "express": "^4.16.4",
     "firebase": "^5.7.3",
@@ -41,9 +44,9 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.12.1",
-    "@angular/cli": "^7.3.0",
-    "@angular/compiler-cli": "^7.2.5",
+    "@angular-devkit/build-angular": "^0.13.8",
+    "@angular/cli": "^7.3.8",
+    "@angular/compiler-cli": "^7.2.13",
     "@angular/language-service": "~7.0.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
