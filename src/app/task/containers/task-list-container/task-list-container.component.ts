@@ -49,6 +49,7 @@ export class TaskListContainerComponent implements OnInit {
     this.spinner.show();
     this.auth.user$.subscribe(user => this.currentUser = user);
 
+    // TODO refactor
     this.taskListService.getTaskLists$().subscribe(taskLists => {
       if (!taskLists || !taskLists.length) {
         this.createNewTaskList('My List', true);
@@ -111,7 +112,7 @@ export class TaskListContainerComponent implements OnInit {
   toggleTaskComplete(taskList: TaskList, task: Task): Promise<void> {
     task.completed = !task.completed;
     task.dateCompleted = task.completed ? new Date().toISOString() : null;
-    return this.taskService.updateTask(this.currentUser.uid, taskList, task);
+    return this.taskListService.updateTaskList(this.currentUser.uid, taskList);
   }
 
   onDragEnded(taskListRef): void {
