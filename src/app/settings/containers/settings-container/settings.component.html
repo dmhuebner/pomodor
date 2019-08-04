@@ -8,7 +8,7 @@
     fullScreen="false">
     <p style="font-size: 20px; color: #3E51B5">Loading Settings...</p>
   </ngx-spinner>
-  <div class="settings-form" *ngIf="!loading">
+  <div class="settings-form" *ngIf="settingsService.currentSettings$ | async">
     <pm-settings-form
       [currentSettings]="settingsService.currentSettings$ | async"
       (submitted)="onSaveSettings($event.value)"

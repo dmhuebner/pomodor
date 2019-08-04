@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { InputFieldComponent } from './fields/input-field/input-field.component';
 import { RaisedButtonComponent } from './fields/raised-button/raised-button.component';
 import { CheckboxFieldComponent } from '@shared/forms/fields/checkbox-field/checkbox-field.component';

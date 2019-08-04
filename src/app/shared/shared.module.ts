@@ -1,7 +1,7 @@
 import { ClassProvider, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { TimerPipe } from '@timer/pipes/timer.pipe';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsbLightInterceptor } from './interceptors/usbLight.interceptor';
