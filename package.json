@@ -29,7 +29,7 @@
     "@angular/pwa": "^0.13.8",
     "@angular/router": "~7.0.0",
     "@angular/service-worker": "~7.0.0",
-    "@capacitor/cli": "^1.0.0-beta.19",
+    "@capacitor/cli": "^1.1.1",
     "@capacitor/core": "^1.0.0-beta.19",
     "core-js": "^2.5.4",
     "express": "^4.16.4",
