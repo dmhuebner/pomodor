@@ -17,7 +17,6 @@ export class SettingsComponent implements OnInit {
 
   currentSettings: Settings;
   currentUser: User;
-  loading = false;
   saveButtonDisabled = false;
 
   constructor(public settingsService: SettingsService,
@@ -27,7 +26,6 @@ export class SettingsComponent implements OnInit {
               private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.spinner.spinnerObservable.subscribe(loading => this.loading = loading);
     this.spinner.show();
     this.auth.user$.subscribe(user => {
       if (user) {
