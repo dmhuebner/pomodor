@@ -71,25 +71,27 @@
   <hr class="completed-tasks-hr">
   <section class="inactive-task-list">
     <div class="task-list" *ngFor="let taskListRef of userTaskLists | activeTaskList">
-      <pm-task-list-header
-        [taskList]="taskListRef"
-        [allTasksInListAreComplete]="allTasksComplete(taskListRef.tasks)"
-        [manageListActions]="true"
-        (taskListDeleted)="deleteEmptyTaskList(taskListRef)"
-        (taskListUpdated)="onTaskListUpdated($event)"
-        (taskListActivated)="onActivateTaskList($event)">
-      </pm-task-list-header>
-      <pm-task-list
-        *ngIf="taskListRef.tasks && taskListRef.open"
-        [tasksList]="taskListRef?.tasks"
-        [currentUser]="currentUser"
-        [deviceIsMobile]="isHandset$ | async"
-        (taskCompletionChanged)="toggleTaskComplete(taskListRef, $event)"
-        (dragEnded)="onDragEnded(taskListRef)"
-        (taskUpdated)="onTaskUpdated(taskListRef, $event)"
-        (taskDeleted)="onTaskDeleted(taskListRef, $event)">
-      </pm-task-list>
-      <pm-new-task *ngIf="taskListRef.open" (taskAdded)="onNewTaskAdded(taskListRef, $event)"></pm-new-task>
+      <div class="task-list-container">
+        <pm-task-list-header
+          [taskList]="taskListRef"
+          [allTasksInListAreComplete]="allTasksComplete(taskListRef.tasks)"
+          [manageListActions]="true"
+          (taskListDeleted)="deleteEmptyTaskList(taskListRef)"
+          (taskListUpdated)="onTaskListUpdated($event)"
+          (taskListActivated)="onActivateTaskList($event)">
+        </pm-task-list-header>
+        <pm-task-list
+          *ngIf="taskListRef.tasks && taskListRef.open"
+          [tasksList]="taskListRef?.tasks"
+          [currentUser]="currentUser"
+          [deviceIsMobile]="isHandset$ | async"
+          (taskCompletionChanged)="toggleTaskComplete(taskListRef, $event)"
+          (dragEnded)="onDragEnded(taskListRef)"
+          (taskUpdated)="onTaskUpdated(taskListRef, $event)"
+          (taskDeleted)="onTaskDeleted(taskListRef, $event)">
+        </pm-task-list>
+        <pm-new-task *ngIf="taskListRef.open" (taskAdded)="onNewTaskAdded(taskListRef, $event)"></pm-new-task>
+      </div>
     </div>
   </section>
   <h4 class="header-text">Completed Tasks</h4>
